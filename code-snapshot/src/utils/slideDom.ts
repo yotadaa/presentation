@@ -1,13 +1,50 @@
 import type { ReferenceEntry, SelectionTarget, Slide } from "../types";
 
+const EXTERNAL_URL_PATTERN = /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i;
+
+function appBaseUrl() {
+  const base = import.meta.env.BASE_URL || "/";
+  return base.endsWith("/") ? base : `${base}/`;
+}
+
+function publicAssetPath(value: string) {
+  const base = appBaseUrl();
+  const normalized = value.trim().replace(/\\/g, "/");
+  if (base !== "/" && normalized.startsWith(base)) return normalized;
+  return normalized
+    .replace(/^(\.\.\/)+/, "")
+    .replace(/^(\.\/)+/, "")
+    .replace(/^\/+/, "");
+}
+
+export function publicUrl(value = "") {
+  if (!value) return "";
+  if (EXTERNAL_URL_PATTERN.test(value)) return value;
+  const base = appBaseUrl();
+  const path = publicAssetPath(value);
+  return base !== "/" && path.startsWith(base) ? path : `${base}${path}`;
+}
+
+function storedAssetPath(value = "") {
+  if (!value || EXTERNAL_URL_PATTERN.test(value)) return value;
+  const base = appBaseUrl();
+  const normalized = value.trim().replace(/\\/g, "/");
+  const withoutBase = base !== "/" && normalized.startsWith(base)
+    ? normalized.slice(base.length)
+    : normalized;
+  return withoutBase
+    .replace(/^(\.\.\/)+/, "")
+    .replace(/^(\.\/)+/, "")
+    .replace(/^\/+/, "");
+}
+
 export function normalizeAssetUrl(value = "") {
   if (!value) return "";
-  if (/^(https?:|data:|blob:)/.test(value)) return value;
-  return value.startsWith("/") ? value : `/${value.replace(/^(\.\.\/|\.\.\\|\.\/)/, "")}`;
+  return publicUrl(value);
 }
 
 export function slideHtmlFor(slide: Slide, edits: Record<number, string>) {
-  return withActiveChapterChip(edits[slide.index] || slide.html, slide.chapter);
+  return withPublicAssetUrls(withActiveChapterChip(edits[slide.index] || slide.html, slide.chapter));
 }
 
 function withActiveChapterChip(html: string, chapter: string) {
@@ -40,6 +77,17 @@ function parseHtml(html: string) {
   return parser.parseFromString(`<div id="root">${html}</div>`, "text/html");
 }
 
+function withPublicAssetUrls(html: string) {
+  const doc = parseHtml(html);
+  doc.querySelectorAll<HTMLElement>("[src], [href]").forEach((node) => {
+    const src = node.getAttribute("src");
+    if (src) node.setAttribute("src", publicUrl(src));
+    const href = node.getAttribute("href");
+    if (href) node.setAttribute("href", publicUrl(href));
+  });
+  return doc.querySelector("#root")?.innerHTML || html;
+}
+
 export function replaceElementText(html: string, editId: string, replacement: string) {
   const doc = parseHtml(html);
   const target = doc.querySelector(`[data-edit-id="${CSS.escape(editId)}"]`);
@@ -61,7 +109,7 @@ export function replaceImageSource(html: string, editId: string, src: string) {
   const doc = parseHtml(html);
   const target = doc.querySelector(`[data-edit-id="${CSS.escape(editId)}"]`) as HTMLImageElement | null;
   if (!target || target.tagName.toLowerCase() !== "img") return html;
-  target.setAttribute("src", normalizeAssetUrl(src).replace(/^\//, ""));
+  target.setAttribute("src", storedAssetPath(src));
   return doc.querySelector("#root")?.innerHTML || html;
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { AssetsData, SlidesData, ThesisData } from "./types";
 import AppShell from "./components/AppShell";
+import { publicUrl } from "./utils/slideDom";
 
 type PresenterPayload = {
   slidesData: SlidesData;
@@ -21,9 +22,9 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
     Promise.all([
-      loadJson<SlidesData>("/data/slides.json"),
-      loadJson<ThesisData>("/data/thesis.json"),
-      loadJson<AssetsData>("/data/assets.json"),
+      loadJson<SlidesData>(publicUrl("/data/slides.json")),
+      loadJson<ThesisData>(publicUrl("/data/thesis.json")),
+      loadJson<AssetsData>(publicUrl("/data/assets.json")),
     ])
       .then(([slidesData, thesisData, assetsData]) => {
         if (!cancelled) setPayload({ slidesData, thesisData, assetsData });
