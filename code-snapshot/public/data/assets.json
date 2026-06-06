@@ -1,0 +1,1348 @@
+{
+  "assets": [
+    {
+      "id": "chromosome-generation-flowchart-png",
+      "name": "chromosome_generation_flowchart.png",
+      "path": "/assets/chromosome_generation_flowchart.png",
+      "relativePath": "chromosome_generation_flowchart.png",
+      "kind": "slide",
+      "size": 195369
+    },
+    {
+      "id": "docx-media-image1-jpeg",
+      "name": "image1.jpeg",
+      "path": "/assets/docx-media/image1.jpeg",
+      "relativePath": "docx-media/image1.jpeg",
+      "kind": "slide",
+      "size": 42361
+    },
+    {
+      "id": "docx-media-image10-jpeg",
+      "name": "image10.jpeg",
+      "path": "/assets/docx-media/image10.jpeg",
+      "relativePath": "docx-media/image10.jpeg",
+      "kind": "slide",
+      "size": 30288
+    },
+    {
+      "id": "docx-media-image11-jpeg",
+      "name": "image11.jpeg",
+      "path": "/assets/docx-media/image11.jpeg",
+      "relativePath": "docx-media/image11.jpeg",
+      "kind": "slide",
+      "size": 49760
+    },
+    {
+      "id": "docx-media-image12-jpeg",
+      "name": "image12.jpeg",
+      "path": "/assets/docx-media/image12.jpeg",
+      "relativePath": "docx-media/image12.jpeg",
+      "kind": "slide",
+      "size": 33295
+    },
+    {
+      "id": "docx-media-image13-jpeg",
+      "name": "image13.jpeg",
+      "path": "/assets/docx-media/image13.jpeg",
+      "relativePath": "docx-media/image13.jpeg",
+      "kind": "slide",
+      "size": 49469
+    },
+    {
+      "id": "docx-media-image14-jpeg",
+      "name": "image14.jpeg",
+      "path": "/assets/docx-media/image14.jpeg",
+      "relativePath": "docx-media/image14.jpeg",
+      "kind": "slide",
+      "size": 33221
+    },
+    {
+      "id": "docx-media-image15-png",
+      "name": "image15.png",
+      "path": "/assets/docx-media/image15.png",
+      "relativePath": "docx-media/image15.png",
+      "kind": "slide",
+      "size": 129108
+    },
+    {
+      "id": "docx-media-image16-png",
+      "name": "image16.png",
+      "path": "/assets/docx-media/image16.png",
+      "relativePath": "docx-media/image16.png",
+      "kind": "slide",
+      "size": 60387
+    },
+    {
+      "id": "docx-media-image17-png",
+      "name": "image17.png",
+      "path": "/assets/docx-media/image17.png",
+      "relativePath": "docx-media/image17.png",
+      "kind": "slide",
+      "size": 34804
+    },
+    {
+      "id": "docx-media-image18-png",
+      "name": "image18.png",
+      "path": "/assets/docx-media/image18.png",
+      "relativePath": "docx-media/image18.png",
+      "kind": "slide",
+      "size": 48967
+    },
+    {
+      "id": "docx-media-image19-png",
+      "name": "image19.png",
+      "path": "/assets/docx-media/image19.png",
+      "relativePath": "docx-media/image19.png",
+      "kind": "slide",
+      "size": 38227
+    },
+    {
+      "id": "docx-media-image2-jpeg",
+      "name": "image2.jpeg",
+      "path": "/assets/docx-media/image2.jpeg",
+      "relativePath": "docx-media/image2.jpeg",
+      "kind": "slide",
+      "size": 35993
+    },
+    {
+      "id": "docx-media-image20-png",
+      "name": "image20.png",
+      "path": "/assets/docx-media/image20.png",
+      "relativePath": "docx-media/image20.png",
+      "kind": "slide",
+      "size": 43633
+    },
+    {
+      "id": "docx-media-image21-png",
+      "name": "image21.png",
+      "path": "/assets/docx-media/image21.png",
+      "relativePath": "docx-media/image21.png",
+      "kind": "slide",
+      "size": 44498
+    },
+    {
+      "id": "docx-media-image22-png",
+      "name": "image22.png",
+      "path": "/assets/docx-media/image22.png",
+      "relativePath": "docx-media/image22.png",
+      "kind": "slide",
+      "size": 38131
+    },
+    {
+      "id": "docx-media-image23-png",
+      "name": "image23.png",
+      "path": "/assets/docx-media/image23.png",
+      "relativePath": "docx-media/image23.png",
+      "kind": "slide",
+      "size": 87537
+    },
+    {
+      "id": "docx-media-image24-jpeg",
+      "name": "image24.jpeg",
+      "path": "/assets/docx-media/image24.jpeg",
+      "relativePath": "docx-media/image24.jpeg",
+      "kind": "slide",
+      "size": 115302
+    },
+    {
+      "id": "docx-media-image25-jpeg",
+      "name": "image25.jpeg",
+      "path": "/assets/docx-media/image25.jpeg",
+      "relativePath": "docx-media/image25.jpeg",
+      "kind": "slide",
+      "size": 77976
+    },
+    {
+      "id": "docx-media-image26-jpeg",
+      "name": "image26.jpeg",
+      "path": "/assets/docx-media/image26.jpeg",
+      "relativePath": "docx-media/image26.jpeg",
+      "kind": "slide",
+      "size": 70486
+    },
+    {
+      "id": "docx-media-image27-jpeg",
+      "name": "image27.jpeg",
+      "path": "/assets/docx-media/image27.jpeg",
+      "relativePath": "docx-media/image27.jpeg",
+      "kind": "slide",
+      "size": 82578
+    },
+    {
+      "id": "docx-media-image28-jpeg",
+      "name": "image28.jpeg",
+      "path": "/assets/docx-media/image28.jpeg",
+      "relativePath": "docx-media/image28.jpeg",
+      "kind": "slide",
+      "size": 118113
+    },
+    {
+      "id": "docx-media-image29-jpeg",
+      "name": "image29.jpeg",
+      "path": "/assets/docx-media/image29.jpeg",
+      "relativePath": "docx-media/image29.jpeg",
+      "kind": "slide",
+      "size": 105001
+    },
+    {
+      "id": "docx-media-image3-png",
+      "name": "image3.png",
+      "path": "/assets/docx-media/image3.png",
+      "relativePath": "docx-media/image3.png",
+      "kind": "slide",
+      "size": 238183
+    },
+    {
+      "id": "docx-media-image30-jpeg",
+      "name": "image30.jpeg",
+      "path": "/assets/docx-media/image30.jpeg",
+      "relativePath": "docx-media/image30.jpeg",
+      "kind": "slide",
+      "size": 128271
+    },
+    {
+      "id": "docx-media-image31-jpeg",
+      "name": "image31.jpeg",
+      "path": "/assets/docx-media/image31.jpeg",
+      "relativePath": "docx-media/image31.jpeg",
+      "kind": "slide",
+      "size": 108847
+    },
+    {
+      "id": "docx-media-image4-jpeg",
+      "name": "image4.jpeg",
+      "path": "/assets/docx-media/image4.jpeg",
+      "relativePath": "docx-media/image4.jpeg",
+      "kind": "slide",
+      "size": 57775
+    },
+    {
+      "id": "docx-media-image5-png",
+      "name": "image5.png",
+      "path": "/assets/docx-media/image5.png",
+      "relativePath": "docx-media/image5.png",
+      "kind": "slide",
+      "size": 62575
+    },
+    {
+      "id": "docx-media-image6-jpeg",
+      "name": "image6.jpeg",
+      "path": "/assets/docx-media/image6.jpeg",
+      "relativePath": "docx-media/image6.jpeg",
+      "kind": "slide",
+      "size": 46281
+    },
+    {
+      "id": "docx-media-image7-jpeg",
+      "name": "image7.jpeg",
+      "path": "/assets/docx-media/image7.jpeg",
+      "relativePath": "docx-media/image7.jpeg",
+      "kind": "slide",
+      "size": 18140
+    },
+    {
+      "id": "docx-media-image8-jpeg",
+      "name": "image8.jpeg",
+      "path": "/assets/docx-media/image8.jpeg",
+      "relativePath": "docx-media/image8.jpeg",
+      "kind": "slide",
+      "size": 20639
+    },
+    {
+      "id": "docx-media-image9-jpeg",
+      "name": "image9.jpeg",
+      "path": "/assets/docx-media/image9.jpeg",
+      "relativePath": "docx-media/image9.jpeg",
+      "kind": "slide",
+      "size": 45868
+    },
+    {
+      "id": "gui-data-crop-jpg",
+      "name": "gui-data-crop.jpg",
+      "path": "/assets/gui-data-crop.jpg",
+      "relativePath": "gui-data-crop.jpg",
+      "kind": "gui",
+      "size": 91246
+    },
+    {
+      "id": "gui-fitness-crop-jpg",
+      "name": "gui-fitness-crop.jpg",
+      "path": "/assets/gui-fitness-crop.jpg",
+      "relativePath": "gui-fitness-crop.jpg",
+      "kind": "gui",
+      "size": 58603
+    },
+    {
+      "id": "gui-schedule-crop-jpg",
+      "name": "gui-schedule-crop.jpg",
+      "path": "/assets/gui-schedule-crop.jpg",
+      "relativePath": "gui-schedule-crop.jpg",
+      "kind": "gui",
+      "size": 88207
+    },
+    {
+      "id": "isometric-chromosome-png",
+      "name": "isometric-chromosome.png",
+      "path": "/assets/isometric-chromosome.png",
+      "relativePath": "isometric-chromosome.png",
+      "kind": "isometric",
+      "size": 1422932
+    },
+    {
+      "id": "isometric-dashboard-png",
+      "name": "isometric-dashboard.png",
+      "path": "/assets/isometric-dashboard.png",
+      "relativePath": "isometric-dashboard.png",
+      "kind": "isometric",
+      "size": 1619515
+    },
+    {
+      "id": "isometric-fuzzy-controller-png",
+      "name": "isometric-fuzzy-controller.png",
+      "path": "/assets/isometric-fuzzy-controller.png",
+      "relativePath": "isometric-fuzzy-controller.png",
+      "kind": "isometric",
+      "size": 1648949
+    },
+    {
+      "id": "isometric-scheduling-png",
+      "name": "isometric-scheduling.png",
+      "path": "/assets/isometric-scheduling.png",
+      "relativePath": "isometric-scheduling.png",
+      "kind": "isometric",
+      "size": 1680160
+    },
+    {
+      "id": "logo-unja-png",
+      "name": "logo-unja.png",
+      "path": "/assets/logo-unja.png",
+      "relativePath": "logo-unja.png",
+      "kind": "logo",
+      "size": 520887
+    },
+    {
+      "id": "reference-html-images-ref-slide-01-img-01-jpg",
+      "name": "ref-slide-01-img-01.jpg",
+      "path": "/assets/reference-html-images/ref-slide-01-img-01.jpg",
+      "relativePath": "reference-html-images/ref-slide-01-img-01.jpg",
+      "kind": "isometric",
+      "size": 42361
+    },
+    {
+      "id": "reference-html-images-ref-slide-01-img-03-webp",
+      "name": "ref-slide-01-img-03.webp",
+      "path": "/assets/reference-html-images/ref-slide-01-img-03.webp",
+      "relativePath": "reference-html-images/ref-slide-01-img-03.webp",
+      "kind": "isometric",
+      "size": 375516
+    },
+    {
+      "id": "reference-html-images-ref-slide-02-img-05-webp",
+      "name": "ref-slide-02-img-05.webp",
+      "path": "/assets/reference-html-images/ref-slide-02-img-05.webp",
+      "relativePath": "reference-html-images/ref-slide-02-img-05.webp",
+      "kind": "isometric",
+      "size": 203436
+    },
+    {
+      "id": "reference-html-images-ref-slide-03-img-07-webp",
+      "name": "ref-slide-03-img-07.webp",
+      "path": "/assets/reference-html-images/ref-slide-03-img-07.webp",
+      "relativePath": "reference-html-images/ref-slide-03-img-07.webp",
+      "kind": "isometric",
+      "size": 232334
+    },
+    {
+      "id": "reference-html-images-ref-slide-06-img-11-webp",
+      "name": "ref-slide-06-img-11.webp",
+      "path": "/assets/reference-html-images/ref-slide-06-img-11.webp",
+      "relativePath": "reference-html-images/ref-slide-06-img-11.webp",
+      "kind": "isometric",
+      "size": 194328
+    },
+    {
+      "id": "reference-html-images-ref-slide-23-img-29-webp",
+      "name": "ref-slide-23-img-29.webp",
+      "path": "/assets/reference-html-images/ref-slide-23-img-29.webp",
+      "relativePath": "reference-html-images/ref-slide-23-img-29.webp",
+      "kind": "isometric",
+      "size": 160116
+    },
+    {
+      "id": "reference-html-images-ref-slide-25-img-32-webp",
+      "name": "ref-slide-25-img-32.webp",
+      "path": "/assets/reference-html-images/ref-slide-25-img-32.webp",
+      "relativePath": "reference-html-images/ref-slide-25-img-32.webp",
+      "kind": "isometric",
+      "size": 200302
+    },
+    {
+      "id": "reference-html-images-ref-slide-28-img-36-webp",
+      "name": "ref-slide-28-img-36.webp",
+      "path": "/assets/reference-html-images/ref-slide-28-img-36.webp",
+      "relativePath": "reference-html-images/ref-slide-28-img-36.webp",
+      "kind": "isometric",
+      "size": 198026
+    },
+    {
+      "id": "reference-html-images-ref-slide-34-img-43-webp",
+      "name": "ref-slide-34-img-43.webp",
+      "path": "/assets/reference-html-images/ref-slide-34-img-43.webp",
+      "relativePath": "reference-html-images/ref-slide-34-img-43.webp",
+      "kind": "isometric",
+      "size": 236020
+    },
+    {
+      "id": "reference-html-images-ref-slide-36-img-47-webp",
+      "name": "ref-slide-36-img-47.webp",
+      "path": "/assets/reference-html-images/ref-slide-36-img-47.webp",
+      "relativePath": "reference-html-images/ref-slide-36-img-47.webp",
+      "kind": "isometric",
+      "size": 242394
+    },
+    {
+      "id": "reference-pdf-pages-alkhayyat-et-al-2022-slide-20-page-01-jpg",
+      "name": "alkhayyat-et-al-2022-slide-20-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/alkhayyat-et-al-2022-slide-20-page-01.jpg",
+      "relativePath": "reference-pdf-pages/alkhayyat-et-al-2022-slide-20-page-01.jpg",
+      "kind": "reference",
+      "size": 380168
+    },
+    {
+      "id": "reference-pdf-pages-alkhayyat-et-al-2022-jpg",
+      "name": "alkhayyat-et-al-2022.jpg",
+      "path": "/assets/reference-pdf-pages/alkhayyat-et-al-2022.jpg",
+      "relativePath": "reference-pdf-pages/alkhayyat-et-al-2022.jpg",
+      "kind": "reference",
+      "size": 284459
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-08-page-06-jpg",
+      "name": "azam-et-al-2020-slide-08-page-06.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-08-page-06.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-08-page-06.jpg",
+      "kind": "reference",
+      "size": 438571
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-25-page-06-jpg",
+      "name": "azam-et-al-2020-slide-25-page-06.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-25-page-06.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-25-page-06.jpg",
+      "kind": "reference",
+      "size": 438571
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-26-page-01-jpg",
+      "name": "azam-et-al-2020-slide-26-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-26-page-01.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-26-page-01.jpg",
+      "kind": "reference",
+      "size": 555991
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-27-page-06-jpg",
+      "name": "azam-et-al-2020-slide-27-page-06.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-27-page-06.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-27-page-06.jpg",
+      "kind": "reference",
+      "size": 438571
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-36-page-01-jpg",
+      "name": "azam-et-al-2020-slide-36-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-36-page-01.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-36-page-01.jpg",
+      "kind": "reference",
+      "size": 555991
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-39-page-06-jpg",
+      "name": "azam-et-al-2020-slide-39-page-06.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-39-page-06.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-39-page-06.jpg",
+      "kind": "reference",
+      "size": 438571
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-slide-41-page-01-jpg",
+      "name": "azam-et-al-2020-slide-41-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020-slide-41-page-01.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020-slide-41-page-01.jpg",
+      "kind": "reference",
+      "size": 555991
+    },
+    {
+      "id": "reference-pdf-pages-azam-et-al-2020-jpg",
+      "name": "azam-et-al-2020.jpg",
+      "path": "/assets/reference-pdf-pages/azam-et-al-2020.jpg",
+      "relativePath": "reference-pdf-pages/azam-et-al-2020.jpg",
+      "kind": "reference",
+      "size": 406959
+    },
+    {
+      "id": "reference-pdf-pages-cao-et-al-2024-slide-20-page-02-jpg",
+      "name": "cao-et-al-2024-slide-20-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/cao-et-al-2024-slide-20-page-02.jpg",
+      "relativePath": "reference-pdf-pages/cao-et-al-2024-slide-20-page-02.jpg",
+      "kind": "reference",
+      "size": 520477
+    },
+    {
+      "id": "reference-pdf-pages-cao-et-al-2024-jpg",
+      "name": "cao-et-al-2024.jpg",
+      "path": "/assets/reference-pdf-pages/cao-et-al-2024.jpg",
+      "relativePath": "reference-pdf-pages/cao-et-al-2024.jpg",
+      "kind": "reference",
+      "size": 200344
+    },
+    {
+      "id": "reference-pdf-pages-dockhorn-and-lucas-2022-jpg",
+      "name": "dockhorn-and-lucas-2022.jpg",
+      "path": "/assets/reference-pdf-pages/dockhorn-and-lucas-2022.jpg",
+      "relativePath": "reference-pdf-pages/dockhorn-and-lucas-2022.jpg",
+      "kind": "reference",
+      "size": 312158
+    },
+    {
+      "id": "reference-pdf-pages-dockhorn-lucas-2022-slide-16-page-02-jpg",
+      "name": "dockhorn-lucas-2022-slide-16-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/dockhorn-lucas-2022-slide-16-page-02.jpg",
+      "relativePath": "reference-pdf-pages/dockhorn-lucas-2022-slide-16-page-02.jpg",
+      "kind": "reference",
+      "size": 482713
+    },
+    {
+      "id": "reference-pdf-pages-dockhorn-lucas-2022-slide-28-page-02-jpg",
+      "name": "dockhorn-lucas-2022-slide-28-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/dockhorn-lucas-2022-slide-28-page-02.jpg",
+      "relativePath": "reference-pdf-pages/dockhorn-lucas-2022-slide-28-page-02.jpg",
+      "kind": "reference",
+      "size": 482713
+    },
+    {
+      "id": "reference-pdf-pages-dockhorn-lucas-2022-slide-33-page-02-jpg",
+      "name": "dockhorn-lucas-2022-slide-33-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/dockhorn-lucas-2022-slide-33-page-02.jpg",
+      "relativePath": "reference-pdf-pages/dockhorn-lucas-2022-slide-33-page-02.jpg",
+      "kind": "reference",
+      "size": 482713
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-slide-21-page-07-jpg",
+      "name": "ghaffar-et-al-2022-slide-21-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022-slide-21-page-07.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022-slide-21-page-07.jpg",
+      "kind": "reference",
+      "size": 446725
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-slide-34-page-09-jpg",
+      "name": "ghaffar-et-al-2022-slide-34-page-09.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022-slide-34-page-09.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022-slide-34-page-09.jpg",
+      "kind": "reference",
+      "size": 478733
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-slide-40-page-02-jpg",
+      "name": "ghaffar-et-al-2022-slide-40-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022-slide-40-page-02.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022-slide-40-page-02.jpg",
+      "kind": "reference",
+      "size": 619371
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-slide-42-page-03-jpg",
+      "name": "ghaffar-et-al-2022-slide-42-page-03.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022-slide-42-page-03.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022-slide-42-page-03.jpg",
+      "kind": "reference",
+      "size": 652881
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-slide-43-page-02-jpg",
+      "name": "ghaffar-et-al-2022-slide-43-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022-slide-43-page-02.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022-slide-43-page-02.jpg",
+      "kind": "reference",
+      "size": 619371
+    },
+    {
+      "id": "reference-pdf-pages-ghaffar-et-al-2022-jpg",
+      "name": "ghaffar-et-al-2022.jpg",
+      "path": "/assets/reference-pdf-pages/ghaffar-et-al-2022.jpg",
+      "relativePath": "reference-pdf-pages/ghaffar-et-al-2022.jpg",
+      "kind": "reference",
+      "size": 310803
+    },
+    {
+      "id": "reference-pdf-pages-han-and-xiao-2022-jpg",
+      "name": "han-and-xiao-2022.jpg",
+      "path": "/assets/reference-pdf-pages/han-and-xiao-2022.jpg",
+      "relativePath": "reference-pdf-pages/han-and-xiao-2022.jpg",
+      "kind": "reference",
+      "size": 184720
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-15-page-04-jpg",
+      "name": "han-xiao-2022-slide-15-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-15-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-15-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-21-page-04-jpg",
+      "name": "han-xiao-2022-slide-21-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-21-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-21-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-27-page-04-jpg",
+      "name": "han-xiao-2022-slide-27-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-27-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-27-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-32-page-04-jpg",
+      "name": "han-xiao-2022-slide-32-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-32-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-32-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-34-page-04-jpg",
+      "name": "han-xiao-2022-slide-34-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-34-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-34-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-35-page-04-jpg",
+      "name": "han-xiao-2022-slide-35-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-35-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-35-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-40-page-04-jpg",
+      "name": "han-xiao-2022-slide-40-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-40-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-40-page-04.jpg",
+      "kind": "reference",
+      "size": 447304
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-40-page-05-jpg",
+      "name": "han-xiao-2022-slide-40-page-05.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-40-page-05.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-40-page-05.jpg",
+      "kind": "reference",
+      "size": 292467
+    },
+    {
+      "id": "reference-pdf-pages-han-xiao-2022-slide-44-page-04-jpg",
+      "name": "han-xiao-2022-slide-44-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/han-xiao-2022-slide-44-page-04.jpg",
+      "relativePath": "reference-pdf-pages/han-xiao-2022-slide-44-page-04.jpg",
+      "kind": "reference",
+      "size": 353489
+    },
+    {
+      "id": "reference-pdf-pages-hartono-and-zein-2023-jpg",
+      "name": "hartono-and-zein-2023.jpg",
+      "path": "/assets/reference-pdf-pages/hartono-and-zein-2023.jpg",
+      "relativePath": "reference-pdf-pages/hartono-and-zein-2023.jpg",
+      "kind": "reference",
+      "size": 337192
+    },
+    {
+      "id": "reference-pdf-pages-irfan-et-al-2022-slide-17-page-02-jpg",
+      "name": "irfan-et-al-2022-slide-17-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/irfan-et-al-2022-slide-17-page-02.jpg",
+      "relativePath": "reference-pdf-pages/irfan-et-al-2022-slide-17-page-02.jpg",
+      "kind": "reference",
+      "size": 492601
+    },
+    {
+      "id": "reference-pdf-pages-irfan-et-al-2022-slide-18-page-02-jpg",
+      "name": "irfan-et-al-2022-slide-18-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/irfan-et-al-2022-slide-18-page-02.jpg",
+      "relativePath": "reference-pdf-pages/irfan-et-al-2022-slide-18-page-02.jpg",
+      "kind": "reference",
+      "size": 492601
+    },
+    {
+      "id": "reference-pdf-pages-irfan-et-al-2022-jpg",
+      "name": "irfan-et-al-2022.jpg",
+      "path": "/assets/reference-pdf-pages/irfan-et-al-2022.jpg",
+      "relativePath": "reference-pdf-pages/irfan-et-al-2022.jpg",
+      "kind": "reference",
+      "size": 367872
+    },
+    {
+      "id": "reference-pdf-pages-mahmoudinazlou-and-kwon-2024-jpg",
+      "name": "mahmoudinazlou-and-kwon-2024.jpg",
+      "path": "/assets/reference-pdf-pages/mahmoudinazlou-and-kwon-2024.jpg",
+      "relativePath": "reference-pdf-pages/mahmoudinazlou-and-kwon-2024.jpg",
+      "kind": "reference",
+      "size": 205981
+    },
+    {
+      "id": "reference-pdf-pages-mahmoudinazlou-kwon-2024-slide-22-page-01-jpg",
+      "name": "mahmoudinazlou-kwon-2024-slide-22-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/mahmoudinazlou-kwon-2024-slide-22-page-01.jpg",
+      "relativePath": "reference-pdf-pages/mahmoudinazlou-kwon-2024-slide-22-page-01.jpg",
+      "kind": "reference",
+      "size": 240985
+    },
+    {
+      "id": "reference-pdf-pages-mahmoudinazlou-kwon-2024-slide-22-page-26-jpg",
+      "name": "mahmoudinazlou-kwon-2024-slide-22-page-26.jpg",
+      "path": "/assets/reference-pdf-pages/mahmoudinazlou-kwon-2024-slide-22-page-26.jpg",
+      "relativePath": "reference-pdf-pages/mahmoudinazlou-kwon-2024-slide-22-page-26.jpg",
+      "kind": "reference",
+      "size": 385352
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-24-page-07-jpg",
+      "name": "marrouchi-et-al-2024-slide-24-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-24-page-07.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-24-page-07.jpg",
+      "kind": "reference",
+      "size": 576302
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-25-page-07-jpg",
+      "name": "marrouchi-et-al-2024-slide-25-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-25-page-07.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-25-page-07.jpg",
+      "kind": "reference",
+      "size": 576302
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-26-page-07-jpg",
+      "name": "marrouchi-et-al-2024-slide-26-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-26-page-07.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-26-page-07.jpg",
+      "kind": "reference",
+      "size": 576302
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-36-page-01-jpg",
+      "name": "marrouchi-et-al-2024-slide-36-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-36-page-01.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-36-page-01.jpg",
+      "kind": "reference",
+      "size": 405399
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-39-page-01-jpg",
+      "name": "marrouchi-et-al-2024-slide-39-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-39-page-01.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-39-page-01.jpg",
+      "kind": "reference",
+      "size": 405399
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-slide-41-page-01-jpg",
+      "name": "marrouchi-et-al-2024-slide-41-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024-slide-41-page-01.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024-slide-41-page-01.jpg",
+      "kind": "reference",
+      "size": 405399
+    },
+    {
+      "id": "reference-pdf-pages-marrouchi-et-al-2024-jpg",
+      "name": "marrouchi-et-al-2024.jpg",
+      "path": "/assets/reference-pdf-pages/marrouchi-et-al-2024.jpg",
+      "relativePath": "reference-pdf-pages/marrouchi-et-al-2024.jpg",
+      "kind": "reference",
+      "size": 299386
+    },
+    {
+      "id": "reference-pdf-pages-movassaghi-and-avakh-darestani-2022-jpg",
+      "name": "movassaghi-and-avakh-darestani-2022.jpg",
+      "path": "/assets/reference-pdf-pages/movassaghi-and-avakh-darestani-2022.jpg",
+      "relativePath": "reference-pdf-pages/movassaghi-and-avakh-darestani-2022.jpg",
+      "kind": "reference",
+      "size": 170853
+    },
+    {
+      "id": "reference-pdf-pages-movassaghi-avakh-darestani-2022-slide-23-page-05-jpg",
+      "name": "movassaghi-avakh-darestani-2022-slide-23-page-05.jpg",
+      "path": "/assets/reference-pdf-pages/movassaghi-avakh-darestani-2022-slide-23-page-05.jpg",
+      "relativePath": "reference-pdf-pages/movassaghi-avakh-darestani-2022-slide-23-page-05.jpg",
+      "kind": "reference",
+      "size": 349294
+    },
+    {
+      "id": "reference-pdf-pages-movassaghi-avakh-darestani-2022-slide-24-page-01-jpg",
+      "name": "movassaghi-avakh-darestani-2022-slide-24-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/movassaghi-avakh-darestani-2022-slide-24-page-01.jpg",
+      "relativePath": "reference-pdf-pages/movassaghi-avakh-darestani-2022-slide-24-page-01.jpg",
+      "kind": "reference",
+      "size": 231138
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-slide-07-page-02-jpg",
+      "name": "noptrina-et-al-2024-slide-07-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024-slide-07-page-02.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024-slide-07-page-02.jpg",
+      "kind": "reference",
+      "size": 539506
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-slide-10-page-02-jpg",
+      "name": "noptrina-et-al-2024-slide-10-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024-slide-10-page-02.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024-slide-10-page-02.jpg",
+      "kind": "reference",
+      "size": 539506
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-slide-19-page-02-jpg",
+      "name": "noptrina-et-al-2024-slide-19-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024-slide-19-page-02.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024-slide-19-page-02.jpg",
+      "kind": "reference",
+      "size": 539506
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-slide-37-page-02-jpg",
+      "name": "noptrina-et-al-2024-slide-37-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024-slide-37-page-02.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024-slide-37-page-02.jpg",
+      "kind": "reference",
+      "size": 539506
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-slide-38-page-01-jpg",
+      "name": "noptrina-et-al-2024-slide-38-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024-slide-38-page-01.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024-slide-38-page-01.jpg",
+      "kind": "reference",
+      "size": 505314
+    },
+    {
+      "id": "reference-pdf-pages-noptrina-et-al-2024-jpg",
+      "name": "noptrina-et-al-2024.jpg",
+      "path": "/assets/reference-pdf-pages/noptrina-et-al-2024.jpg",
+      "relativePath": "reference-pdf-pages/noptrina-et-al-2024.jpg",
+      "kind": "reference",
+      "size": 359414
+    },
+    {
+      "id": "reference-pdf-pages-pangestu-et-al-2023-jpg",
+      "name": "pangestu-et-al-2023.jpg",
+      "path": "/assets/reference-pdf-pages/pangestu-et-al-2023.jpg",
+      "relativePath": "reference-pdf-pages/pangestu-et-al-2023.jpg",
+      "kind": "reference",
+      "size": 266865
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-02-page-01-jpg",
+      "name": "pratama-2025-slide-02-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-02-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-02-page-01.jpg",
+      "kind": "reference",
+      "size": 550834
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-02-page-05-jpg",
+      "name": "pratama-2025-slide-02-page-05.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-02-page-05.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-02-page-05.jpg",
+      "kind": "reference",
+      "size": 409741
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-03-page-01-jpg",
+      "name": "pratama-2025-slide-03-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-03-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-03-page-01.jpg",
+      "kind": "reference",
+      "size": 550834
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-04-page-01-jpg",
+      "name": "pratama-2025-slide-04-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-04-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-04-page-01.jpg",
+      "kind": "reference",
+      "size": 550834
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-05-page-01-jpg",
+      "name": "pratama-2025-slide-05-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-05-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-05-page-01.jpg",
+      "kind": "reference",
+      "size": 550834
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-06-page-05-jpg",
+      "name": "pratama-2025-slide-06-page-05.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-06-page-05.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-06-page-05.jpg",
+      "kind": "reference",
+      "size": 409741
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-slide-19-page-01-jpg",
+      "name": "pratama-2025-slide-19-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025-slide-19-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025-slide-19-page-01.jpg",
+      "kind": "reference",
+      "size": 550834
+    },
+    {
+      "id": "reference-pdf-pages-pratama-2025-jpg",
+      "name": "pratama-2025.jpg",
+      "path": "/assets/reference-pdf-pages/pratama-2025.jpg",
+      "relativePath": "reference-pdf-pages/pratama-2025.jpg",
+      "kind": "reference",
+      "size": 346271
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-14-page-04-jpg",
+      "name": "pytel-2025-slide-14-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-14-page-04.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-14-page-04.jpg",
+      "kind": "reference",
+      "size": 289721
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-16-page-01-jpg",
+      "name": "pytel-2025-slide-16-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-16-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-16-page-01.jpg",
+      "kind": "reference",
+      "size": 409547
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-21-page-01-jpg",
+      "name": "pytel-2025-slide-21-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-21-page-01.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-21-page-01.jpg",
+      "kind": "reference",
+      "size": 409547
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-23-page-04-jpg",
+      "name": "pytel-2025-slide-23-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-23-page-04.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-23-page-04.jpg",
+      "kind": "reference",
+      "size": 289721
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-31-page-04-jpg",
+      "name": "pytel-2025-slide-31-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-31-page-04.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-31-page-04.jpg",
+      "kind": "reference",
+      "size": 289721
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-33-page-04-jpg",
+      "name": "pytel-2025-slide-33-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-33-page-04.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-33-page-04.jpg",
+      "kind": "reference",
+      "size": 289721
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-34-page-16-jpg",
+      "name": "pytel-2025-slide-34-page-16.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-34-page-16.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-34-page-16.jpg",
+      "kind": "reference",
+      "size": 353200
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-slide-35-page-04-jpg",
+      "name": "pytel-2025-slide-35-page-04.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025-slide-35-page-04.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025-slide-35-page-04.jpg",
+      "kind": "reference",
+      "size": 289721
+    },
+    {
+      "id": "reference-pdf-pages-pytel-2025-jpg",
+      "name": "pytel-2025.jpg",
+      "path": "/assets/reference-pdf-pages/pytel-2025.jpg",
+      "relativePath": "reference-pdf-pages/pytel-2025.jpg",
+      "kind": "reference",
+      "size": 291389
+    },
+    {
+      "id": "reference-pdf-pages-subburaj-miruna-joe-amali-2025-slide-21-page-25-jpg",
+      "name": "subburaj-miruna-joe-amali-2025-slide-21-page-25.jpg",
+      "path": "/assets/reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-21-page-25.jpg",
+      "relativePath": "reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-21-page-25.jpg",
+      "kind": "reference",
+      "size": 498121
+    },
+    {
+      "id": "reference-pdf-pages-subburaj-miruna-joe-amali-2025-slide-34-page-03-jpg",
+      "name": "subburaj-miruna-joe-amali-2025-slide-34-page-03.jpg",
+      "path": "/assets/reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-34-page-03.jpg",
+      "relativePath": "reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-34-page-03.jpg",
+      "kind": "reference",
+      "size": 531022
+    },
+    {
+      "id": "reference-pdf-pages-subburaj-miruna-joe-amali-2025-slide-35-page-13-jpg",
+      "name": "subburaj-miruna-joe-amali-2025-slide-35-page-13.jpg",
+      "path": "/assets/reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-35-page-13.jpg",
+      "relativePath": "reference-pdf-pages/subburaj-miruna-joe-amali-2025-slide-35-page-13.jpg",
+      "kind": "reference",
+      "size": 440604
+    },
+    {
+      "id": "reference-pdf-pages-syahputra-et-al-2024-slide-09-page-13-jpg",
+      "name": "syahputra-et-al-2024-slide-09-page-13.jpg",
+      "path": "/assets/reference-pdf-pages/syahputra-et-al-2024-slide-09-page-13.jpg",
+      "relativePath": "reference-pdf-pages/syahputra-et-al-2024-slide-09-page-13.jpg",
+      "kind": "reference",
+      "size": 377416
+    },
+    {
+      "id": "reference-pdf-pages-syahputra-et-al-2024-slide-10-page-02-jpg",
+      "name": "syahputra-et-al-2024-slide-10-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/syahputra-et-al-2024-slide-10-page-02.jpg",
+      "relativePath": "reference-pdf-pages/syahputra-et-al-2024-slide-10-page-02.jpg",
+      "kind": "reference",
+      "size": 523319
+    },
+    {
+      "id": "reference-pdf-pages-syahputra-et-al-2024-slide-17-page-02-jpg",
+      "name": "syahputra-et-al-2024-slide-17-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/syahputra-et-al-2024-slide-17-page-02.jpg",
+      "relativePath": "reference-pdf-pages/syahputra-et-al-2024-slide-17-page-02.jpg",
+      "kind": "reference",
+      "size": 523319
+    },
+    {
+      "id": "reference-pdf-pages-syahputra-et-al-2024-slide-18-page-13-jpg",
+      "name": "syahputra-et-al-2024-slide-18-page-13.jpg",
+      "path": "/assets/reference-pdf-pages/syahputra-et-al-2024-slide-18-page-13.jpg",
+      "relativePath": "reference-pdf-pages/syahputra-et-al-2024-slide-18-page-13.jpg",
+      "kind": "reference",
+      "size": 377416
+    },
+    {
+      "id": "reference-pdf-pages-syahputra-et-al-2024-jpg",
+      "name": "syahputra-et-al-2024.jpg",
+      "path": "/assets/reference-pdf-pages/syahputra-et-al-2024.jpg",
+      "relativePath": "reference-pdf-pages/syahputra-et-al-2024.jpg",
+      "kind": "reference",
+      "size": 277334
+    },
+    {
+      "id": "reference-pdf-pages-triyono-and-kusrini-2024-jpg",
+      "name": "triyono-and-kusrini-2024.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-and-kusrini-2024.jpg",
+      "relativePath": "reference-pdf-pages/triyono-and-kusrini-2024.jpg",
+      "kind": "reference",
+      "size": 195961
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-08-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-08-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-08-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-08-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-09-page-01-jpg",
+      "name": "triyono-kusrini-2024-slide-09-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-09-page-01.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-09-page-01.jpg",
+      "kind": "reference",
+      "size": 268770
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-11-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-11-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-11-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-11-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-12-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-12-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-12-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-12-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-13-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-13-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-13-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-13-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-14-page-20-jpg",
+      "name": "triyono-kusrini-2024-slide-14-page-20.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-14-page-20.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-14-page-20.jpg",
+      "kind": "reference",
+      "size": 213074
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-29-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-29-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-29-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-29-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-30-page-03-jpg",
+      "name": "triyono-kusrini-2024-slide-30-page-03.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-30-page-03.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-30-page-03.jpg",
+      "kind": "reference",
+      "size": 195167
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-31-page-20-jpg",
+      "name": "triyono-kusrini-2024-slide-31-page-20.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-31-page-20.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-31-page-20.jpg",
+      "kind": "reference",
+      "size": 213074
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-42-page-01-jpg",
+      "name": "triyono-kusrini-2024-slide-42-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-42-page-01.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-42-page-01.jpg",
+      "kind": "reference",
+      "size": 268770
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-42-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-42-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-42-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-42-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-43-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-43-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-43-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-43-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-triyono-kusrini-2024-slide-44-page-02-jpg",
+      "name": "triyono-kusrini-2024-slide-44-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/triyono-kusrini-2024-slide-44-page-02.jpg",
+      "relativePath": "reference-pdf-pages/triyono-kusrini-2024-slide-44-page-02.jpg",
+      "kind": "reference",
+      "size": 247075
+    },
+    {
+      "id": "reference-pdf-pages-umam-et-al-2022-slide-22-page-09-jpg",
+      "name": "umam-et-al-2022-slide-22-page-09.jpg",
+      "path": "/assets/reference-pdf-pages/umam-et-al-2022-slide-22-page-09.jpg",
+      "relativePath": "reference-pdf-pages/umam-et-al-2022-slide-22-page-09.jpg",
+      "kind": "reference",
+      "size": 660539
+    },
+    {
+      "id": "reference-pdf-pages-umam-et-al-2022-jpg",
+      "name": "umam-et-al-2022.jpg",
+      "path": "/assets/reference-pdf-pages/umam-et-al-2022.jpg",
+      "relativePath": "reference-pdf-pages/umam-et-al-2022.jpg",
+      "kind": "reference",
+      "size": 312159
+    },
+    {
+      "id": "reference-pdf-pages-xue-et-al-2021-slide-15-page-02-jpg",
+      "name": "xue-et-al-2021-slide-15-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/xue-et-al-2021-slide-15-page-02.jpg",
+      "relativePath": "reference-pdf-pages/xue-et-al-2021-slide-15-page-02.jpg",
+      "kind": "reference",
+      "size": 604050
+    },
+    {
+      "id": "reference-pdf-pages-xue-et-al-2021-slide-28-page-02-jpg",
+      "name": "xue-et-al-2021-slide-28-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/xue-et-al-2021-slide-28-page-02.jpg",
+      "relativePath": "reference-pdf-pages/xue-et-al-2021-slide-28-page-02.jpg",
+      "kind": "reference",
+      "size": 604050
+    },
+    {
+      "id": "reference-pdf-pages-xue-et-al-2021-slide-32-page-02-jpg",
+      "name": "xue-et-al-2021-slide-32-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/xue-et-al-2021-slide-32-page-02.jpg",
+      "relativePath": "reference-pdf-pages/xue-et-al-2021-slide-32-page-02.jpg",
+      "kind": "reference",
+      "size": 604050
+    },
+    {
+      "id": "reference-pdf-pages-xue-et-al-2021-jpg",
+      "name": "xue-et-al-2021.jpg",
+      "path": "/assets/reference-pdf-pages/xue-et-al-2021.jpg",
+      "relativePath": "reference-pdf-pages/xue-et-al-2021.jpg",
+      "kind": "reference",
+      "size": 331207
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-02-page-07-jpg",
+      "name": "yazid-2025-slide-02-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-02-page-07.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-02-page-07.jpg",
+      "kind": "reference",
+      "size": 319536
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-02-page-09-jpg",
+      "name": "yazid-2025-slide-02-page-09.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-02-page-09.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-02-page-09.jpg",
+      "kind": "reference",
+      "size": 342980
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-03-page-07-jpg",
+      "name": "yazid-2025-slide-03-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-03-page-07.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-03-page-07.jpg",
+      "kind": "reference",
+      "size": 319536
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-04-page-07-jpg",
+      "name": "yazid-2025-slide-04-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-04-page-07.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-04-page-07.jpg",
+      "kind": "reference",
+      "size": 319536
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-05-page-07-jpg",
+      "name": "yazid-2025-slide-05-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-05-page-07.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-05-page-07.jpg",
+      "kind": "reference",
+      "size": 319536
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-06-page-07-jpg",
+      "name": "yazid-2025-slide-06-page-07.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-06-page-07.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-06-page-07.jpg",
+      "kind": "reference",
+      "size": 319536
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-07-page-09-jpg",
+      "name": "yazid-2025-slide-07-page-09.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-07-page-09.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-07-page-09.jpg",
+      "kind": "reference",
+      "size": 342980
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-37-page-09-jpg",
+      "name": "yazid-2025-slide-37-page-09.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-37-page-09.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-37-page-09.jpg",
+      "kind": "reference",
+      "size": 342980
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-slide-38-page-03-jpg",
+      "name": "yazid-2025-slide-38-page-03.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025-slide-38-page-03.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025-slide-38-page-03.jpg",
+      "kind": "reference",
+      "size": 368946
+    },
+    {
+      "id": "reference-pdf-pages-yazid-2025-jpg",
+      "name": "yazid-2025.jpg",
+      "path": "/assets/reference-pdf-pages/yazid-2025.jpg",
+      "relativePath": "reference-pdf-pages/yazid-2025.jpg",
+      "kind": "reference",
+      "size": 234682
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-11-page-02-jpg",
+      "name": "zhou-et-al-2020-slide-11-page-02.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-11-page-02.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-11-page-02.jpg",
+      "kind": "reference",
+      "size": 502618
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-12-page-01-jpg",
+      "name": "zhou-et-al-2020-slide-12-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-12-page-01.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-12-page-01.jpg",
+      "kind": "reference",
+      "size": 396955
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-13-page-01-jpg",
+      "name": "zhou-et-al-2020-slide-13-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-13-page-01.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-13-page-01.jpg",
+      "kind": "reference",
+      "size": 396955
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-29-page-01-jpg",
+      "name": "zhou-et-al-2020-slide-29-page-01.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-29-page-01.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-29-page-01.jpg",
+      "kind": "reference",
+      "size": 396955
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-30-page-03-jpg",
+      "name": "zhou-et-al-2020-slide-30-page-03.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-30-page-03.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-30-page-03.jpg",
+      "kind": "reference",
+      "size": 487195
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-slide-44-page-05-jpg",
+      "name": "zhou-et-al-2020-slide-44-page-05.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020-slide-44-page-05.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020-slide-44-page-05.jpg",
+      "kind": "reference",
+      "size": 487910
+    },
+    {
+      "id": "reference-pdf-pages-zhou-et-al-2020-jpg",
+      "name": "zhou-et-al-2020.jpg",
+      "path": "/assets/reference-pdf-pages/zhou-et-al-2020.jpg",
+      "relativePath": "reference-pdf-pages/zhou-et-al-2020.jpg",
+      "kind": "reference",
+      "size": 310275
+    }
+  ]
+}

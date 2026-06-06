@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+*.tsbuildinfo
+
+# Runtime logs and local OS/editor files
+*.log
+.DS_Store
+
+# Browser runtime profiles created by QA scripts
+**/chrome-*-profile/
+**/chrome-shot-profile-*/
+
+# Accidental root lockfile; the app lockfile lives in code-snapshot/
+/package-lock.json
+
+# Local AI/session artifacts
+.opencode-context.md
+.opencode-jce/
