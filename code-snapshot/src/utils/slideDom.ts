@@ -49,6 +49,7 @@ export function extractBaseImageLayers(html: string, slideIndex: number): BaseIm
     const editId = imageEditId(img, slideIndex, index);
     const src = img.getAttribute("src") || "";
     const alt = img.getAttribute("alt") || "";
+    const frame = img.closest(".screen-frame") ? "screen" : undefined;
     return {
       id: `base-${slideIndex}-${editId}`,
       slideIndex,
@@ -56,6 +57,7 @@ export function extractBaseImageLayers(html: string, slideIndex: number): BaseIm
       src,
       alt,
       name: alt || img.className || `Gambar ${index + 1}`,
+      frame,
     };
   });
 }
@@ -186,6 +188,18 @@ export function replaceImageSource(html: string, editId: string, src: string) {
   const target = doc.querySelector(`[data-edit-id="${CSS.escape(editId)}"]`) as HTMLImageElement | null;
   if (!target || target.tagName.toLowerCase() !== "img") return html;
   target.setAttribute("src", storedAssetPath(src));
+  return doc.querySelector("#root")?.innerHTML || html;
+}
+
+export function applyElementStyle(html: string, editId: string, stylePatch: Record<string, string>) {
+  const doc = parseHtml(html);
+  const target = doc.querySelector(`[data-edit-id="${CSS.escape(editId)}"]`) as HTMLElement | null;
+  if (!target) return html;
+  Object.entries(stylePatch).forEach(([key, value]) => {
+    const cssName = key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+    if (!value) target.style.removeProperty(cssName);
+    else target.style.setProperty(cssName, value);
+  });
   return doc.querySelector("#root")?.innerHTML || html;
 }
 

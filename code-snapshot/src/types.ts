@@ -85,6 +85,9 @@ export type AssetItem = {
   size: number;
 };
 
+export type ImageDepth = "back" | "front";
+export type ImageFrame = "screen";
+
 export type AssetsData = {
   assets: AssetItem[];
 };
@@ -108,6 +111,7 @@ export type SlideLayer = {
   y: number;
   width: number;
   zIndex: number;
+  depth?: ImageDepth;
   visible: boolean;
   locked: boolean;
 };
@@ -123,6 +127,8 @@ export type BaseImageOverride = {
   y: number;
   width: number;
   zIndex: number;
+  depth?: ImageDepth;
+  frame?: ImageFrame;
   visible: boolean;
   locked: boolean;
 };
@@ -138,6 +144,8 @@ export type BaseImageLayer = {
   y?: number;
   width?: number;
   zIndex?: number;
+  depth?: ImageDepth;
+  frame?: ImageFrame;
   visible?: boolean;
   locked?: boolean;
 };
@@ -146,6 +154,9 @@ export type EditorSnapshot = {
   slideHtmlByIndex: Record<number, string>;
   layers: SlideLayer[];
   baseImageOverrides: Record<string, BaseImageOverride>;
+  theme: ThemeName;
+  fontFamily: FontFamilyName;
+  accent: string;
 };
 
 export type EditorState = EditorSnapshot & {

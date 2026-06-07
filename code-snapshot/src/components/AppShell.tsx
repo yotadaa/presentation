@@ -141,6 +141,12 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
   }, []);
 
   useEffect(() => {
+    if (!isPresenting || (!state.selectedLayerId && !state.selectedTarget)) return;
+    editor.selectLayer(null);
+    editor.selectTarget(null);
+  }, [editor, isPresenting, state.selectedLayerId, state.selectedTarget]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -200,6 +206,7 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           html={renderedActiveHtml}
           theme={state.theme}
           accent={state.accent}
+          isEditingLocked={isPresenting}
           chapterStartByName={chapterStartByName}
           layers={activeLayers}
           baseImages={activeBaseImages}
@@ -212,9 +219,13 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onSelectLayer={editor.selectLayer}
           onUpdateLayer={editor.updateLayer}
           onUpdateBaseImage={editor.updateBaseImage}
+          onBeginLayerEdit={editor.beginLayerEdit}
+          onBeginBaseImageEdit={editor.beginBaseImageEdit}
           onDeleteLayer={editor.deleteLayer}
+          onDeleteBaseImage={editor.deleteBaseImage}
           onDuplicateLayer={editor.duplicateLayer}
           onDuplicateBaseImage={editor.duplicateBaseImage}
+          onUpdateTextStyle={editor.updateTargetStyle}
           onAddLayer={editor.addLayer}
           onNext={() => editor.goToSlide(state.currentSlide + 1)}
           onPrev={() => editor.goToSlide(state.currentSlide - 1)}
@@ -231,6 +242,7 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onAddLayer={editor.addLayer}
           onUpdateLayer={editor.updateLayer}
           onDeleteLayer={editor.deleteLayer}
+          onDeleteBaseImage={editor.deleteBaseImage}
           onDuplicateLayer={editor.duplicateLayer}
           onUpdateBaseImage={editor.updateBaseImage}
           onDuplicateBaseImage={editor.duplicateBaseImage}
@@ -290,6 +302,10 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           const baseImages = enrichBaseImages(extractBaseImageLayers(item.html, item.index), state.baseImageOverrides);
           const managedBaseImages = baseImages.filter((image) => image.x != null && image.y != null && image.width != null);
           const layers = state.layers.filter((layer) => layer.slideIndex === item.index);
+          const backBaseImages = managedBaseImages.filter((image) => (image.depth || "front") === "back");
+          const frontBaseImages = managedBaseImages.filter((image) => (image.depth || "front") !== "back");
+          const backLayers = layers.filter((layer) => (layer.depth || "front") === "back");
+          const frontLayers = layers.filter((layer) => (layer.depth || "front") !== "back");
           return (
             <div
               key={item.index}
@@ -298,11 +314,11 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
               style={{ "--slide-accent": state.accent, "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
             >
               <div className="print-html-source" dangerouslySetInnerHTML={{ __html: item.html }} />
-              <div className="layer-stage print-layer-stage" aria-hidden="true">
-                {managedBaseImages.map((image) => image.visible === false ? null : (
+              <div className="layer-stage print-layer-stage layer-stage-back" aria-hidden="true">
+                {backBaseImages.map((image) => image.visible === false ? null : (
                   <div
                     key={image.id}
-                    className="slide-layer base-image-layer"
+                    className={`slide-layer base-image-layer depth-back ${image.frame === "screen" ? "base-screen-frame" : ""}`}
                     style={{
                       left: `${image.x}%`,
                       top: `${image.y}%`,
@@ -310,13 +326,49 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
                       zIndex: image.zIndex ?? 12,
                     }}
                   >
+                    {image.frame === "screen" ? (
+                      <div className="base-screen-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                    ) : null}
                     <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
                   </div>
                 ))}
-                {layers.map((layer) => layer.visible ? (
+                {backLayers.map((layer) => layer.visible ? (
                   <div
                     key={layer.id}
-                    className="slide-layer"
+                    className="slide-layer depth-back"
+                    style={{
+                      left: `${layer.x}%`,
+                      top: `${layer.y}%`,
+                      width: `${layer.width}%`,
+                      zIndex: layer.zIndex,
+                    }}
+                  >
+                    <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
+                  </div>
+                ) : null)}
+              </div>
+              <div className="layer-stage print-layer-stage layer-stage-front" aria-hidden="true">
+                {frontBaseImages.map((image) => image.visible === false ? null : (
+                  <div
+                    key={image.id}
+                    className={`slide-layer base-image-layer depth-front ${image.frame === "screen" ? "base-screen-frame" : ""}`}
+                    style={{
+                      left: `${image.x}%`,
+                      top: `${image.y}%`,
+                      width: `${image.width}%`,
+                      zIndex: image.zIndex ?? 12,
+                    }}
+                  >
+                    {image.frame === "screen" ? (
+                      <div className="base-screen-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                    ) : null}
+                    <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
+                  </div>
+                ))}
+                {frontLayers.map((layer) => layer.visible ? (
+                  <div
+                    key={layer.id}
+                    className="slide-layer depth-front"
                     style={{
                       left: `${layer.x}%`,
                       top: `${layer.y}%`,
@@ -346,6 +398,7 @@ function enrichBaseImages(baseImages: BaseImageLayer[], overrides: Record<string
       src: override.src || image.src,
       name: override.name || image.name,
       alt: override.alt || image.alt,
+      frame: override.frame || image.frame,
     };
   });
 }

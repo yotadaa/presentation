@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
+  ArrowsPointingOutIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   DocumentDuplicateIcon,
@@ -12,19 +13,29 @@ import {
   TrashIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import type { CSSProperties } from "react";
-import type { AssetItem, BaseImageLayer, BaseImageOverride, SelectionTarget, Slide, SlideLayer } from "../types";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import type { AssetItem, BaseImageLayer, BaseImageOverride, FontFamilyName, ImageDepth, SelectionTarget, Slide, SlideLayer } from "../types";
 import { normalizeAssetUrl, targetFromElement } from "../utils/slideDom";
-import { AppButton, IconButton } from "./ui/controls";
+import { AppButton, ColorField, IconButton, NumberStepper, SelectMenu } from "./ui/controls";
 
 const SLIDE_WIDTH = 1536;
 const SLIDE_HEIGHT = 864;
+
+const textFontOptions: Array<{ value: "inherit" | FontFamilyName; label: string; note?: string }> = [
+  { value: "inherit", label: "Ikuti slide", note: "Gunakan font tema aktif." },
+  { value: "inter", label: "Inter", note: "Sans modern dan netral." },
+  { value: "jakarta", label: "Plus Jakarta Sans", note: "Sans hangat untuk akademik." },
+  { value: "noto", label: "Noto Sans", note: "Sans stabil untuk teks panjang." },
+  { value: "sourceSerif", label: "Source Serif 4", note: "Serif formal." },
+  { value: "robotoSlab", label: "Roboto Slab", note: "Slab untuk aksen tegas." },
+];
 
 type SlideCanvasProps = {
   slide: Slide;
   html: string;
   theme: string;
   accent: string;
+  isEditingLocked?: boolean;
   chapterStartByName: Record<string, number>;
   layers: SlideLayer[];
   baseImages: BaseImageLayer[];
@@ -32,11 +43,15 @@ type SlideCanvasProps = {
   onRegisterBaseImages: (images: BaseImageLayer[]) => void;
   onSelectTarget: (target: SelectionTarget | null) => void;
   onSelectLayer: (layerId: string | null) => void;
-  onUpdateLayer: (layerId: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
-  onUpdateBaseImage: (layerId: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
+  onUpdateLayer: (layerId: string, patch: Partial<SlideLayer>, saveHistory?: boolean, historyBeforePatch?: Partial<SlideLayer>) => void;
+  onUpdateBaseImage: (layerId: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean, historyBeforePatch?: Partial<BaseImageOverride>) => void;
+  onBeginLayerEdit: (layerId: string, beforePatch?: Partial<SlideLayer>) => void;
+  onBeginBaseImageEdit: (layerId: string, beforePatch?: Partial<BaseImageOverride>) => void;
   onDeleteLayer: (layerId: string) => void;
+  onDeleteBaseImage: (layerId: string) => void;
   onDuplicateLayer: (layerId: string) => void;
   onDuplicateBaseImage: (layerId: string) => void;
+  onUpdateTextStyle: (target: SelectionTarget, stylePatch: Record<string, string>) => void;
   onAddLayer: (asset: AssetItem, position?: { x: number; y: number; width?: number }) => void;
   onGoToSlide: (slide: number) => void;
   onNext: () => void;
@@ -48,6 +63,7 @@ export default function SlideCanvas({
   html,
   theme,
   accent,
+  isEditingLocked = false,
   chapterStartByName,
   layers,
   baseImages,
@@ -57,9 +73,13 @@ export default function SlideCanvas({
   onSelectLayer,
   onUpdateLayer,
   onUpdateBaseImage,
+  onBeginLayerEdit,
+  onBeginBaseImageEdit,
   onDeleteLayer,
+  onDeleteBaseImage,
   onDuplicateLayer,
   onDuplicateBaseImage,
+  onUpdateTextStyle,
   onAddLayer,
   onGoToSlide,
   onNext,
@@ -69,13 +89,26 @@ export default function SlideCanvas({
   const frameRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const previousSlideIndexRef = useRef(slide.index);
-  const dragRef = useRef<{ kind: "base" | "layer"; id: string; startX: number; startY: number; x: number; y: number } | null>(null);
+  const dragRef = useRef<
+    | { mode: "move"; kind: "base" | "layer"; id: string; startX: number; startY: number; x: number; y: number; moved: boolean }
+    | { mode: "resize"; kind: "base" | "layer"; id: string; startX: number; width: number; moved: boolean }
+    | null
+  >(null);
   const gestureRef = useRef<{ pointerId: number; startX: number; startY: number; startTime: number } | null>(null);
   const [imageTip, setImageTip] = useState<
     | { kind: "base"; layerId: string; title: string; x: number; y: number }
     | { kind: "layer"; layerId: string; title: string; x: number; y: number }
     | null
   >(null);
+  const [textTip, setTextTip] = useState<{
+    target: SelectionTarget;
+    x: number;
+    y: number;
+    fontSize: number;
+    fontFamily: "inherit" | FontFamilyName;
+    color: string;
+    padding: number;
+  } | null>(null);
   const transitionDirection = slide.index >= previousSlideIndexRef.current ? "forward" : "backward";
   const imageTipPosition = useMemo(() => {
     if (!imageTip) return null;
@@ -134,6 +167,7 @@ export default function SlideCanvas({
   useEffect(() => {
     previousSlideIndexRef.current = slide.index;
     setImageTip(null);
+    setTextTip(null);
   }, [slide.index]);
 
   useEffect(() => {
@@ -150,7 +184,8 @@ export default function SlideCanvas({
         .map((image, index) => {
           const node = frame.querySelector<HTMLImageElement>(`img[data-edit-id="${escapeSelector(image.editId)}"]`);
           if (!node) return null;
-          const rect = node.getBoundingClientRect();
+          const measuredNode = image.frame === "screen" ? (node.closest(".screen-frame") as HTMLElement | null) || node : node;
+          const rect = measuredNode.getBoundingClientRect();
           if (rect.width <= 1 || rect.height <= 1) return null;
           return {
             ...image,
@@ -179,7 +214,15 @@ export default function SlideCanvas({
     () => baseImages.filter((image) => image.x != null && image.y != null && image.width != null),
     [baseImages],
   );
+  const backBaseImages = useMemo(() => managedBaseImages.filter((image) => (image.depth || "front") === "back"), [managedBaseImages]);
+  const frontBaseImages = useMemo(() => managedBaseImages.filter((image) => (image.depth || "front") !== "back"), [managedBaseImages]);
+  const backLayers = useMemo(() => layers.filter((layer) => (layer.depth || "front") === "back"), [layers]);
+  const frontLayers = useMemo(() => layers.filter((layer) => (layer.depth || "front") !== "back"), [layers]);
   const slideProgress = useMemo(() => `${slide.index} / 45`, [slide.index]);
+
+  function isEditInteractionLocked() {
+    return isEditingLocked || isPresentationGestureEnabled();
+  }
 
   return (
     <main className="canvas-panel">
@@ -242,12 +285,14 @@ export default function SlideCanvas({
           gestureRef.current = null;
         }}
         onDragOver={(event) => {
+          if (isEditInteractionLocked()) return;
           if (event.dataTransfer.types.includes("application/x-skripsi-asset")) {
             event.preventDefault();
             event.dataTransfer.dropEffect = "copy";
           }
         }}
         onDrop={(event) => {
+          if (isEditInteractionLocked()) return;
           const raw = event.dataTransfer.getData("application/x-skripsi-asset");
           if (!raw) return;
           event.preventDefault();
@@ -273,6 +318,35 @@ export default function SlideCanvas({
             className={`react-slide-frame ${managedBaseImages.length ? "has-managed-base-images" : ""}`}
             data-slide-theme={theme}
             style={{ transform: `scale(${scale})`, "--slide-accent": accent } as CSSProperties}
+            onContextMenu={(event) => {
+              if (isEditInteractionLocked()) {
+                event.preventDefault();
+                event.stopPropagation();
+                return;
+              }
+              const target = event.target as HTMLElement;
+              const selected = targetFromElement(target, slide.index);
+              const selectedNode = target.closest("[data-edit-id]") as HTMLElement | null;
+              if (!selected || !selectedNode || selected.kind === "image") return;
+              event.preventDefault();
+              event.stopPropagation();
+              const frameRect = frameRef.current?.getBoundingClientRect();
+              const styles = window.getComputedStyle(selectedNode);
+              const fontSize = parseFloat(styles.fontSize) || 18;
+              const padding = parseFloat(styles.paddingTop) || 0;
+              setImageTip(null);
+              onSelectLayer(null);
+              onSelectTarget(null);
+              setTextTip({
+                target: selected,
+                x: frameRect ? ((event.clientX - frameRect.left) / frameRect.width) * 100 : 50,
+                y: frameRect ? ((event.clientY - frameRect.top) / frameRect.height) * 100 : 50,
+                fontSize: Math.round(fontSize),
+                fontFamily: "inherit",
+                color: rgbToHex(styles.color) || "#0f172a",
+                padding: Math.round(padding),
+              });
+            }}
             onClick={(event) => {
               const target = event.target as HTMLElement;
               const chapterChip = target.closest(".chapter .chip") as HTMLElement | null;
@@ -282,6 +356,13 @@ export default function SlideCanvas({
                 const chapter = chapterChip.textContent?.trim();
                 const targetSlide = chapter ? chapterStartByName[chapter] : undefined;
                 if (targetSlide) onGoToSlide(targetSlide);
+                return;
+              }
+              if (isEditInteractionLocked()) {
+                setImageTip(null);
+                setTextTip(null);
+                onSelectLayer(null);
+                onSelectTarget(null);
                 return;
               }
               const layerHit = target.closest(".slide-layer");
@@ -310,84 +391,16 @@ export default function SlideCanvas({
                 onSelectLayer(null);
                 onSelectTarget(selected);
                 setImageTip(null);
+                setTextTip(null);
               }
             }}
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
-
-          <div className="layer-stage" aria-label="Layer gambar tambahan">
-            {managedBaseImages.map((image) => {
-              if (image.visible === false) return null;
-              const locked = image.locked === true;
-              return (
-                <div
-                  key={image.id}
-                  className={`slide-layer base-image-layer ${selectedLayerId === image.id ? "selected" : ""} ${locked ? "locked" : ""}`}
-                  style={{
-                    left: `${image.x}%`,
-                    top: `${image.y}%`,
-                    width: `${image.width}%`,
-                    zIndex: image.zIndex ?? 12,
-                  }}
-                  onPointerDown={(event) => {
-                    if (locked) return;
-                    event.preventDefault();
-                    onSelectTarget(null);
-                    onSelectLayer(image.id);
-                    setImageTip({ kind: "base", layerId: image.id, title: image.name, x: image.x ?? 50, y: image.y ?? 50 });
-                    dragRef.current = {
-                      kind: "base",
-                      id: image.id,
-                      startX: event.clientX,
-                      startY: event.clientY,
-                      x: image.x ?? 50,
-                      y: image.y ?? 50,
-                    };
-                    window.addEventListener("pointermove", pointerMove);
-                    window.addEventListener("pointerup", pointerUp);
-                  }}
-                >
-                  <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
-                </div>
-              );
-            })}
-            {layers.map((layer) => {
-              if (!layer.visible) return null;
-              return (
-                <div
-                  key={layer.id}
-                  className={`slide-layer ${selectedLayerId === layer.id ? "selected" : ""} ${layer.locked ? "locked" : ""}`}
-                  style={{
-                    left: `${layer.x}%`,
-                    top: `${layer.y}%`,
-                    width: `${layer.width}%`,
-                    zIndex: layer.zIndex,
-                  }}
-                  onPointerDown={(event) => {
-                    if (layer.locked) return;
-                    event.preventDefault();
-                    onSelectTarget(null);
-                    onSelectLayer(layer.id);
-                    setImageTip({ kind: "layer", layerId: layer.id, title: layer.name, x: layer.x, y: layer.y });
-                    dragRef.current = {
-                      kind: "layer",
-                      id: layer.id,
-                      startX: event.clientX,
-                      startY: event.clientY,
-                      x: layer.x,
-                      y: layer.y,
-                    };
-                    window.addEventListener("pointermove", pointerMove);
-                    window.addEventListener("pointerup", pointerUp);
-                  }}
-                >
-                  <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
-                </div>
-              );
-            })}
+          >
+            <div className="slide-html-host" dangerouslySetInnerHTML={{ __html: html }} />
+            {renderLayerStage("back", backBaseImages, backLayers)}
+            {renderLayerStage("front", frontBaseImages, frontLayers)}
           </div>
 
-          {imageTip ? (
+          {imageTip && !isEditInteractionLocked() ? (
             <div
               className={`image-layer-tooltip ${imageTip.kind === "base" ? "base-tip" : "overlay-tip"}`}
               style={imageTipPosition || undefined}
@@ -403,13 +416,16 @@ export default function SlideCanvas({
                     const layer = managedBaseImages.find((item) => item.id === imageTip.layerId);
                     if (!layer) return null;
                     const locked = layer.locked === true;
+                    const isBehindText = layer.depth === "back";
                     return (
                       <>
                         <AppButton size="sm" icon={locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { locked: !locked })}>{locked ? "Unlock" : "Lock"}</AppButton>
                         <AppButton size="sm" icon={<EyeSlashIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { visible: false })}>Hide</AppButton>
                         <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { zIndex: (layer.zIndex ?? 12) + 1 })}>Front</AppButton>
                         <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { zIndex: Math.max(1, (layer.zIndex ?? 12) - 1) })}>Back</AppButton>
+                        <AppButton size="sm" icon={isBehindText ? <ArrowUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { depth: isBehindText ? "front" : "back" })}>{isBehindText ? "Depan teks" : "Belakang teks"}</AppButton>
                         <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateBaseImage(layer.id)}>Duplicate</AppButton>
+                        <AppButton size="sm" variant="danger" icon={<TrashIcon aria-hidden="true" />} onClick={() => { onDeleteBaseImage(layer.id); setImageTip(null); }}>Delete</AppButton>
                       </>
                     );
                   })()}
@@ -419,12 +435,14 @@ export default function SlideCanvas({
                   {(() => {
                     const layer = layers.find((item) => item.id === imageTip.layerId);
                     if (!layer) return null;
+                    const isBehindText = layer.depth === "back";
                     return (
                       <>
                         <AppButton size="sm" icon={layer.locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { locked: !layer.locked })}>{layer.locked ? "Unlock" : "Lock"}</AppButton>
                         <AppButton size="sm" icon={<EyeSlashIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { visible: false })}>Hide</AppButton>
                         <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex + 1 })}>Front</AppButton>
                         <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex - 1 })}>Back</AppButton>
+                        <AppButton size="sm" icon={isBehindText ? <ArrowUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { depth: isBehindText ? "front" : "back" })}>{isBehindText ? "Depan teks" : "Belakang teks"}</AppButton>
                         <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateLayer(layer.id)}>Duplicate</AppButton>
                         <AppButton size="sm" variant="danger" icon={<TrashIcon aria-hidden="true" />} onClick={() => { onDeleteLayer(layer.id); setImageTip(null); }}>Delete</AppButton>
                       </>
@@ -434,17 +452,198 @@ export default function SlideCanvas({
               )}
             </div>
           ) : null}
+
+          {textTip && !isEditInteractionLocked() ? (
+            <div
+              className="text-style-tooltip"
+              style={{ left: `${textTip.x}%`, top: `${textTip.y}%` }}
+              onClick={(event) => event.stopPropagation()}
+              onPointerDown={(event) => event.stopPropagation()}
+            >
+              <div className="image-tip-head">
+                <PhotoIcon aria-hidden="true" />
+                <strong>Atur teks terpilih</strong>
+                <IconButton compact label="Tutup kontrol teks" icon={<XMarkIcon aria-hidden="true" />} onClick={() => setTextTip(null)} />
+              </div>
+              <div className="text-style-grid">
+                <NumberStepper
+                  label="Font"
+                  min={1}
+                  value={textTip.fontSize}
+                  onChange={(value) => applyTextStyle({ fontSize: value }, { fontSize: `${value}px` })}
+                />
+                <NumberStepper
+                  label="Pad"
+                  min={0}
+                  max={32}
+                  value={textTip.padding}
+                  onChange={(value) => applyTextStyle({ padding: value }, { padding: value ? `${value}px` : "" })}
+                />
+                <SelectMenu
+                  label="Font family"
+                  value={textTip.fontFamily}
+                  options={textFontOptions}
+                  onChange={(value) => applyTextStyle({ fontFamily: value }, { fontFamily: value === "inherit" ? "" : fontCssValue(value) })}
+                />
+                <ColorField
+                  label="Warna"
+                  value={textTip.color}
+                  onChange={(value) => applyTextStyle({ color: value }, { color: value })}
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
         <IconButton className="nav-hit right" label="Slide berikutnya" icon={<ChevronRightIcon aria-hidden="true" />} onClick={onNext} />
       </div>
     </main>
   );
 
+  function renderLayerStage(depth: ImageDepth, baseItems: BaseImageLayer[], overlayItems: SlideLayer[]) {
+    return (
+      <div className={`layer-stage layer-stage-${depth}`} aria-label={depth === "back" ? "Layer gambar belakang teks" : "Layer gambar depan teks"}>
+        {baseItems.map((image) => {
+          if (image.visible === false) return null;
+          const locked = image.locked === true;
+          const selected = selectedLayerId === image.id;
+          return (
+            <div
+              key={image.id}
+              className={`slide-layer base-image-layer depth-${depth} ${image.frame === "screen" ? "base-screen-frame" : ""} ${selected ? "selected" : ""} ${locked ? "locked" : ""}`}
+              style={{
+                left: `${image.x}%`,
+                top: `${image.y}%`,
+                width: `${image.width}%`,
+                zIndex: image.zIndex ?? 12,
+              }}
+              onPointerDown={(event) => startImageMove(event, "base", image.id, image.name, image.x ?? 50, image.y ?? 50, locked)}
+            >
+              {image.frame === "screen" ? (
+                <div className="base-screen-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              ) : null}
+              <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
+              {selected && !locked ? (
+                <IconButton
+                  compact
+                  className="resize-handle resize-se"
+                  label="Resize gambar"
+                  icon={<ArrowsPointingOutIcon aria-hidden="true" />}
+                  onPointerDown={(event) => startImageResize(event, "base", image.id, image.width ?? 12)}
+                />
+              ) : null}
+            </div>
+          );
+        })}
+        {overlayItems.map((layer) => {
+          if (!layer.visible) return null;
+          const selected = selectedLayerId === layer.id;
+          return (
+            <div
+              key={layer.id}
+              className={`slide-layer depth-${depth} ${selected ? "selected" : ""} ${layer.locked ? "locked" : ""}`}
+              style={{
+                left: `${layer.x}%`,
+                top: `${layer.y}%`,
+                width: `${layer.width}%`,
+                zIndex: layer.zIndex,
+              }}
+              onPointerDown={(event) => startImageMove(event, "layer", layer.id, layer.name, layer.x, layer.y, layer.locked)}
+            >
+              <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
+              {selected && !layer.locked ? (
+                <IconButton
+                  compact
+                  className="resize-handle resize-se"
+                  label="Resize gambar"
+                  icon={<ArrowsPointingOutIcon aria-hidden="true" />}
+                  onPointerDown={(event) => startImageResize(event, "layer", layer.id, layer.width)}
+                />
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  function startImageMove(
+    event: ReactPointerEvent,
+    kind: "base" | "layer",
+    id: string,
+    title: string,
+    x: number,
+    y: number,
+    locked: boolean,
+  ) {
+    if (locked) return;
+    if (isEditInteractionLocked()) return;
+    event.preventDefault();
+    event.stopPropagation();
+    onSelectTarget(null);
+    onSelectLayer(id);
+    setTextTip(null);
+    setImageTip({ kind, layerId: id, title, x, y });
+    dragRef.current = {
+      mode: "move",
+      kind,
+      id,
+      startX: event.clientX,
+      startY: event.clientY,
+      x,
+      y,
+      moved: false,
+    };
+    window.addEventListener("pointermove", pointerMove);
+    window.addEventListener("pointerup", pointerUp);
+  }
+
+  function startImageResize(event: ReactPointerEvent, kind: "base" | "layer", id: string, width: number) {
+    if (isEditInteractionLocked()) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragRef.current = {
+      mode: "resize",
+      kind,
+      id,
+      startX: event.clientX,
+      width,
+      moved: false,
+    };
+    window.addEventListener("pointermove", pointerMove);
+    window.addEventListener("pointerup", pointerUp);
+  }
+
+  function applyTextStyle(tipPatch: Partial<NonNullable<typeof textTip>>, stylePatch: Record<string, string>) {
+    if (!textTip) return;
+    const nextTip = { ...textTip, ...tipPatch };
+    setTextTip(nextTip);
+    onUpdateTextStyle(textTip.target, stylePatch);
+  }
+
   function pointerMove(event: PointerEvent) {
     const drag = dragRef.current;
     const frame = frameRef.current;
     if (!drag || !frame) return;
     const rect = frame.getBoundingClientRect();
+    if (drag.mode === "resize") {
+      if (!drag.moved && Math.abs(event.clientX - drag.startX) <= 2) return;
+      if (!drag.moved) {
+        if (drag.kind === "base") onBeginBaseImageEdit(drag.id, { width: drag.width });
+        else onBeginLayerEdit(drag.id, { width: drag.width });
+        drag.moved = true;
+      }
+      const nextWidth = drag.width + ((event.clientX - drag.startX) / rect.width) * 100;
+      const patch = { width: Math.max(4, Math.min(95, nextWidth)) };
+      if (drag.kind === "base") onUpdateBaseImage(drag.id, patch, false);
+      else onUpdateLayer(drag.id, patch, false);
+      return;
+    }
+    if (!drag.moved && Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) <= 2) return;
+    if (!drag.moved) {
+      if (drag.kind === "base") onBeginBaseImageEdit(drag.id, { x: drag.x, y: drag.y });
+      else onBeginLayerEdit(drag.id, { x: drag.x, y: drag.y });
+      drag.moved = true;
+    }
     const nextX = drag.x + ((event.clientX - drag.startX) / rect.width) * 100;
     const nextY = drag.y + ((event.clientY - drag.startY) / rect.height) * 100;
     const patch = { x: Math.max(0, Math.min(95, nextX)), y: Math.max(0, Math.min(92, nextY)) };
@@ -455,9 +654,18 @@ export default function SlideCanvas({
 
   function pointerUp() {
     const drag = dragRef.current;
-    if (drag) {
-      if (drag.kind === "base") onUpdateBaseImage(drag.id, {}, true);
-      else onUpdateLayer(drag.id, {}, true);
+    if (drag?.moved) {
+      if (drag.mode === "resize") {
+        if (drag.kind === "base") {
+          onUpdateBaseImage(drag.id, {}, true, { width: drag.width });
+        } else {
+          onUpdateLayer(drag.id, {}, true, { width: drag.width });
+        }
+      } else if (drag.kind === "base") {
+        onUpdateBaseImage(drag.id, {}, true, { x: drag.x, y: drag.y });
+      } else {
+        onUpdateLayer(drag.id, {}, true, { x: drag.x, y: drag.y });
+      }
     }
     dragRef.current = null;
     window.removeEventListener("pointermove", pointerMove);
@@ -473,4 +681,26 @@ export default function SlideCanvas({
 function escapeSelector(value: string) {
   if (typeof CSS !== "undefined" && CSS.escape) return CSS.escape(value);
   return value.replace(/["\\]/g, "\\$&");
+}
+
+function rgbToHex(value: string) {
+  const match = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+  if (!match) return "";
+  return `#${[match[1], match[2], match[3]].map((part) => Number(part).toString(16).padStart(2, "0")).join("")}`;
+}
+
+function fontCssValue(value: "inherit" | FontFamilyName) {
+  if (value === "inherit") return "";
+  const stacks: Record<FontFamilyName, string> = {
+    inter: "Inter, ui-sans-serif, system-ui, sans-serif",
+    jakarta: "\"Plus Jakarta Sans\", Inter, ui-sans-serif, system-ui, sans-serif",
+    noto: "\"Noto Sans\", Inter, ui-sans-serif, system-ui, sans-serif",
+    sourceSerif: "\"Source Serif 4\", Georgia, serif",
+    robotoSlab: "\"Roboto Slab\", Georgia, serif",
+    system: "ui-sans-serif, system-ui, sans-serif",
+    serif: "Georgia, serif",
+    mono: "\"Cascadia Mono\", Consolas, monospace",
+    rounded: "\"Trebuchet MS\", ui-sans-serif, system-ui, sans-serif",
+  };
+  return stacks[value];
 }

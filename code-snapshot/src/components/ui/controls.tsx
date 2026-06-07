@@ -86,7 +86,11 @@ export function NumberStepper({
   className = "",
   showButtons = true,
 }: NumberStepperProps) {
-  const clamp = (next: number) => Math.min(max, Math.max(min, Number.isFinite(next) ? next : min));
+  const clamp = (next: number) => {
+    const fallback = Number.isFinite(value) ? value : 0;
+    const safeNext = Number.isFinite(next) ? next : fallback;
+    return Math.min(max, Math.max(min, safeNext));
+  };
   const content = (
     <span className={`ui-number-stepper ${showButtons ? "" : "ui-number-stepper-plain"} ${className}`.trim()}>
       {label ? <span className="ui-number-label">{label}</span> : null}

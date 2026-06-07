@@ -260,6 +260,222 @@
   height: .30in;
 }
 
+.react-slide-frame #slide-23 .flow-diagram.big-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  gap: .32in;
+  margin-top: .38in;
+  margin-bottom: .24in;
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow > .flow-arrow {
+  display: none;
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow .flow-node {
+  min-height: 1.08in;
+  position: relative;
+  justify-content: flex-start;
+  text-align: left;
+  padding: .18in .18in;
+  gap: .12in;
+  border-color: color-mix(in srgb, var(--slide-accent, var(--accent)) 22%, rgba(15,23,42,.08));
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow .flow-node svg {
+  width: .28in;
+  height: .28in;
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow .flow-node span {
+  font-size: .17in;
+  line-height: 1.14;
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow .flow-node:not(:last-of-type)::after {
+  content: "";
+  position: absolute;
+  right: -.31in;
+  top: 50%;
+  width: .30in;
+  height: .052in;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--slide-accent, var(--accent)), #38bdf8);
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--slide-accent, var(--accent)) 18%, transparent);
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+.react-slide-frame #slide-23 .flow-diagram.big-flow .flow-node:not(:last-of-type)::before {
+  content: "";
+  position: absolute;
+  right: -.38in;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: .085in solid transparent;
+  border-bottom: .085in solid transparent;
+  border-left: .13in solid var(--slide-accent, var(--accent));
+  transform: translateY(-50%);
+  z-index: 4;
+}
+
+.react-slide-frame #slide-27 .pipeline-wide {
+  position: relative;
+  margin-top: .32in;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane {
+  gap: .18in;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane:first-child {
+  position: relative;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane:first-child::after {
+  display: none;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane:first-child .pipeline-stage:last-child::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -.40in;
+  width: .068in;
+  height: .40in;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #38bdf8, var(--slide-accent, var(--accent)));
+  box-shadow: 0 8px 18px rgba(20, 184, 166, .16);
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane:first-child .pipeline-stage:last-child::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: auto;
+  bottom: -.53in;
+  width: 0;
+  height: 0;
+  border-left: .11in solid transparent;
+  border-right: .11in solid transparent;
+  border-top: .16in solid var(--slide-accent, var(--accent));
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane.lower {
+  direction: rtl;
+  margin-top: .18in;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane.lower .pipeline-stage {
+  direction: ltr;
+}
+
+.react-slide-frame #slide-27 .pipeline-lane.lower .pipeline-stage:not(:last-child)::after {
+  left: -.25in;
+  right: auto;
+  width: .32in;
+  height: .068in;
+  background: linear-gradient(270deg, var(--slide-accent, var(--accent)), #a3e635);
+}
+
+.react-slide-frame #slide-27 .pipeline-lane.lower .pipeline-stage:not(:last-child)::before {
+  left: -.38in;
+  right: auto;
+  border-left: 0;
+  border-right: .16in solid var(--slide-accent, var(--accent));
+  border-top: .105in solid transparent;
+  border-bottom: .105in solid transparent;
+}
+
+.react-slide-frame #slide-27 .pipeline-stage {
+  min-height: 1.12in;
+  padding: .16in .14in .13in;
+}
+
+.react-slide-frame #slide-27 .pipeline-stage strong {
+  font-size: .162in;
+}
+
+.react-slide-frame #slide-27 .pipeline-stage span {
+  font-size: .128in;
+}
+
+.react-slide-frame :is(.agenda-grid, .process-line, .repair-flow) > .step {
+  display: grid;
+  grid-template-columns: .42in minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  align-items: start;
+  column-gap: .12in;
+  row-gap: .06in;
+  text-align: left;
+}
+
+.react-slide-frame :is(.agenda-grid, .process-line, .repair-flow) > .step .step-icon {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+
+.react-slide-frame :is(.agenda-grid, .process-line, .repair-flow) > .step h3 {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  align-self: center;
+  font-size: .176in;
+  line-height: 1.16;
+}
+
+.react-slide-frame :is(.agenda-grid, .process-line, .repair-flow) > .step p {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  font-size: .146in;
+  line-height: 1.34;
+}
+
+.react-slide-frame .controller-card {
+  display: grid;
+  grid-template-columns: .40in minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
+  align-items: start;
+  column-gap: .12in;
+  row-gap: .025in;
+  text-align: left;
+}
+
+.react-slide-frame .controller-card .controller-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin: 0;
+}
+
+.react-slide-frame .controller-card span {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  align-self: end;
+}
+
+.react-slide-frame .controller-card strong {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+}
+
+.react-slide-frame .controller-card p {
+  grid-column: 2;
+  grid-row: 3;
+  margin: .045in 0 0;
+}
+
 .react-slide-frame .native-flowchart .flow-arrow {
   width: .34in;
   height: .24in;
@@ -490,7 +706,7 @@
 }
 
 .react-slide-frame #slide-34 .controller-card strong {
-  margin-top: .055in;
+  margin: 0;
   font-size: .16in;
 }
 
@@ -511,14 +727,6 @@
   height: calc(100% - .08in);
 }
 
-.slide-scale-shell:has(#slide-34) .base-image-layer:has(img[src*="generated-concept"]) {
-  left: 50% !important;
-  top: 75% !important;
-  width: 36% !important;
-  height: 24% !important;
-  overflow: visible;
-}
-
 .slide-scale-shell:has(#slide-34) .base-image-layer:has(img[src*="generated-concept"]) img {
   width: 100%;
   height: 100%;
@@ -537,8 +745,8 @@
 .react-slide-frame #slide-36 .subdesc p,
 .react-slide-frame #slide-39 .subdesc p,
 .react-slide-frame #slide-41 .subdesc p {
-  font-size: .142in;
-  line-height: 1.28;
+  font-size: .176in;
+  line-height: 1.36;
 }
 
 .react-slide-frame #slide-36 .screenshot-layout,
@@ -582,9 +790,9 @@
 .react-slide-frame #slide-36 .gui-callout,
 .react-slide-frame #slide-39 .gui-callout,
 .react-slide-frame #slide-41 .gui-callout {
-  grid-template-columns: .34in 1fr;
-  gap: .10in;
-  padding: .13in .14in;
+  grid-template-columns: .38in 1fr;
+  gap: .12in;
+  padding: .15in .16in;
 }
 
 .react-slide-frame #slide-36 .gui-callout svg,
@@ -598,14 +806,15 @@
 .react-slide-frame #slide-36 .gui-callout strong,
 .react-slide-frame #slide-39 .gui-callout strong,
 .react-slide-frame #slide-41 .gui-callout strong {
-  font-size: .145in;
+  font-size: .192in;
+  line-height: 1.14;
 }
 
 .react-slide-frame #slide-36 .gui-callout p,
 .react-slide-frame #slide-39 .gui-callout p,
 .react-slide-frame #slide-41 .gui-callout p {
-  font-size: .118in;
-  line-height: 1.25;
+  font-size: .162in;
+  line-height: 1.36;
 }
 
 .slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]),
@@ -614,23 +823,9 @@
 .slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="gui-"]),
 .slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="gui-"]),
 .slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="gui-"]) {
-  left: 25.65% !important;
-  width: 44.05% !important;
-  height: 36.65% !important;
+  aspect-ratio: 2.14 / 1;
   overflow: hidden;
   border-radius: .10in;
-}
-
-.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]),
-.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="gui-"]) {
-  top: 55.25% !important;
-}
-
-.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="reference-html-images"]),
-.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="reference-html-images"]),
-.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="gui-"]),
-.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="gui-"]) {
-  top: 60.75% !important;
 }
 
 .slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]) img,

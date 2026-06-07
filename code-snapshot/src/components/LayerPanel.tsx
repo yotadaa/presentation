@@ -8,10 +8,11 @@ type LayerPanelProps = {
   baseImages: BaseImageLayer[];
   selectedLayerId: string | null;
   onSelectLayer: (id: string | null) => void;
-  onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
+  onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean, historyBeforePatch?: Partial<SlideLayer>) => void;
   onDeleteLayer: (id: string) => void;
+  onDeleteBaseImage: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
-  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
+  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean, historyBeforePatch?: Partial<BaseImageOverride>) => void;
   onDuplicateBaseImage: (id: string) => void;
 };
 
@@ -22,6 +23,7 @@ export default function LayerPanel({
   onSelectLayer,
   onUpdateLayer,
   onDeleteLayer,
+  onDeleteBaseImage,
   onDuplicateLayer,
   onUpdateBaseImage,
   onDuplicateBaseImage,
@@ -41,6 +43,7 @@ export default function LayerPanel({
             .map((image) => {
               const visible = image.visible !== false;
               const locked = image.locked === true;
+              const isBehindText = image.depth === "back";
               const hasRect = image.x != null && image.y != null && image.width != null;
               return (
                 <article key={image.id} className={`layer-row base-layer-row ${selectedLayerId === image.id ? "active" : ""} ${visible ? "" : "is-hidden"}`}>
@@ -68,7 +71,9 @@ export default function LayerPanel({
                       <AppButton size="sm" icon={locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { locked: !locked })}>{locked ? "Unlock" : "Lock"}</AppButton>
                       <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { zIndex: (image.zIndex ?? 12) + 1 })}>Front</AppButton>
                       <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { zIndex: Math.max(1, (image.zIndex ?? 12) - 1) })}>Back</AppButton>
+                      <AppButton size="sm" icon={isBehindText ? <ArrowUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { depth: isBehindText ? "front" : "back" })}>{isBehindText ? "Depan teks" : "Belakang teks"}</AppButton>
                       <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateBaseImage(image.id)}>Duplicate</AppButton>
+                      <AppButton size="sm" variant="danger" className="danger-text" icon={<TrashIcon aria-hidden="true" />} onClick={() => onDeleteBaseImage(image.id)}>Delete</AppButton>
                     </div>
                   </div>
                 </article>
@@ -80,7 +85,9 @@ export default function LayerPanel({
       {layers
         .slice()
         .sort((a, b) => b.zIndex - a.zIndex)
-        .map((layer) => (
+        .map((layer) => {
+          const isBehindText = layer.depth === "back";
+          return (
           <article key={layer.id} className={`layer-row ${selectedLayerId === layer.id ? "active" : ""}`}>
             <IconButton
               label={`Pilih layer ${layer.name}`}
@@ -103,12 +110,14 @@ export default function LayerPanel({
                 <AppButton size="sm" icon={layer.locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { locked: !layer.locked })}>{layer.locked ? "Unlock" : "Lock"}</AppButton>
                 <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex + 1 })}>Front</AppButton>
                 <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex - 1 })}>Back</AppButton>
+                <AppButton size="sm" icon={isBehindText ? <ArrowUpIcon aria-hidden="true" /> : <ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { depth: isBehindText ? "front" : "back" })}>{isBehindText ? "Depan teks" : "Belakang teks"}</AppButton>
                 <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateLayer(layer.id)}>Duplicate</AppButton>
                 <AppButton size="sm" variant="danger" className="danger-text" icon={<TrashIcon aria-hidden="true" />} onClick={() => onDeleteLayer(layer.id)}>Delete</AppButton>
               </div>
             </div>
           </article>
-        ))}
+        );
+        })}
     </section>
   );
 }

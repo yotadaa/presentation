@@ -15,10 +15,11 @@ type InspectorProps = {
   onSetDraftQuery: (query: string) => void;
   onReplaceImage: (asset: AssetItem) => void;
   onAddLayer: (asset: AssetItem) => void;
-  onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
+  onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean, historyBeforePatch?: Partial<SlideLayer>) => void;
   onDeleteLayer: (id: string) => void;
+  onDeleteBaseImage: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
-  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
+  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean, historyBeforePatch?: Partial<BaseImageOverride>) => void;
   onDuplicateBaseImage: (id: string) => void;
   onSelectLayer: (id: string | null) => void;
   baseImages: BaseImageLayer[];
@@ -42,6 +43,7 @@ export default function Inspector({
   onAddLayer,
   onUpdateLayer,
   onDeleteLayer,
+  onDeleteBaseImage,
   onDuplicateLayer,
   onUpdateBaseImage,
   onDuplicateBaseImage,
@@ -88,6 +90,7 @@ export default function Inspector({
             onSelectLayer={onSelectLayer}
             onUpdateLayer={onUpdateLayer}
             onDeleteLayer={onDeleteLayer}
+            onDeleteBaseImage={onDeleteBaseImage}
             onDuplicateLayer={onDuplicateLayer}
             onUpdateBaseImage={onUpdateBaseImage}
             onDuplicateBaseImage={onDuplicateBaseImage}
