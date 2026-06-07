@@ -1,15 +1,20 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { AssetItem, EditorSnapshot, EditorState, FontFamilyName, SelectionTarget, SlideLayer, ThemeName } from "../types";
+import type { AssetItem, BaseImageLayer, BaseImageOverride, EditorSnapshot, EditorState, FontFamilyName, SelectionTarget, SlideLayer, ThemeName } from "../types";
 import { replaceElementText, replaceImageSource } from "../utils/slideDom";
 
 const STORAGE_KEY = "skripsi-presenter-react-editor-v1";
 
 type InitialState = Pick<EditorState, "slideHtmlByIndex" | "layers">;
 
+function isBaseLayerId(layerId: string | null) {
+  return Boolean(layerId?.startsWith("base-"));
+}
+
 function snapshot(state: EditorState): EditorSnapshot {
   return {
     slideHtmlByIndex: state.slideHtmlByIndex,
     layers: state.layers,
+    baseImageOverrides: state.baseImageOverrides,
   };
 }
 
@@ -33,6 +38,7 @@ function loadState(initial: InitialState): EditorState {
           inspectorTab: "draft",
           slideHtmlByIndex: storedSlides,
           layers: parsed.layers || initial.layers,
+          baseImageOverrides: parsed.baseImageOverrides || {},
           history: [],
           future: [],
           autosavedAt: parsed.autosavedAt || Date.now(),
@@ -53,6 +59,7 @@ function loadState(initial: InitialState): EditorState {
     inspectorTab: "draft",
     slideHtmlByIndex: initial.slideHtmlByIndex,
     layers: initial.layers,
+    baseImageOverrides: {},
     history: [],
     future: [],
     autosavedAt: Date.now(),
@@ -138,6 +145,32 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
 
   const replaceImage = useCallback((asset: AssetItem) => {
     commit((prev) => {
+      if (isBaseLayerId(prev.selectedLayerId) && prev.baseImageOverrides[prev.selectedLayerId as string]) {
+        const layerId = prev.selectedLayerId as string;
+        return {
+          ...prev,
+          baseImageOverrides: {
+            ...prev.baseImageOverrides,
+            [layerId]: {
+              ...prev.baseImageOverrides[layerId],
+              src: asset.path,
+              name: asset.name,
+              alt: asset.name,
+            },
+          },
+        };
+      }
+      if (prev.selectedLayerId) {
+        return {
+          ...prev,
+          layers: prev.layers.map((layer) => layer.id === prev.selectedLayerId ? {
+            ...layer,
+            assetId: asset.id,
+            src: asset.path,
+            name: asset.name,
+          } : layer),
+        };
+      }
       const target = prev.selectedTarget;
       if (!target || target.kind !== "image") return prev;
       const html = prev.slideHtmlByIndex[target.slideIndex] || initialSlideHtmlByIndex[target.slideIndex] || "";
@@ -148,6 +181,83 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
           [target.slideIndex]: replaceImageSource(html, target.editId, asset.path.replace(/^\//, "")),
         },
       };
+    });
+  }, [commit]);
+
+  const registerBaseImages = useCallback((images: BaseImageLayer[]) => {
+    if (!images.length) return;
+    setState((prev) => {
+      let changed = false;
+      const nextOverrides = { ...prev.baseImageOverrides };
+      images.forEach((image, index) => {
+        if (image.x == null || image.y == null || image.width == null) return;
+        const existing = nextOverrides[image.id];
+        if (!existing) {
+          changed = true;
+          nextOverrides[image.id] = {
+            id: image.id,
+            slideIndex: image.slideIndex,
+            editId: image.editId,
+            src: image.src,
+            name: image.name,
+            alt: image.alt,
+            x: image.x,
+            y: image.y,
+            width: image.width,
+            zIndex: image.zIndex ?? index + 12,
+            visible: image.visible ?? true,
+            locked: image.locked ?? false,
+          };
+          return;
+        }
+
+        const src = existing.src || image.src;
+        const name = existing.name || image.name;
+        const alt = existing.alt || image.alt;
+        if (src !== existing.src || name !== existing.name || alt !== existing.alt) {
+          nextOverrides[image.id] = { ...existing, src, name, alt };
+          changed = true;
+        }
+      });
+      return changed ? { ...prev, baseImageOverrides: nextOverrides, autosavedAt: Date.now() } : prev;
+    });
+  }, []);
+
+  const updateBaseImage = useCallback((layerId: string, patch: Partial<BaseImageOverride>, saveHistory = true) => {
+    const updater = (prev: EditorState) => {
+      const layer = prev.baseImageOverrides[layerId];
+      if (!layer) return prev;
+      return {
+        ...prev,
+        baseImageOverrides: {
+          ...prev.baseImageOverrides,
+          [layerId]: { ...layer, ...patch },
+        },
+      };
+    };
+    if (saveHistory) commit(updater);
+    else setState((prev) => ({ ...updater(prev), autosavedAt: Date.now() }));
+  }, [commit]);
+
+  const duplicateBaseImage = useCallback((layerId: string) => {
+    commit((prev) => {
+      const base = prev.baseImageOverrides[layerId];
+      if (!base) return prev;
+      const maxZ = prev.layers.filter((layer) => layer.slideIndex === base.slideIndex).reduce((max, layer) => Math.max(max, layer.zIndex), base.zIndex);
+      const duplicate: SlideLayer = {
+        id: `layer-${Date.now()}`,
+        slideIndex: base.slideIndex,
+        assetId: "",
+        src: base.src,
+        name: `${base.name} copy`,
+        x: Math.min(88, base.x + 4),
+        y: Math.min(82, base.y + 4),
+        width: base.width,
+        zIndex: maxZ + 1,
+        visible: true,
+        locked: false,
+      };
+      return { ...prev, layers: [...prev.layers, duplicate], selectedLayerId: duplicate.id };
     });
   }, [commit]);
 
@@ -229,10 +339,14 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
   const resetSlide = useCallback((slideIndex: number) => {
     commit((prev) => {
       const nextHtml = { ...prev.slideHtmlByIndex, [slideIndex]: initialSlideHtmlByIndex[slideIndex] || "" };
+      const nextOverrides = Object.fromEntries(
+        Object.entries(prev.baseImageOverrides).filter(([, image]) => image.slideIndex !== slideIndex),
+      );
       return {
         ...prev,
         slideHtmlByIndex: nextHtml,
         layers: prev.layers.filter((layer) => layer.slideIndex !== slideIndex),
+        baseImageOverrides: nextOverrides,
         selectedLayerId: null,
         selectedTarget: null,
       };
@@ -249,6 +363,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
       ...prev,
       slideHtmlByIndex: parsed.slideHtmlByIndex || prev.slideHtmlByIndex,
       layers: parsed.layers || prev.layers,
+      baseImageOverrides: parsed.baseImageOverrides || prev.baseImageOverrides,
       theme: parsed.theme || prev.theme,
       fontFamily: parsed.fontFamily || prev.fontFamily,
       accent: parsed.accent || prev.accent,
@@ -260,6 +375,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
       ...prev,
       slideHtmlByIndex: initialSlideHtmlByIndex,
       layers: [],
+      baseImageOverrides: {},
       selectedLayerId: null,
       selectedTarget: null,
     }));
@@ -277,6 +393,9 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     setInspectorTab,
     replaceText,
     replaceImage,
+    registerBaseImages,
+    updateBaseImage,
+    duplicateBaseImage,
     addLayer,
     duplicateLayer,
     updateLayer,
@@ -287,5 +406,5 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     exportState,
     importState,
     resetAll,
-  }), [addLayer, deleteLayer, duplicateLayer, exportState, goToSlide, importState, redo, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setFontFamily, setInspectorTab, setTheme, state, undo, updateLayer]);
+  }), [addLayer, deleteLayer, duplicateBaseImage, duplicateLayer, exportState, goToSlide, importState, redo, registerBaseImages, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setFontFamily, setInspectorTab, setTheme, state, undo, updateBaseImage, updateLayer]);
 }

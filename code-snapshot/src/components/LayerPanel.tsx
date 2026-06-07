@@ -1,5 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon, DocumentDuplicateIcon, EyeIcon, EyeSlashIcon, LockClosedIcon, LockOpenIcon, TrashIcon } from "@heroicons/react/24/outline";
-import type { BaseImageLayer, SlideLayer } from "../types";
+import type { BaseImageLayer, BaseImageOverride, SlideLayer } from "../types";
 import { normalizeAssetUrl } from "../utils/slideDom";
 import { AppButton, IconButton, NumberStepper } from "./ui/controls";
 
@@ -11,6 +11,8 @@ type LayerPanelProps = {
   onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
   onDeleteLayer: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
+  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
+  onDuplicateBaseImage: (id: string) => void;
 };
 
 export default function LayerPanel({
@@ -21,6 +23,8 @@ export default function LayerPanel({
   onUpdateLayer,
   onDeleteLayer,
   onDuplicateLayer,
+  onUpdateBaseImage,
+  onDuplicateBaseImage,
 }: LayerPanelProps) {
   if (!layers.length && !baseImages.length) {
     return <p className="empty-note">Belum ada layer tambahan di slide ini. Insert gambar dari tab Assets.</p>;
@@ -31,17 +35,45 @@ export default function LayerPanel({
       {baseImages.length ? (
         <div className="base-layer-group">
           <h3>Gambar bawaan slide</h3>
-          {baseImages.map((image) => (
-            <article key={image.id} className="layer-row base-layer-row">
-              <span className="layer-thumb">
-                <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} />
-              </span>
-              <div className="layer-main">
-                <strong className="layer-title">{image.name}</strong>
-                <p>Base image terkunci dari HTML slide. Klik gambar di canvas untuk kontrol cepat.</p>
-              </div>
-            </article>
-          ))}
+          {baseImages
+            .slice()
+            .sort((a, b) => (b.zIndex ?? 0) - (a.zIndex ?? 0))
+            .map((image) => {
+              const visible = image.visible !== false;
+              const locked = image.locked === true;
+              const hasRect = image.x != null && image.y != null && image.width != null;
+              return (
+                <article key={image.id} className={`layer-row base-layer-row ${selectedLayerId === image.id ? "active" : ""} ${visible ? "" : "is-hidden"}`}>
+                  <IconButton
+                    label={`Pilih gambar ${image.name}`}
+                    className="layer-thumb"
+                    icon={<img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} />}
+                    onClick={() => onSelectLayer(image.id)}
+                  />
+                  <div className="layer-main">
+                    <AppButton variant="ghost" size="sm" className="layer-title" onClick={() => onSelectLayer(image.id)}>
+                      {image.name}
+                    </AppButton>
+                    <p>{hasRect ? "Gambar bawaan sudah menjadi layer terkelola." : "Posisi gambar sedang dibaca dari slide."}</p>
+                    {hasRect ? (
+                      <div className="layer-fields">
+                        <NumberStepper label="X" min={0} max={95} value={Math.round(image.x ?? 0)} onChange={(value) => onUpdateBaseImage(image.id, { x: value })} />
+                        <NumberStepper label="Y" min={0} max={92} value={Math.round(image.y ?? 0)} onChange={(value) => onUpdateBaseImage(image.id, { y: value })} />
+                        <NumberStepper label="W" min={4} max={95} value={Math.round(image.width ?? 12)} onChange={(value) => onUpdateBaseImage(image.id, { width: value })} />
+                        <NumberStepper label="Z" min={1} max={999} value={image.zIndex ?? 12} onChange={(value) => onUpdateBaseImage(image.id, { zIndex: value })} />
+                      </div>
+                    ) : null}
+                    <div className="layer-actions">
+                      <AppButton size="sm" icon={visible ? <EyeSlashIcon aria-hidden="true" /> : <EyeIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { visible: !visible })}>{visible ? "Hide" : "Show"}</AppButton>
+                      <AppButton size="sm" icon={locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { locked: !locked })}>{locked ? "Unlock" : "Lock"}</AppButton>
+                      <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { zIndex: (image.zIndex ?? 12) + 1 })}>Front</AppButton>
+                      <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(image.id, { zIndex: Math.max(1, (image.zIndex ?? 12) - 1) })}>Back</AppButton>
+                      <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateBaseImage(image.id)}>Duplicate</AppButton>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
         </div>
       ) : null}
 

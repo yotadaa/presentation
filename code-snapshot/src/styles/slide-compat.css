@@ -395,3 +395,252 @@
   font-size: .155in;
   line-height: 1.28;
 }
+
+/* Slide 20 uses a chart plus three explanatory cards; keep the legend above the footer. */
+.react-slide-frame #slide-20 .split {
+  height: 5.34in;
+  gap: .28in;
+  padding-top: .08in;
+  align-items: start;
+}
+
+.react-slide-frame #slide-20 .membership.small {
+  height: 1.52in;
+  margin: 0 0 .10in;
+}
+
+.react-slide-frame #slide-20 .membership.small .axis {
+  left: .34in;
+  right: .34in;
+  bottom: .25in;
+}
+
+.react-slide-frame #slide-20 .membership.small .curve {
+  width: 1.58in;
+  height: .86in;
+  bottom: .26in;
+}
+
+.react-slide-frame #slide-20 .membership.small .curve.low {
+  left: .45in;
+}
+
+.react-slide-frame #slide-20 .membership.small .curve.med {
+  left: 1.82in;
+}
+
+.react-slide-frame #slide-20 .membership.small .curve.high {
+  left: 3.18in;
+}
+
+.react-slide-frame #slide-20 .mini-legend {
+  gap: .10in;
+  margin-top: .07in;
+}
+
+.react-slide-frame #slide-20 .mini-legend .card {
+  align-items: flex-start;
+  min-height: 1.50in;
+  padding: .13in .11in;
+  gap: .08in;
+}
+
+.react-slide-frame #slide-20 .mini-legend .card-icon {
+  width: .30in;
+  height: .30in;
+  flex: 0 0 .30in;
+}
+
+.react-slide-frame #slide-20 .mini-legend .card h3 {
+  font-size: .15in;
+  margin-bottom: .035in;
+}
+
+.react-slide-frame #slide-20 .mini-legend .card p {
+  font-size: .125in;
+  line-height: 1.18;
+}
+
+/* Keep cover identity cards clear of the footer. */
+.react-slide-frame #slide-01 .cover-identity {
+  transform: translateY(-.18in);
+}
+
+.react-slide-frame #slide-01 .cover-advisor-grid {
+  margin-top: .16in;
+  transform: translateY(-.22in);
+}
+
+/* Slide 33 population strip should read as a panel, not touch the footer. */
+.react-slide-frame #slide-33 .population-cloud {
+  height: 2.80in;
+  margin-top: .24in;
+  padding-block: .26in;
+}
+
+/* Slide 34 visual is decorative support; keep it inside the slide and under control. */
+.react-slide-frame #slide-34 .controller-grid {
+  gap: .12in;
+  margin-top: .16in;
+}
+
+.react-slide-frame #slide-34 .controller-card {
+  min-height: 1.04in;
+  padding: .15in .16in;
+}
+
+.react-slide-frame #slide-34 .controller-card strong {
+  margin-top: .055in;
+  font-size: .16in;
+}
+
+.react-slide-frame #slide-34 .controller-card p {
+  font-size: .126in;
+  line-height: 1.22;
+}
+
+.react-slide-frame #slide-34 .wide-visual {
+  width: 6.25in;
+  height: 2.16in;
+  margin: .08in auto 0;
+}
+
+.react-slide-frame #slide-34 .wide-visual img {
+  inset: .04in;
+  width: calc(100% - .08in);
+  height: calc(100% - .08in);
+}
+
+.slide-scale-shell:has(#slide-34) .base-image-layer:has(img[src*="generated-concept"]) {
+  left: 50% !important;
+  top: 75% !important;
+  width: 36% !important;
+  height: 24% !important;
+  overflow: visible;
+}
+
+.slide-scale-shell:has(#slide-34) .base-image-layer:has(img[src*="generated-concept"]) img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* GUI slides need large screenshots, but the frame must not cover the title/body area. */
+.react-slide-frame #slide-36 h1,
+.react-slide-frame #slide-39 h1,
+.react-slide-frame #slide-41 h1 {
+  max-width: 8.25in;
+  font-size: .54in;
+  line-height: .92;
+}
+
+.react-slide-frame #slide-36 .subdesc p,
+.react-slide-frame #slide-39 .subdesc p,
+.react-slide-frame #slide-41 .subdesc p {
+  font-size: .142in;
+  line-height: 1.28;
+}
+
+.react-slide-frame #slide-36 .screenshot-layout,
+.react-slide-frame #slide-39 .screenshot-layout,
+.react-slide-frame #slide-41 .screenshot-layout {
+  grid-template-columns: 7.05in 3.15in;
+  gap: .18in;
+  margin-top: .54in;
+  align-items: start;
+}
+
+.react-slide-frame #slide-36 .screen-frame,
+.react-slide-frame #slide-39 .screen-frame,
+.react-slide-frame #slide-41 .screen-frame {
+  height: 3.30in;
+  border-radius: .16in;
+  padding: .10in;
+}
+
+.react-slide-frame #slide-36 .screen-bar,
+.react-slide-frame #slide-39 .screen-bar,
+.react-slide-frame #slide-41 .screen-bar {
+  height: .23in;
+}
+
+.react-slide-frame #slide-36 .screen-frame img,
+.react-slide-frame #slide-39 .screen-frame img,
+.react-slide-frame #slide-41 .screen-frame img {
+  height: calc(100% - .23in);
+  border-radius: .10in;
+  object-position: center top;
+}
+
+.react-slide-frame #slide-36 .callout-stack,
+.react-slide-frame #slide-39 .callout-stack,
+.react-slide-frame #slide-41 .callout-stack {
+  gap: .11in;
+  align-content: start;
+}
+
+.react-slide-frame #slide-36 .gui-callout,
+.react-slide-frame #slide-39 .gui-callout,
+.react-slide-frame #slide-41 .gui-callout {
+  grid-template-columns: .34in 1fr;
+  gap: .10in;
+  padding: .13in .14in;
+}
+
+.react-slide-frame #slide-36 .gui-callout svg,
+.react-slide-frame #slide-39 .gui-callout svg,
+.react-slide-frame #slide-41 .gui-callout svg {
+  width: .28in;
+  height: .28in;
+  padding: .055in;
+}
+
+.react-slide-frame #slide-36 .gui-callout strong,
+.react-slide-frame #slide-39 .gui-callout strong,
+.react-slide-frame #slide-41 .gui-callout strong {
+  font-size: .145in;
+}
+
+.react-slide-frame #slide-36 .gui-callout p,
+.react-slide-frame #slide-39 .gui-callout p,
+.react-slide-frame #slide-41 .gui-callout p {
+  font-size: .118in;
+  line-height: 1.25;
+}
+
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="gui-"]),
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="gui-"]),
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="gui-"]) {
+  left: 25.65% !important;
+  width: 44.05% !important;
+  height: 36.65% !important;
+  overflow: hidden;
+  border-radius: .10in;
+}
+
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="gui-"]) {
+  top: 55.25% !important;
+}
+
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="reference-html-images"]),
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="gui-"]),
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="gui-"]) {
+  top: 60.75% !important;
+}
+
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="reference-html-images"]) img,
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="reference-html-images"]) img,
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="reference-html-images"]) img,
+.slide-scale-shell:has(#slide-36) .base-image-layer:has(img[src*="gui-"]) img,
+.slide-scale-shell:has(#slide-39) .base-image-layer:has(img[src*="gui-"]) img,
+.slide-scale-shell:has(#slide-41) .base-image-layer:has(img[src*="gui-"]) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import type { AssetsData, SlidesData, ThesisData } from "../types";
-import { extractBaseImageLayers, highlightSlideSearch, plainTextFromHtml, slideHtmlFor } from "../utils/slideDom";
+import type { AssetsData, BaseImageLayer, BaseImageOverride, SlidesData, ThesisData } from "../types";
+import { extractBaseImageLayers, highlightSlideSearch, normalizeAssetUrl, plainTextFromHtml, slideHtmlFor } from "../utils/slideDom";
 import { useEditorState } from "../hooks/useEditorState";
 import Toolbar from "./Toolbar";
 import SlideRail from "./SlideRail";
@@ -67,8 +67,8 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
     [activeSlide.index, state.layers],
   );
   const activeBaseImages = useMemo(
-    () => extractBaseImageLayers(activeHtml, activeSlide.index),
-    [activeHtml, activeSlide.index],
+    () => enrichBaseImages(extractBaseImageLayers(activeHtml, activeSlide.index), state.baseImageOverrides),
+    [activeHtml, activeSlide.index, state.baseImageOverrides],
   );
   const chapterStartByName = useMemo(() => {
     const entries = new Map<string, number>();
@@ -204,14 +204,17 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           layers={activeLayers}
           baseImages={activeBaseImages}
           selectedLayerId={state.selectedLayerId}
+          onRegisterBaseImages={editor.registerBaseImages}
           onSelectTarget={(target) => {
             editor.selectTarget(target);
             setModalOpen(Boolean(target && target.kind !== "image"));
           }}
           onSelectLayer={editor.selectLayer}
           onUpdateLayer={editor.updateLayer}
+          onUpdateBaseImage={editor.updateBaseImage}
           onDeleteLayer={editor.deleteLayer}
           onDuplicateLayer={editor.duplicateLayer}
+          onDuplicateBaseImage={editor.duplicateBaseImage}
           onAddLayer={editor.addLayer}
           onNext={() => editor.goToSlide(state.currentSlide + 1)}
           onPrev={() => editor.goToSlide(state.currentSlide - 1)}
@@ -229,6 +232,8 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onUpdateLayer={editor.updateLayer}
           onDeleteLayer={editor.deleteLayer}
           onDuplicateLayer={editor.duplicateLayer}
+          onUpdateBaseImage={editor.updateBaseImage}
+          onDuplicateBaseImage={editor.duplicateBaseImage}
           onSelectLayer={editor.selectLayer}
           baseImages={activeBaseImages}
         />
@@ -281,16 +286,66 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
       ) : null}
 
       <div className="print-deck" aria-hidden="true">
-        {printableSlides.map((item) => (
-          <div
-            key={item.index}
-            className="react-slide-frame print-deck-frame"
-            data-slide-theme={state.theme}
-            style={{ "--slide-accent": state.accent, "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
-            dangerouslySetInnerHTML={{ __html: item.html }}
-          />
-        ))}
+        {printableSlides.map((item) => {
+          const baseImages = enrichBaseImages(extractBaseImageLayers(item.html, item.index), state.baseImageOverrides);
+          const managedBaseImages = baseImages.filter((image) => image.x != null && image.y != null && image.width != null);
+          const layers = state.layers.filter((layer) => layer.slideIndex === item.index);
+          return (
+            <div
+              key={item.index}
+              className={`react-slide-frame print-deck-frame ${managedBaseImages.length ? "has-managed-base-images" : ""}`}
+              data-slide-theme={state.theme}
+              style={{ "--slide-accent": state.accent, "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
+            >
+              <div className="print-html-source" dangerouslySetInnerHTML={{ __html: item.html }} />
+              <div className="layer-stage print-layer-stage" aria-hidden="true">
+                {managedBaseImages.map((image) => image.visible === false ? null : (
+                  <div
+                    key={image.id}
+                    className="slide-layer base-image-layer"
+                    style={{
+                      left: `${image.x}%`,
+                      top: `${image.y}%`,
+                      width: `${image.width}%`,
+                      zIndex: image.zIndex ?? 12,
+                    }}
+                  >
+                    <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
+                  </div>
+                ))}
+                {layers.map((layer) => layer.visible ? (
+                  <div
+                    key={layer.id}
+                    className="slide-layer"
+                    style={{
+                      left: `${layer.x}%`,
+                      top: `${layer.y}%`,
+                      width: `${layer.width}%`,
+                      zIndex: layer.zIndex,
+                    }}
+                  >
+                    <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
+                  </div>
+                ) : null)}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
+}
+
+function enrichBaseImages(baseImages: BaseImageLayer[], overrides: Record<string, BaseImageOverride>): BaseImageLayer[] {
+  return baseImages.map((image) => {
+    const override = overrides[image.id];
+    if (!override) return image;
+    return {
+      ...image,
+      ...override,
+      src: override.src || image.src,
+      name: override.name || image.name,
+      alt: override.alt || image.alt,
+    };
+  });
 }

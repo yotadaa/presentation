@@ -1,0 +1,952 @@
+{
+  "generatedAt": "2026-06-07T03:43:49.637Z",
+  "logs": [],
+  "issueSlides": [],
+  "results": [
+    {
+      "slide": 1,
+      "title": "Optimasi Algoritma Genetika Menggunakan Fuzzy Logic pada Penjadwalan Praktikum",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 2,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-01.png"
+    },
+    {
+      "slide": 2,
+      "title": "Agenda Presentasi",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-02.png"
+    },
+    {
+      "slide": 3,
+      "title": "BAB I - Pendahuluan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-03.png"
+    },
+    {
+      "slide": 4,
+      "title": "Pendahuluan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-04.png"
+    },
+    {
+      "slide": 5,
+      "title": "Masalah Penjadwalan Praktikum",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-05.png"
+    },
+    {
+      "slide": 6,
+      "title": "Fokus Masalah Penelitian",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 2,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-06.png"
+    },
+    {
+      "slide": 7,
+      "title": "Arah Penelitian",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 6,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-07.png"
+    },
+    {
+      "slide": 8,
+      "title": "Kontribusi Penelitian",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-08.png"
+    },
+    {
+      "slide": 9,
+      "title": "BAB II - Tinjauan Pustaka",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-09.png"
+    },
+    {
+      "slide": 10,
+      "title": "Tinjauan Pustaka dan Algoritma Penjadwalan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-10.png"
+    },
+    {
+      "slide": 11,
+      "title": "Algoritma Genetika",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-11.png"
+    },
+    {
+      "slide": 12,
+      "title": "Kromosom",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-12.png"
+    },
+    {
+      "slide": 13,
+      "title": "Pembangkitan Kromosom",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-13.png"
+    },
+    {
+      "slide": 14,
+      "title": "Fitness Function",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-14.png"
+    },
+    {
+      "slide": 15,
+      "title": "Crossover",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-15.png"
+    },
+    {
+      "slide": 16,
+      "title": "Mutation",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-16.png"
+    },
+    {
+      "slide": 17,
+      "title": "Penjadwalan Akademik",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-17.png"
+    },
+    {
+      "slide": 18,
+      "title": "Penerapan AG dalam Penjadwalan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 3,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-18.png"
+    },
+    {
+      "slide": 19,
+      "title": "Penjadwalan Laboratorium",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-19.png"
+    },
+    {
+      "slide": 20,
+      "title": "Fuzzy Logic dan Variabel Linguistik",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 3,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-20.png"
+    },
+    {
+      "slide": 21,
+      "title": "Optimasi Algoritma Menggunakan Fuzzy Logic",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-21.png"
+    },
+    {
+      "slide": 22,
+      "title": "Evaluasi Kinerja Hybrid Genetic Algorithm",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-22.png"
+    },
+    {
+      "slide": 23,
+      "title": "Kerangka Pemikiran",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 3,
+        "flowItems": 5,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-23.png"
+    },
+    {
+      "slide": 24,
+      "title": "Penelitian Terdahulu",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-24.png"
+    },
+    {
+      "slide": 25,
+      "title": "BAB III - Metodologi",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-25.png"
+    },
+    {
+      "slide": 26,
+      "title": "Metodologi Penelitian dan Pengumpulan Data",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-26.png"
+    },
+    {
+      "slide": 27,
+      "title": "Pipeline Sistem Optimasi",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 10,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-27.png"
+    },
+    {
+      "slide": 28,
+      "title": "Repair dan Post-Processing Konflik",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 4,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-28.png"
+    },
+    {
+      "slide": 29,
+      "title": "Representasi Jadwal sebagai Kromosom",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-29.png"
+    },
+    {
+      "slide": 30,
+      "title": "Inisialisasi Populasi Awal",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 16,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-30.png"
+    },
+    {
+      "slide": 31,
+      "title": "Penalty sebagai Dasar Kualitas Jadwal",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-31.png"
+    },
+    {
+      "slide": 32,
+      "title": "Rekombinasi Jadwal antar Parent",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-32.png"
+    },
+    {
+      "slide": 33,
+      "title": "Menjaga Keragaman Populasi",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 4,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-33.png"
+    },
+    {
+      "slide": 34,
+      "title": "Controller Adaptif pada Parameter GA",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-34.png"
+    },
+    {
+      "slide": 35,
+      "title": "Fuzzy untuk Mengatur Cr dan Mr",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 6,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-35.png"
+    },
+    {
+      "slide": 36,
+      "title": "Evaluasi dan Implementasi GUI",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-36.png"
+    },
+    {
+      "slide": 37,
+      "title": "BAB IV - Hasil dan Pembahasan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-37.png"
+    },
+    {
+      "slide": 38,
+      "title": "Hasil dan Rekap Data Praktikum FST",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-38.png"
+    },
+    {
+      "slide": 39,
+      "title": "Implementasi Program dan Parameter Adaptif",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-39.png"
+    },
+    {
+      "slide": 40,
+      "title": "Classic GA vs Fuzzy GA",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-40.png"
+    },
+    {
+      "slide": 41,
+      "title": "Hasil Jadwal, Implikasi, dan GUI",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-41.png"
+    },
+    {
+      "slide": 42,
+      "title": "BAB V - Penutup",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-42.png"
+    },
+    {
+      "slide": 43,
+      "title": "Kesimpulan dan Saran",
+      "issues": [],
+      "counts": {
+        "visibleImages": 1,
+        "cards": 3,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-43.png"
+    },
+    {
+      "slide": 44,
+      "title": "Kesimpulan Utama dan Saran Pengembangan",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 3,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-44.png"
+    },
+    {
+      "slide": 45,
+      "title": "Terima Kasih",
+      "issues": [],
+      "counts": {
+        "visibleImages": 2,
+        "cards": 0,
+        "flowItems": 0,
+        "animNodes": 0,
+        "faded": 0
+      },
+      "slideRect": {
+        "left": 335,
+        "top": 289.1875,
+        "right": 1465,
+        "bottom": 924.8125,
+        "width": 1130,
+        "height": 635.625
+      },
+      "screenshot": "C:\\skripsi\\presentation\\qa\\react-slide-captures-20260607-h4-current\\slide-45.png"
+    }
+  ]
+}

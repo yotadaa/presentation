@@ -1082,6 +1082,11 @@ button {
   pointer-events: none;
 }
 
+.slide-scale-shell .react-slide-frame.has-managed-base-images img[data-edit-id],
+.print-deck-frame.has-managed-base-images .print-html-source img[data-edit-id] {
+  visibility: hidden;
+}
+
 .slide-layer {
   position: absolute;
   pointer-events: auto;
@@ -1111,6 +1116,14 @@ button {
   pointer-events: none;
 }
 
+.base-image-layer img {
+  background: transparent;
+}
+
+.base-layer-row.is-hidden {
+  opacity: 0.64;
+}
+
 .image-layer-tooltip {
   position: absolute;
   z-index: 30;
@@ -1130,7 +1143,7 @@ button {
 .image-layer-tooltip::after {
   content: "";
   position: absolute;
-  left: 50%;
+  left: var(--tip-arrow-x, 50%);
   bottom: -7px;
   width: 12px;
   height: 12px;
@@ -1904,6 +1917,15 @@ body.pdf-exporting .print-deck-frame {
   background: #fff;
   page-break-after: auto;
   break-after: auto;
+}
+
+.print-html-source {
+  position: absolute;
+  inset: 0;
+}
+
+.print-layer-stage {
+  pointer-events: none;
 }
 
 body.pdf-exporting .print-deck,

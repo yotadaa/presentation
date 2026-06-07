@@ -13,7 +13,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import type { CSSProperties } from "react";
-import type { AssetItem, BaseImageLayer, SelectionTarget, Slide, SlideLayer } from "../types";
+import type { AssetItem, BaseImageLayer, BaseImageOverride, SelectionTarget, Slide, SlideLayer } from "../types";
 import { normalizeAssetUrl, targetFromElement } from "../utils/slideDom";
 import { AppButton, IconButton } from "./ui/controls";
 
@@ -29,11 +29,14 @@ type SlideCanvasProps = {
   layers: SlideLayer[];
   baseImages: BaseImageLayer[];
   selectedLayerId: string | null;
+  onRegisterBaseImages: (images: BaseImageLayer[]) => void;
   onSelectTarget: (target: SelectionTarget | null) => void;
   onSelectLayer: (layerId: string | null) => void;
   onUpdateLayer: (layerId: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
+  onUpdateBaseImage: (layerId: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
   onDeleteLayer: (layerId: string) => void;
   onDuplicateLayer: (layerId: string) => void;
+  onDuplicateBaseImage: (layerId: string) => void;
   onAddLayer: (asset: AssetItem, position?: { x: number; y: number; width?: number }) => void;
   onGoToSlide: (slide: number) => void;
   onNext: () => void;
@@ -49,11 +52,14 @@ export default function SlideCanvas({
   layers,
   baseImages,
   selectedLayerId,
+  onRegisterBaseImages,
   onSelectTarget,
   onSelectLayer,
   onUpdateLayer,
+  onUpdateBaseImage,
   onDeleteLayer,
   onDuplicateLayer,
+  onDuplicateBaseImage,
   onAddLayer,
   onGoToSlide,
   onNext,
@@ -63,24 +69,49 @@ export default function SlideCanvas({
   const frameRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const previousSlideIndexRef = useRef(slide.index);
-  const dragRef = useRef<{ id: string; startX: number; startY: number; x: number; y: number } | null>(null);
+  const dragRef = useRef<{ kind: "base" | "layer"; id: string; startX: number; startY: number; x: number; y: number } | null>(null);
   const gestureRef = useRef<{ pointerId: number; startX: number; startY: number; startTime: number } | null>(null);
   const [imageTip, setImageTip] = useState<
-    | { kind: "base"; target: SelectionTarget; title: string; x: number; y: number }
+    | { kind: "base"; layerId: string; title: string; x: number; y: number }
     | { kind: "layer"; layerId: string; title: string; x: number; y: number }
     | null
   >(null);
   const transitionDirection = slide.index >= previousSlideIndexRef.current ? "forward" : "backward";
   const imageTipPosition = useMemo(() => {
     if (!imageTip) return null;
-    const minX = imageTip.kind === "base" ? 32 : 30;
-    const maxX = imageTip.kind === "base" ? 68 : 70;
+    const frame = frameRef.current;
+    const panel = viewportRef.current?.closest(".canvas-panel");
+    const shell = frame?.parentElement;
+    if (!frame || !panel || !shell) {
+      return {
+        left: `${imageTip.x}%`,
+        top: `${imageTip.y}%`,
+      } satisfies CSSProperties;
+    }
+
+    const frameRect = frame.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+    const shellRect = shell.getBoundingClientRect();
+    const tipWidth = 250;
+    const tipHeight = 128;
+    const margin = 12;
+    const anchorX = frameRect.left + (imageTip.x / 100) * frameRect.width - shellRect.left;
+    const anchorY = frameRect.top + (imageTip.y / 100) * frameRect.height - shellRect.top;
+    const minCenterX = panelRect.left + tipWidth / 2 + margin - shellRect.left;
+    const maxCenterX = Math.max(minCenterX, panelRect.right - tipWidth / 2 - margin - shellRect.left);
+    const minTop = panelRect.top + tipHeight + margin - shellRect.top;
+    const maxTop = Math.max(minTop, panelRect.bottom - margin - shellRect.top);
+    const centerX = Math.max(minCenterX, Math.min(maxCenterX, anchorX));
+    const top = Math.max(minTop, Math.min(maxTop, anchorY));
+    const arrowX = Math.max(18, Math.min(tipWidth - 18, anchorX - (centerX - tipWidth / 2)));
 
     return {
-      left: `${Math.max(minX, Math.min(maxX, imageTip.x))}%`,
-      top: `${Math.max(14, Math.min(80, imageTip.y))}%`,
-    } satisfies CSSProperties;
-  }, [imageTip]);
+      left: `${centerX}px`,
+      position: "absolute",
+      top: `${top}px`,
+      "--tip-arrow-x": `${arrowX}px`,
+    } satisfies CSSProperties & Record<"--tip-arrow-x", string>;
+  }, [imageTip, scale]);
 
   useEffect(() => {
     const resize = () => {
@@ -105,6 +136,49 @@ export default function SlideCanvas({
     setImageTip(null);
   }, [slide.index]);
 
+  useEffect(() => {
+    if (!baseImages.length) return;
+    const frame = frameRef.current;
+    if (!frame) return;
+    let cancelled = false;
+
+    const measure = () => {
+      if (cancelled) return;
+      const frameRect = frame.getBoundingClientRect();
+      if (!frameRect.width || !frameRect.height) return;
+      const measured = baseImages
+        .map((image, index) => {
+          const node = frame.querySelector<HTMLImageElement>(`img[data-edit-id="${escapeSelector(image.editId)}"]`);
+          if (!node) return null;
+          const rect = node.getBoundingClientRect();
+          if (rect.width <= 1 || rect.height <= 1) return null;
+          return {
+            ...image,
+            x: ((rect.left + rect.width / 2 - frameRect.left) / frameRect.width) * 100,
+            y: ((rect.top + rect.height / 2 - frameRect.top) / frameRect.height) * 100,
+            width: (rect.width / frameRect.width) * 100,
+            zIndex: image.zIndex ?? index + 12,
+            visible: image.visible ?? true,
+            locked: image.locked ?? false,
+          };
+        })
+        .filter(Boolean) as BaseImageLayer[];
+      if (measured.length) onRegisterBaseImages(measured);
+    };
+
+    const frameId = window.requestAnimationFrame(() => {
+      measure();
+    });
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [baseImages, html, onRegisterBaseImages, scale, slide.index]);
+
+  const managedBaseImages = useMemo(
+    () => baseImages.filter((image) => image.x != null && image.y != null && image.width != null),
+    [baseImages],
+  );
   const slideProgress = useMemo(() => `${slide.index} / 45`, [slide.index]);
 
   return (
@@ -196,7 +270,7 @@ export default function SlideCanvas({
         >
           <div
             ref={frameRef}
-            className="react-slide-frame"
+            className={`react-slide-frame ${managedBaseImages.length ? "has-managed-base-images" : ""}`}
             data-slide-theme={theme}
             style={{ transform: `scale(${scale})`, "--slide-accent": accent } as CSSProperties}
             onClick={(event) => {
@@ -214,20 +288,27 @@ export default function SlideCanvas({
               if (layerHit) return;
               const selected = targetFromElement(target, slide.index);
               const selectedNode = (target.closest("[data-edit-id]") || target.closest("img")) as HTMLElement | null;
-              onSelectLayer(null);
-              onSelectTarget(selected);
               if (selected?.kind === "image" && selectedNode && frameRef.current) {
                 const imageRect = selectedNode.getBoundingClientRect();
                 const frameRect = frameRef.current.getBoundingClientRect();
                 const baseImage = baseImages.find((item) => item.editId === selected.editId);
+                if (baseImage) {
+                  onSelectTarget(null);
+                  onSelectLayer(baseImage.id);
+                } else {
+                  onSelectLayer(null);
+                  onSelectTarget(selected);
+                }
                 setImageTip({
                   kind: "base",
-                  target: selected,
+                  layerId: baseImage?.id || selected.editId,
                   title: baseImage?.name || selected.text || "Gambar slide",
                   x: ((imageRect.left + imageRect.width / 2 - frameRect.left) / frameRect.width) * 100,
                   y: ((imageRect.top - frameRect.top) / frameRect.height) * 100,
                 });
               } else {
+                onSelectLayer(null);
+                onSelectTarget(selected);
                 setImageTip(null);
               }
             }}
@@ -235,6 +316,41 @@ export default function SlideCanvas({
           />
 
           <div className="layer-stage" aria-label="Layer gambar tambahan">
+            {managedBaseImages.map((image) => {
+              if (image.visible === false) return null;
+              const locked = image.locked === true;
+              return (
+                <div
+                  key={image.id}
+                  className={`slide-layer base-image-layer ${selectedLayerId === image.id ? "selected" : ""} ${locked ? "locked" : ""}`}
+                  style={{
+                    left: `${image.x}%`,
+                    top: `${image.y}%`,
+                    width: `${image.width}%`,
+                    zIndex: image.zIndex ?? 12,
+                  }}
+                  onPointerDown={(event) => {
+                    if (locked) return;
+                    event.preventDefault();
+                    onSelectTarget(null);
+                    onSelectLayer(image.id);
+                    setImageTip({ kind: "base", layerId: image.id, title: image.name, x: image.x ?? 50, y: image.y ?? 50 });
+                    dragRef.current = {
+                      kind: "base",
+                      id: image.id,
+                      startX: event.clientX,
+                      startY: event.clientY,
+                      x: image.x ?? 50,
+                      y: image.y ?? 50,
+                    };
+                    window.addEventListener("pointermove", pointerMove);
+                    window.addEventListener("pointerup", pointerUp);
+                  }}
+                >
+                  <img src={normalizeAssetUrl(image.src)} alt={image.alt || image.name} draggable={false} />
+                </div>
+              );
+            })}
             {layers.map((layer) => {
               if (!layer.visible) return null;
               return (
@@ -254,6 +370,7 @@ export default function SlideCanvas({
                     onSelectLayer(layer.id);
                     setImageTip({ kind: "layer", layerId: layer.id, title: layer.name, x: layer.x, y: layer.y });
                     dragRef.current = {
+                      kind: "layer",
                       id: layer.id,
                       startX: event.clientX,
                       startY: event.clientY,
@@ -281,7 +398,22 @@ export default function SlideCanvas({
                 <IconButton compact label="Tutup kontrol gambar" icon={<XMarkIcon aria-hidden="true" />} onClick={() => setImageTip(null)} />
               </div>
               {imageTip.kind === "base" ? (
-                <p>Gambar bawaan slide. Pilih aset di panel kanan untuk mengganti gambar yang sedang dipilih.</p>
+                <div className="image-tip-actions">
+                  {(() => {
+                    const layer = managedBaseImages.find((item) => item.id === imageTip.layerId);
+                    if (!layer) return null;
+                    const locked = layer.locked === true;
+                    return (
+                      <>
+                        <AppButton size="sm" icon={locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { locked: !locked })}>{locked ? "Unlock" : "Lock"}</AppButton>
+                        <AppButton size="sm" icon={<EyeSlashIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { visible: false })}>Hide</AppButton>
+                        <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { zIndex: (layer.zIndex ?? 12) + 1 })}>Front</AppButton>
+                        <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateBaseImage(layer.id, { zIndex: Math.max(1, (layer.zIndex ?? 12) - 1) })}>Back</AppButton>
+                        <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateBaseImage(layer.id)}>Duplicate</AppButton>
+                      </>
+                    );
+                  })()}
+                </div>
               ) : (
                 <div className="image-tip-actions">
                   {(() => {
@@ -310,18 +442,22 @@ export default function SlideCanvas({
 
   function pointerMove(event: PointerEvent) {
     const drag = dragRef.current;
-    const viewport = viewportRef.current;
-    if (!drag || !viewport) return;
-    const rect = viewport.getBoundingClientRect();
+    const frame = frameRef.current;
+    if (!drag || !frame) return;
+    const rect = frame.getBoundingClientRect();
     const nextX = drag.x + ((event.clientX - drag.startX) / rect.width) * 100;
     const nextY = drag.y + ((event.clientY - drag.startY) / rect.height) * 100;
-    onUpdateLayer(drag.id, { x: Math.max(0, Math.min(95, nextX)), y: Math.max(0, Math.min(92, nextY)) }, false);
+    const patch = { x: Math.max(0, Math.min(95, nextX)), y: Math.max(0, Math.min(92, nextY)) };
+    setImageTip((tip) => tip && tip.layerId === drag.id ? { ...tip, x: patch.x, y: patch.y } : tip);
+    if (drag.kind === "base") onUpdateBaseImage(drag.id, patch, false);
+    else onUpdateLayer(drag.id, patch, false);
   }
 
   function pointerUp() {
     const drag = dragRef.current;
     if (drag) {
-      onUpdateLayer(drag.id, {}, true);
+      if (drag.kind === "base") onUpdateBaseImage(drag.id, {}, true);
+      else onUpdateLayer(drag.id, {}, true);
     }
     dragRef.current = null;
     window.removeEventListener("pointermove", pointerMove);
@@ -332,4 +468,9 @@ export default function SlideCanvas({
     const viewport = viewportRef.current;
     return Boolean(document.fullscreenElement || viewport?.closest(".app-shell.is-presenting"));
   }
+}
+
+function escapeSelector(value: string) {
+  if (typeof CSS !== "undefined" && CSS.escape) return CSS.escape(value);
+  return value.replace(/["\\]/g, "\\$&");
 }

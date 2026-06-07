@@ -61,7 +61,8 @@ export function extractBaseImageLayers(html: string, slideIndex: number): BaseIm
 }
 
 export function slideHtmlFor(slide: Slide, edits: Record<number, string>) {
-  return withPublicAssetUrls(withActiveChapterChip(edits[slide.index] || slide.html, slide.chapter));
+  const html = withImageEditIds(edits[slide.index] || slide.html, slide.index);
+  return withPublicAssetUrls(withActiveChapterChip(html, slide.chapter));
 }
 
 export function plainTextFromHtml(html: string) {
@@ -149,6 +150,16 @@ function withPublicAssetUrls(html: string) {
     if (src) node.setAttribute("src", publicUrl(src));
     const href = node.getAttribute("href");
     if (href) node.setAttribute("href", publicUrl(href));
+  });
+  return doc.querySelector("#root")?.innerHTML || html;
+}
+
+function withImageEditIds(html: string, slideIndex: number) {
+  const doc = parseHtml(html);
+  Array.from(doc.querySelectorAll<HTMLImageElement>("img")).forEach((img, index) => {
+    if (!img.dataset.editId) {
+      img.dataset.editId = `base-image-${slideIndex}-${index}`;
+    }
   });
   return doc.querySelector("#root")?.innerHTML || html;
 }

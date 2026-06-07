@@ -112,6 +112,21 @@ export type SlideLayer = {
   locked: boolean;
 };
 
+export type BaseImageOverride = {
+  id: string;
+  slideIndex: number;
+  editId: string;
+  src: string;
+  name: string;
+  alt: string;
+  x: number;
+  y: number;
+  width: number;
+  zIndex: number;
+  visible: boolean;
+  locked: boolean;
+};
+
 export type BaseImageLayer = {
   id: string;
   slideIndex: number;
@@ -119,11 +134,18 @@ export type BaseImageLayer = {
   src: string;
   name: string;
   alt: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  zIndex?: number;
+  visible?: boolean;
+  locked?: boolean;
 };
 
 export type EditorSnapshot = {
   slideHtmlByIndex: Record<number, string>;
   layers: SlideLayer[];
+  baseImageOverrides: Record<string, BaseImageOverride>;
 };
 
 export type EditorState = EditorSnapshot & {

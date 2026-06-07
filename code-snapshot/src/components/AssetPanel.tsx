@@ -7,6 +7,7 @@ import { AppButton, SegmentedControl, TextField } from "./ui/controls";
 type AssetPanelProps = {
   assets: AssetItem[];
   selectedTarget: SelectionTarget | null;
+  selectedLayerId: string | null;
   onAddLayer: (asset: AssetItem) => void;
   onReplaceImage: (asset: AssetItem) => void;
 };
@@ -17,7 +18,7 @@ function isReferenceScreenshot(asset: AssetItem) {
   return asset.kind === "reference" || asset.path.includes("/reference-pdf-pages/");
 }
 
-export default function AssetPanel({ assets, selectedTarget, onAddLayer, onReplaceImage }: AssetPanelProps) {
+export default function AssetPanel({ assets, selectedTarget, selectedLayerId, onAddLayer, onReplaceImage }: AssetPanelProps) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<(typeof filters)[number]>("all");
 
@@ -68,7 +69,7 @@ export default function AssetPanel({ assets, selectedTarget, onAddLayer, onRepla
               <AppButton
                 size="sm"
                 icon={<PhotoIcon aria-hidden="true" />}
-                disabled={selectedTarget?.kind !== "image"}
+                disabled={selectedTarget?.kind !== "image" && !selectedLayerId}
                 onClick={() => onReplaceImage(asset)}
               >
                 Replace image

@@ -1,5 +1,5 @@
 import { DocumentTextIcon, PhotoIcon, RectangleStackIcon, BookOpenIcon } from "@heroicons/react/24/outline";
-import type { AssetItem, AssetsData, BaseImageLayer, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
+import type { AssetItem, AssetsData, BaseImageLayer, BaseImageOverride, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
 import DraftPanel from "./DraftPanel";
 import AssetPanel from "./AssetPanel";
 import LayerPanel from "./LayerPanel";
@@ -18,6 +18,8 @@ type InspectorProps = {
   onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
   onDeleteLayer: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
+  onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean) => void;
+  onDuplicateBaseImage: (id: string) => void;
   onSelectLayer: (id: string | null) => void;
   baseImages: BaseImageLayer[];
 };
@@ -41,6 +43,8 @@ export default function Inspector({
   onUpdateLayer,
   onDeleteLayer,
   onDuplicateLayer,
+  onUpdateBaseImage,
+  onDuplicateBaseImage,
   onSelectLayer,
   baseImages,
 }: InspectorProps) {
@@ -70,6 +74,7 @@ export default function Inspector({
           <AssetPanel
             assets={assetsData.assets}
             selectedTarget={state.selectedTarget}
+            selectedLayerId={state.selectedLayerId}
             onAddLayer={onAddLayer}
             onReplaceImage={onReplaceImage}
           />
@@ -84,6 +89,8 @@ export default function Inspector({
             onUpdateLayer={onUpdateLayer}
             onDeleteLayer={onDeleteLayer}
             onDuplicateLayer={onDuplicateLayer}
+            onUpdateBaseImage={onUpdateBaseImage}
+            onDuplicateBaseImage={onDuplicateBaseImage}
           />
         ) : null}
 
