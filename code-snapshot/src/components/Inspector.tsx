@@ -1,5 +1,5 @@
 import { DocumentTextIcon, PhotoIcon, RectangleStackIcon, BookOpenIcon } from "@heroicons/react/24/outline";
-import type { AssetItem, AssetsData, BaseImageLayer, BaseImageOverride, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
+import type { AssetItem, AssetsData, BaseElementLayer, BaseElementOverride, BaseImageLayer, BaseImageOverride, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
 import DraftPanel from "./DraftPanel";
 import AssetPanel from "./AssetPanel";
 import LayerPanel from "./LayerPanel";
@@ -18,11 +18,14 @@ type InspectorProps = {
   onUpdateLayer: (id: string, patch: Partial<SlideLayer>, saveHistory?: boolean, historyBeforePatch?: Partial<SlideLayer>) => void;
   onDeleteLayer: (id: string) => void;
   onDeleteBaseImage: (id: string) => void;
+  onDeleteBaseElement: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
   onUpdateBaseImage: (id: string, patch: Partial<BaseImageOverride>, saveHistory?: boolean, historyBeforePatch?: Partial<BaseImageOverride>) => void;
+  onUpdateBaseElement: (id: string, patch: Partial<BaseElementOverride>, saveHistory?: boolean, historyBeforePatch?: Partial<BaseElementOverride>) => void;
   onDuplicateBaseImage: (id: string) => void;
   onSelectLayer: (id: string | null) => void;
   baseImages: BaseImageLayer[];
+  baseElements: BaseElementLayer[];
 };
 
 const tabs: Array<{ id: EditorState["inspectorTab"]; label: string; Icon: typeof DocumentTextIcon }> = [
@@ -44,11 +47,14 @@ export default function Inspector({
   onUpdateLayer,
   onDeleteLayer,
   onDeleteBaseImage,
+  onDeleteBaseElement,
   onDuplicateLayer,
   onUpdateBaseImage,
+  onUpdateBaseElement,
   onDuplicateBaseImage,
   onSelectLayer,
   baseImages,
+  baseElements,
 }: InspectorProps) {
   const slide = slidesData.slides.find((item) => item.index === state.currentSlide) || slidesData.slides[0];
   const layers = state.layers.filter((layer) => layer.slideIndex === state.currentSlide);
@@ -86,13 +92,16 @@ export default function Inspector({
           <LayerPanel
             layers={layers}
             baseImages={baseImages}
+            baseElements={baseElements}
             selectedLayerId={state.selectedLayerId}
             onSelectLayer={onSelectLayer}
             onUpdateLayer={onUpdateLayer}
             onDeleteLayer={onDeleteLayer}
             onDeleteBaseImage={onDeleteBaseImage}
+            onDeleteBaseElement={onDeleteBaseElement}
             onDuplicateLayer={onDuplicateLayer}
             onUpdateBaseImage={onUpdateBaseImage}
+            onUpdateBaseElement={onUpdateBaseElement}
             onDuplicateBaseImage={onDuplicateBaseImage}
           />
         ) : null}

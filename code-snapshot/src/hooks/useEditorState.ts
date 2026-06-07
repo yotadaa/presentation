@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { AssetItem, BaseImageLayer, BaseImageOverride, EditorSnapshot, EditorState, FontFamilyName, SelectionTarget, SlideLayer, ThemeName } from "../types";
+import type { AssetItem, BaseElementLayer, BaseElementOverride, BaseImageLayer, BaseImageOverride, EditorSnapshot, EditorState, FontFamilyName, SelectionTarget, SlideLayer, ThemeName } from "../types";
 import { applyElementStyle, replaceElementText, replaceImageSource } from "../utils/slideDom";
 
 const STORAGE_KEY = "skripsi-presenter-react-editor-v1";
@@ -7,7 +7,11 @@ const STORAGE_KEY = "skripsi-presenter-react-editor-v1";
 type InitialState = Pick<EditorState, "slideHtmlByIndex" | "layers">;
 
 function isBaseLayerId(layerId: string | null) {
-  return Boolean(layerId?.startsWith("base-"));
+  return Boolean(layerId?.startsWith("base-") && !layerId.startsWith("base-element-"));
+}
+
+function isBaseElementLayerId(layerId: string | null) {
+  return Boolean(layerId?.startsWith("base-element-"));
 }
 
 function snapshot(state: EditorState): EditorSnapshot {
@@ -16,6 +20,9 @@ function snapshot(state: EditorState): EditorSnapshot {
     layers: state.layers.map((layer) => ({ ...layer })),
     baseImageOverrides: Object.fromEntries(
       Object.entries(state.baseImageOverrides).map(([key, image]) => [key, { ...image }]),
+    ),
+    baseElementOverrides: Object.fromEntries(
+      Object.entries(state.baseElementOverrides).map(([key, element]) => [key, { ...element }]),
     ),
     theme: state.theme,
     fontFamily: state.fontFamily,
@@ -44,6 +51,7 @@ function loadState(initial: InitialState): EditorState {
           slideHtmlByIndex: storedSlides,
           layers: parsed.layers || initial.layers,
           baseImageOverrides: parsed.baseImageOverrides || {},
+          baseElementOverrides: parsed.baseElementOverrides || {},
           history: [],
           future: [],
           autosavedAt: parsed.autosavedAt || Date.now(),
@@ -65,6 +73,7 @@ function loadState(initial: InitialState): EditorState {
     slideHtmlByIndex: initial.slideHtmlByIndex,
     layers: initial.layers,
     baseImageOverrides: {},
+    baseElementOverrides: {},
     history: [],
     future: [],
     autosavedAt: Date.now(),
@@ -87,6 +96,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
         currentSlide: state.currentSlide,
         selectedLayerId: state.selectedLayerId,
         baseImageOverrides: state.baseImageOverrides,
+        baseElementOverrides: state.baseElementOverrides,
         layers: state.layers,
         historyTail: state.history.at(-1),
         futureHead: state.future[0],
@@ -195,6 +205,8 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
         };
       }
       if (prev.selectedLayerId) {
+        if (isBaseElementLayerId(prev.selectedLayerId)) return prev;
+        if (!prev.layers.some((layer) => layer.id === prev.selectedLayerId)) return prev;
         return {
           ...prev,
           layers: prev.layers.map((layer) => layer.id === prev.selectedLayerId ? {
@@ -261,6 +273,49 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     });
   }, []);
 
+  const registerBaseElements = useCallback((elements: BaseElementLayer[]) => {
+    if (!elements.length) return;
+    setState((prev) => {
+      let changed = false;
+      const nextOverrides = { ...prev.baseElementOverrides };
+      elements.forEach((element, index) => {
+        if (element.x == null || element.y == null || element.width == null || element.height == null) return;
+        const existing = nextOverrides[element.id];
+        if (!existing) {
+          changed = true;
+          nextOverrides[element.id] = {
+            id: element.id,
+            slideIndex: element.slideIndex,
+            editId: element.editId,
+            html: element.html,
+            name: element.name,
+            kind: element.kind,
+            x: element.x,
+            y: element.y,
+            width: element.width,
+            height: element.height,
+            zIndex: element.zIndex ?? index + 18,
+            depth: element.depth ?? "front",
+            visible: element.visible ?? true,
+            locked: element.locked ?? false,
+          };
+          return;
+        }
+
+        if (existing.html !== element.html || existing.name !== element.name || existing.kind !== element.kind) {
+          nextOverrides[element.id] = {
+            ...existing,
+            html: element.html,
+            name: element.name,
+            kind: element.kind,
+          };
+          changed = true;
+        }
+      });
+      return changed ? { ...prev, baseElementOverrides: nextOverrides, autosavedAt: Date.now() } : prev;
+    });
+  }, []);
+
   const beginBaseImageEdit = useCallback((layerId: string, beforePatch?: Partial<BaseImageOverride>) => {
     const transactionKey = `base:${layerId}`;
     const existingSnapshot = activeLayerTransactionsRef.current[transactionKey];
@@ -285,6 +340,23 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     const initialSnapshot = existingSnapshot || snapshot(stateRef.current);
     if (beforePatch) {
       initialSnapshot.layers = initialSnapshot.layers.map((layer) => layer.id === layerId ? { ...layer, ...beforePatch } : layer);
+    }
+    activeLayerTransactionsRef.current[transactionKey] = initialSnapshot;
+  }, []);
+
+  const beginBaseElementEdit = useCallback((layerId: string, beforePatch?: Partial<BaseElementOverride>) => {
+    const transactionKey = `element:${layerId}`;
+    const existingSnapshot = activeLayerTransactionsRef.current[transactionKey];
+    if (existingSnapshot && !beforePatch) return;
+    const initialSnapshot = existingSnapshot || snapshot(stateRef.current);
+    if (beforePatch && initialSnapshot.baseElementOverrides[layerId]) {
+      initialSnapshot.baseElementOverrides = {
+        ...initialSnapshot.baseElementOverrides,
+        [layerId]: {
+          ...initialSnapshot.baseElementOverrides[layerId],
+          ...beforePatch,
+        },
+      };
     }
     activeLayerTransactionsRef.current[transactionKey] = initialSnapshot;
   }, []);
@@ -350,6 +422,73 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
         baseImageOverrides: {
           ...prev.baseImageOverrides,
           [layerId]: { ...layer, visible: false },
+        },
+        selectedLayerId: null,
+      };
+    });
+  }, [commit]);
+
+  const updateBaseElement = useCallback((
+    layerId: string,
+    patch: Partial<BaseElementOverride>,
+    saveHistory = true,
+    historyBeforePatch?: Partial<BaseElementOverride>,
+  ) => {
+    const updater = (prev: EditorState) => {
+      const element = prev.baseElementOverrides[layerId];
+      if (!element) return prev;
+      return {
+        ...prev,
+        baseElementOverrides: {
+          ...prev.baseElementOverrides,
+          [layerId]: { ...element, ...patch },
+        },
+      };
+    };
+    const transactionKey = `element:${layerId}`;
+    if (saveHistory) {
+      setState((prev) => {
+        const transactionStart = activeLayerTransactionsRef.current[transactionKey];
+        if (transactionStart) delete activeLayerTransactionsRef.current[transactionKey];
+        const next = updater(prev);
+        if (next === prev && !transactionStart && !historyBeforePatch) return prev;
+        let historySnapshot = transactionStart || snapshot(prev);
+        if (historyBeforePatch) {
+          const historyElement = historySnapshot.baseElementOverrides[layerId] || prev.baseElementOverrides[layerId];
+          if (historyElement) {
+            historySnapshot = {
+              ...historySnapshot,
+              baseElementOverrides: {
+                ...historySnapshot.baseElementOverrides,
+                [layerId]: { ...historyElement, ...historyBeforePatch },
+              },
+            };
+          }
+        }
+        return {
+          ...next,
+          history: [...prev.history.slice(-30), historySnapshot],
+          future: [],
+          autosavedAt: Date.now(),
+        };
+      });
+    } else {
+      setState((prev) => {
+        const next = updater(prev);
+        return next === prev ? prev : { ...next, autosavedAt: Date.now() };
+      });
+    }
+  }, []);
+
+  const deleteBaseElement = useCallback((layerId: string) => {
+    commit((prev) => {
+      const element = prev.baseElementOverrides[layerId];
+      if (!element) return prev;
+      return {
+        ...prev,
+        baseElementOverrides: {
+          ...prev.baseElementOverrides,
+          [layerId]: { ...element, visible: false },
         },
         selectedLayerId: null,
       };
@@ -490,11 +629,15 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
       const nextOverrides = Object.fromEntries(
         Object.entries(prev.baseImageOverrides).filter(([, image]) => image.slideIndex !== slideIndex),
       );
+      const nextElementOverrides = Object.fromEntries(
+        Object.entries(prev.baseElementOverrides).filter(([, element]) => element.slideIndex !== slideIndex),
+      );
       return {
         ...prev,
         slideHtmlByIndex: nextHtml,
         layers: prev.layers.filter((layer) => layer.slideIndex !== slideIndex),
         baseImageOverrides: nextOverrides,
+        baseElementOverrides: nextElementOverrides,
         selectedLayerId: null,
         selectedTarget: null,
       };
@@ -512,6 +655,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
       slideHtmlByIndex: parsed.slideHtmlByIndex || prev.slideHtmlByIndex,
       layers: parsed.layers || prev.layers,
       baseImageOverrides: parsed.baseImageOverrides || prev.baseImageOverrides,
+      baseElementOverrides: parsed.baseElementOverrides || prev.baseElementOverrides,
       theme: parsed.theme || prev.theme,
       fontFamily: parsed.fontFamily || prev.fontFamily,
       accent: parsed.accent || prev.accent,
@@ -524,6 +668,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
       slideHtmlByIndex: initialSlideHtmlByIndex,
       layers: [],
       baseImageOverrides: {},
+      baseElementOverrides: {},
       selectedLayerId: null,
       selectedTarget: null,
     }));
@@ -543,10 +688,14 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     updateTargetStyle,
     replaceImage,
     registerBaseImages,
+    registerBaseElements,
     beginBaseImageEdit,
+    beginBaseElementEdit,
     beginLayerEdit,
     updateBaseImage,
+    updateBaseElement,
     deleteBaseImage,
+    deleteBaseElement,
     duplicateBaseImage,
     addLayer,
     duplicateLayer,
@@ -558,5 +707,5 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     exportState,
     importState,
     resetAll,
-  }), [addLayer, beginBaseImageEdit, beginLayerEdit, deleteBaseImage, deleteLayer, duplicateBaseImage, duplicateLayer, exportState, goToSlide, importState, redo, registerBaseImages, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setFontFamily, setInspectorTab, setTheme, state, undo, updateBaseImage, updateLayer, updateTargetStyle]);
+  }), [addLayer, beginBaseElementEdit, beginBaseImageEdit, beginLayerEdit, deleteBaseElement, deleteBaseImage, deleteLayer, duplicateBaseImage, duplicateLayer, exportState, goToSlide, importState, redo, registerBaseElements, registerBaseImages, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setFontFamily, setInspectorTab, setTheme, state, undo, updateBaseElement, updateBaseImage, updateLayer, updateTargetStyle]);
 }

@@ -87,6 +87,7 @@ export type AssetItem = {
 
 export type ImageDepth = "back" | "front";
 export type ImageFrame = "screen";
+export type BaseElementKind = "card" | "callout" | "metric" | "element";
 
 export type AssetsData = {
   assets: AssetItem[];
@@ -150,10 +151,45 @@ export type BaseImageLayer = {
   locked?: boolean;
 };
 
+export type BaseElementOverride = {
+  id: string;
+  slideIndex: number;
+  editId: string;
+  html: string;
+  name: string;
+  kind: BaseElementKind;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  zIndex: number;
+  depth?: ImageDepth;
+  visible: boolean;
+  locked: boolean;
+};
+
+export type BaseElementLayer = {
+  id: string;
+  slideIndex: number;
+  editId: string;
+  html: string;
+  name: string;
+  kind: BaseElementKind;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  zIndex?: number;
+  depth?: ImageDepth;
+  visible?: boolean;
+  locked?: boolean;
+};
+
 export type EditorSnapshot = {
   slideHtmlByIndex: Record<number, string>;
   layers: SlideLayer[];
   baseImageOverrides: Record<string, BaseImageOverride>;
+  baseElementOverrides: Record<string, BaseElementOverride>;
   theme: ThemeName;
   fontFamily: FontFamilyName;
   accent: string;

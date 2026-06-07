@@ -1118,6 +1118,11 @@ button {
   visibility: hidden;
 }
 
+.slide-scale-shell .react-slide-frame.has-managed-base-elements > .slide-html-host [data-managed-element-id],
+.print-deck-frame.has-managed-base-elements > .print-html-source [data-managed-element-id] {
+  visibility: hidden;
+}
+
 .slide-layer {
   position: absolute;
   pointer-events: auto;
@@ -1181,6 +1186,31 @@ button {
   background: transparent;
 }
 
+.slide-layer.base-element-layer {
+  display: block;
+  overflow: visible;
+  border-radius: 14px;
+}
+
+.base-element-content {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.base-element-content > * {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+.base-element-layer.selected .base-element-content > * {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--slide-accent, var(--accent)) 32%, transparent),
+    0 18px 44px color-mix(in srgb, var(--slide-accent, var(--accent)) 18%, transparent);
+}
+
 .slide-layer.base-screen-frame {
   aspect-ratio: 2.14 / 1;
   overflow: hidden;
@@ -1223,6 +1253,19 @@ button {
 
 .base-layer-row.is-hidden {
   opacity: 0.64;
+}
+
+.base-element-row.is-hidden {
+  opacity: 0.64;
+}
+
+.element-thumb {
+  color: var(--accent-strong);
+}
+
+.element-thumb svg {
+  width: 22px;
+  height: 22px;
 }
 
 .image-layer-tooltip {

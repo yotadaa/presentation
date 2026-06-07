@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import type { AssetsData, BaseImageLayer, BaseImageOverride, SlidesData, ThesisData } from "../types";
-import { extractBaseImageLayers, highlightSlideSearch, normalizeAssetUrl, plainTextFromHtml, slideHtmlFor } from "../utils/slideDom";
+import type { AssetsData, BaseElementLayer, BaseElementOverride, BaseImageLayer, BaseImageOverride, SlidesData, ThesisData } from "../types";
+import { extractBaseElementLayers, extractBaseImageLayers, highlightSlideSearch, normalizeAssetUrl, plainTextFromHtml, slideHtmlFor } from "../utils/slideDom";
 import { useEditorState } from "../hooks/useEditorState";
 import Toolbar from "./Toolbar";
 import SlideRail from "./SlideRail";
@@ -69,6 +69,10 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
   const activeBaseImages = useMemo(
     () => enrichBaseImages(extractBaseImageLayers(activeHtml, activeSlide.index), state.baseImageOverrides),
     [activeHtml, activeSlide.index, state.baseImageOverrides],
+  );
+  const activeBaseElements = useMemo(
+    () => enrichBaseElements(extractBaseElementLayers(activeHtml, activeSlide.index), state.baseElementOverrides),
+    [activeHtml, activeSlide.index, state.baseElementOverrides],
   );
   const chapterStartByName = useMemo(() => {
     const entries = new Map<string, number>();
@@ -210,8 +214,10 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           chapterStartByName={chapterStartByName}
           layers={activeLayers}
           baseImages={activeBaseImages}
+          baseElements={activeBaseElements}
           selectedLayerId={state.selectedLayerId}
           onRegisterBaseImages={editor.registerBaseImages}
+          onRegisterBaseElements={editor.registerBaseElements}
           onSelectTarget={(target) => {
             editor.selectTarget(target);
             setModalOpen(Boolean(target && target.kind !== "image"));
@@ -219,10 +225,13 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onSelectLayer={editor.selectLayer}
           onUpdateLayer={editor.updateLayer}
           onUpdateBaseImage={editor.updateBaseImage}
+          onUpdateBaseElement={editor.updateBaseElement}
           onBeginLayerEdit={editor.beginLayerEdit}
           onBeginBaseImageEdit={editor.beginBaseImageEdit}
+          onBeginBaseElementEdit={editor.beginBaseElementEdit}
           onDeleteLayer={editor.deleteLayer}
           onDeleteBaseImage={editor.deleteBaseImage}
+          onDeleteBaseElement={editor.deleteBaseElement}
           onDuplicateLayer={editor.duplicateLayer}
           onDuplicateBaseImage={editor.duplicateBaseImage}
           onUpdateTextStyle={editor.updateTargetStyle}
@@ -243,11 +252,14 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onUpdateLayer={editor.updateLayer}
           onDeleteLayer={editor.deleteLayer}
           onDeleteBaseImage={editor.deleteBaseImage}
+          onDeleteBaseElement={editor.deleteBaseElement}
           onDuplicateLayer={editor.duplicateLayer}
           onUpdateBaseImage={editor.updateBaseImage}
+          onUpdateBaseElement={editor.updateBaseElement}
           onDuplicateBaseImage={editor.duplicateBaseImage}
           onSelectLayer={editor.selectLayer}
           baseImages={activeBaseImages}
+          baseElements={activeBaseElements}
         />
       </div>
 
@@ -300,16 +312,20 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
       <div className="print-deck" aria-hidden="true">
         {printableSlides.map((item) => {
           const baseImages = enrichBaseImages(extractBaseImageLayers(item.html, item.index), state.baseImageOverrides);
+          const baseElements = enrichBaseElements(extractBaseElementLayers(item.html, item.index), state.baseElementOverrides);
           const managedBaseImages = baseImages.filter((image) => image.x != null && image.y != null && image.width != null);
+          const managedBaseElements = baseElements.filter((element) => element.x != null && element.y != null && element.width != null && element.height != null);
           const layers = state.layers.filter((layer) => layer.slideIndex === item.index);
           const backBaseImages = managedBaseImages.filter((image) => (image.depth || "front") === "back");
           const frontBaseImages = managedBaseImages.filter((image) => (image.depth || "front") !== "back");
+          const backBaseElements = managedBaseElements.filter((element) => (element.depth || "front") === "back");
+          const frontBaseElements = managedBaseElements.filter((element) => (element.depth || "front") !== "back");
           const backLayers = layers.filter((layer) => (layer.depth || "front") === "back");
           const frontLayers = layers.filter((layer) => (layer.depth || "front") !== "back");
           return (
             <div
               key={item.index}
-              className={`react-slide-frame print-deck-frame ${managedBaseImages.length ? "has-managed-base-images" : ""}`}
+              className={`react-slide-frame print-deck-frame ${managedBaseImages.length ? "has-managed-base-images" : ""} ${managedBaseElements.length ? "has-managed-base-elements" : ""}`}
               data-slide-theme={state.theme}
               style={{ "--slide-accent": state.accent, "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
             >
@@ -346,6 +362,21 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
                     <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
                   </div>
                 ) : null)}
+                {backBaseElements.map((element) => element.visible === false ? null : (
+                  <div
+                    key={element.id}
+                    className="slide-layer base-element-layer depth-back"
+                    data-layer-id={element.id}
+                    style={{
+                      left: `${element.x}%`,
+                      top: `${element.y}%`,
+                      width: `${element.width}%`,
+                      height: `${element.height}%`,
+                      zIndex: element.zIndex ?? 18,
+                    }}
+                    dangerouslySetInnerHTML={{ __html: element.html }}
+                  />
+                ))}
               </div>
               <div className="layer-stage print-layer-stage layer-stage-front" aria-hidden="true">
                 {frontBaseImages.map((image) => image.visible === false ? null : (
@@ -379,6 +410,21 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
                     <img src={normalizeAssetUrl(layer.src)} alt={layer.name} draggable={false} />
                   </div>
                 ) : null)}
+                {frontBaseElements.map((element) => element.visible === false ? null : (
+                  <div
+                    key={element.id}
+                    className="slide-layer base-element-layer depth-front"
+                    data-layer-id={element.id}
+                    style={{
+                      left: `${element.x}%`,
+                      top: `${element.y}%`,
+                      width: `${element.width}%`,
+                      height: `${element.height}%`,
+                      zIndex: element.zIndex ?? 18,
+                    }}
+                    dangerouslySetInnerHTML={{ __html: element.html }}
+                  />
+                ))}
               </div>
             </div>
           );
@@ -386,6 +432,20 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
       </div>
     </div>
   );
+}
+
+function enrichBaseElements(baseElements: BaseElementLayer[], overrides: Record<string, BaseElementOverride>): BaseElementLayer[] {
+  return baseElements.map((element) => {
+    const override = overrides[element.id];
+    if (!override) return element;
+    return {
+      ...element,
+      ...override,
+      html: override.html || element.html,
+      name: override.name || element.name,
+      kind: override.kind || element.kind,
+    };
+  });
 }
 
 function enrichBaseImages(baseImages: BaseImageLayer[], overrides: Record<string, BaseImageOverride>): BaseImageLayer[] {

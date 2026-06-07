@@ -1,6 +1,14 @@
-import type { BaseImageLayer, ReferenceEntry, SelectionTarget, Slide } from "../types";
+import type { BaseElementKind, BaseElementLayer, BaseImageLayer, ReferenceEntry, SelectionTarget, Slide } from "../types";
 
 const EXTERNAL_URL_PATTERN = /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i;
+const MANAGED_ELEMENT_SELECTOR = [
+  ".gui-callout",
+  "article.card",
+  ".controller-card",
+  ".metric",
+  ".callout",
+  ".profile-card",
+].join(",");
 
 function appBaseUrl() {
   const base = import.meta.env.BASE_URL || "/";
@@ -62,8 +70,23 @@ export function extractBaseImageLayers(html: string, slideIndex: number): BaseIm
   });
 }
 
+export function extractBaseElementLayers(html: string, slideIndex: number): BaseElementLayer[] {
+  const doc = parseHtml(html);
+  return Array.from(doc.querySelectorAll<HTMLElement>(MANAGED_ELEMENT_SELECTOR)).map((node, index) => {
+    const editId = managedElementEditId(node, slideIndex, index);
+    return {
+      id: `base-element-${slideIndex}-${editId}`,
+      slideIndex,
+      editId,
+      html: node.outerHTML,
+      name: managedElementName(node, index),
+      kind: managedElementKind(node),
+    };
+  });
+}
+
 export function slideHtmlFor(slide: Slide, edits: Record<number, string>) {
-  const html = withImageEditIds(edits[slide.index] || slide.html, slide.index);
+  const html = withManagedElementEditIds(withImageEditIds(edits[slide.index] || slide.html, slide.index), slide.index);
   return withPublicAssetUrls(withActiveChapterChip(html, slide.chapter));
 }
 
@@ -164,6 +187,32 @@ function withImageEditIds(html: string, slideIndex: number) {
     }
   });
   return doc.querySelector("#root")?.innerHTML || html;
+}
+
+function withManagedElementEditIds(html: string, slideIndex: number) {
+  const doc = parseHtml(html);
+  Array.from(doc.querySelectorAll<HTMLElement>(MANAGED_ELEMENT_SELECTOR)).forEach((node, index) => {
+    const editId = managedElementEditId(node, slideIndex, index);
+    node.dataset.editId = editId;
+    node.dataset.managedElementId = `base-element-${slideIndex}-${editId}`;
+  });
+  return doc.querySelector("#root")?.innerHTML || html;
+}
+
+function managedElementEditId(node: HTMLElement, slideIndex: number, index: number) {
+  return node.dataset.editId || `base-element-${slideIndex}-${index}`;
+}
+
+function managedElementName(node: HTMLElement, index: number) {
+  const label = node.querySelector("h3, strong, b")?.textContent?.trim() || node.textContent?.trim().slice(0, 42);
+  return label || `Kartu ${index + 1}`;
+}
+
+function managedElementKind(node: HTMLElement): BaseElementKind {
+  if (node.classList.contains("gui-callout") || node.classList.contains("callout")) return "callout";
+  if (node.classList.contains("metric")) return "metric";
+  if (node.classList.contains("card") || node.classList.contains("controller-card") || node.classList.contains("profile-card")) return "card";
+  return "element";
 }
 
 export function replaceElementText(html: string, editId: string, replacement: string) {
