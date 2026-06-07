@@ -1,0 +1,796 @@
+{
+  "createdAt": "2026-06-07T15:21:25.903Z",
+  "url": "http://127.0.0.1:5173/presentation/?qa=h8-final-1780845662445#slide-45",
+  "run": "h8-final-1780845662445",
+  "logs": [],
+  "surface": {
+    "title": "Skripsi Presenter React Editor",
+    "appShell": true,
+    "toolbar": true,
+    "leftSidebar": false,
+    "rightInspector": true,
+    "commandPaletteButton": true,
+    "settingsButton": true
+  },
+  "totalSlides": 45,
+  "issueSlides": [],
+  "slideResults": [
+    {
+      "slideNo": 1,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 2,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 3,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 4,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 5,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 6,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 7,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 8,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 9,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 650,
+        "height": 366
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 10,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 11,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 12,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 13,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 14,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 15,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 16,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 17,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 18,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 19,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 20,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 21,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 22,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 23,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 24,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 25,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 26,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 27,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 28,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 29,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 30,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 31,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 32,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 33,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 34,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 35,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 36,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 37,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 38,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 39,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 40,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 41,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 42,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 43,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 44,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    },
+    {
+      "slideNo": 45,
+      "frame": true,
+      "slide": true,
+      "frameSize": {
+        "width": 650,
+        "height": 366
+      },
+      "slideSize": {
+        "width": 0,
+        "height": 0
+      },
+      "clippedCount": 0,
+      "severeClipCount": 0,
+      "tinyText": 0,
+      "issues": []
+    }
+  ],
+  "screenshots": [
+    "qa/screenshots/qa-h8-final-slide-02.png",
+    "qa/screenshots/qa-h8-final-slide-11.png",
+    "qa/screenshots/qa-h8-final-slide-20.png",
+    "qa/screenshots/qa-h8-final-slide-23.png",
+    "qa/screenshots/qa-h8-final-slide-27.png",
+    "qa/screenshots/qa-h8-final-slide-30.png",
+    "qa/screenshots/qa-h8-final-slide-34.png",
+    "qa/screenshots/qa-h8-final-slide-36.png",
+    "qa/screenshots/qa-h8-final-slide-39.png",
+    "qa/screenshots/qa-h8-final-slide-41.png"
+  ]
+}

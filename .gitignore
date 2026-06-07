@@ -14,6 +14,7 @@ build/
 # Browser runtime profiles created by QA scripts
 **/chrome-*-profile/
 **/chrome-shot-profile-*/
+qa/chrome-profile-*/
 
 # Accidental root lockfile; the app lockfile lives in code-snapshot/
 /package-lock.json
