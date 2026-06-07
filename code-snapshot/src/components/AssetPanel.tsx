@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { FunnelIcon, MagnifyingGlassIcon, PhotoIcon, RectangleStackIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, PhotoIcon, RectangleStackIcon } from "@heroicons/react/24/outline";
 import type { AssetItem, SelectionTarget } from "../types";
 import { normalizeAssetUrl } from "../utils/slideDom";
+import { AppButton, SegmentedControl, TextField } from "./ui/controls";
 
 type AssetPanelProps = {
   assets: AssetItem[];
@@ -10,7 +11,11 @@ type AssetPanelProps = {
   onReplaceImage: (asset: AssetItem) => void;
 };
 
-const filters = ["all", "isometric", "gui", "reference", "logo", "slide"] as const;
+const filters = ["all", "isometric", "gui", "logo", "slide"] as const;
+
+function isReferenceScreenshot(asset: AssetItem) {
+  return asset.kind === "reference" || asset.path.includes("/reference-pdf-pages/");
+}
 
 export default function AssetPanel({ assets, selectedTarget, onAddLayer, onReplaceImage }: AssetPanelProps) {
   const [query, setQuery] = useState("");
@@ -19,6 +24,7 @@ export default function AssetPanel({ assets, selectedTarget, onAddLayer, onRepla
   const shown = useMemo(() => {
     const q = query.toLowerCase();
     return assets
+      .filter((asset) => !isReferenceScreenshot(asset))
       .filter((asset) => filter === "all" || asset.kind === filter)
       .filter((asset) => !q || asset.name.toLowerCase().includes(q) || asset.kind.includes(q))
       .slice(0, 90);
@@ -27,38 +33,46 @@ export default function AssetPanel({ assets, selectedTarget, onAddLayer, onRepla
   return (
     <section className="asset-panel">
       <div className="panel-search">
-        <label>
-          <span>Cari aset gambar</span>
-          <MagnifyingGlassIcon aria-hidden="true" />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="isometric, GUI, logo..." />
-        </label>
+        <TextField
+          label="Cari aset gambar"
+          icon={<MagnifyingGlassIcon aria-hidden="true" />}
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="isometric, GUI, logo..."
+        />
       </div>
-      <div className="filter-row">
-        {filters.map((item) => (
-          <button key={item} type="button" className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>
-            <FunnelIcon aria-hidden="true" />
-            {item}
-          </button>
-        ))}
-      </div>
+      <SegmentedControl
+        className="filter-row"
+        value={filter}
+        onChange={setFilter}
+        options={filters.map((item) => ({ value: item, label: item }))}
+      />
       <div className="asset-grid">
         {shown.map((asset) => (
-          <article key={asset.id} className="asset-card">
+          <article
+            key={asset.id}
+            className="asset-card"
+            draggable
+            onDragStart={(event) => {
+              event.dataTransfer.setData("application/x-skripsi-asset", JSON.stringify(asset));
+              event.dataTransfer.effectAllowed = "copy";
+            }}
+          >
             <img src={normalizeAssetUrl(asset.path)} alt={asset.name} loading="lazy" />
             <div>
               <strong>{asset.name}</strong>
               <span>{asset.kind}</span>
             </div>
             <div className="asset-actions">
-              <button type="button" onClick={() => onAddLayer(asset)}><RectangleStackIcon aria-hidden="true" />Insert layer</button>
-              <button
-                type="button"
+              <AppButton size="sm" icon={<RectangleStackIcon aria-hidden="true" />} onClick={() => onAddLayer(asset)}>Insert layer</AppButton>
+              <AppButton
+                size="sm"
+                icon={<PhotoIcon aria-hidden="true" />}
                 disabled={selectedTarget?.kind !== "image"}
                 onClick={() => onReplaceImage(asset)}
               >
-                <PhotoIcon aria-hidden="true" />
                 Replace image
-              </button>
+              </AppButton>
             </div>
           </article>
         ))}

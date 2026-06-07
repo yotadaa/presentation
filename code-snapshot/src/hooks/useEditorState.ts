@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { AssetItem, EditorSnapshot, EditorState, SelectionTarget, SlideLayer, ThemeName } from "../types";
+import type { AssetItem, EditorSnapshot, EditorState, FontFamilyName, SelectionTarget, SlideLayer, ThemeName } from "../types";
 import { replaceElementText, replaceImageSource } from "../utils/slideDom";
 
 const STORAGE_KEY = "skripsi-presenter-react-editor-v1";
@@ -25,6 +25,7 @@ function loadState(initial: InitialState): EditorState {
         return {
           currentSlide: parsed.currentSlide || 1,
           theme: parsed.theme || "light",
+          fontFamily: parsed.fontFamily || "inter",
           accent: parsed.accent || "#14b8a6",
           selectedTarget: null,
           selectedLayerId: null,
@@ -44,6 +45,7 @@ function loadState(initial: InitialState): EditorState {
   return {
     currentSlide: 1,
     theme: "light",
+    fontFamily: "inter",
     accent: "#14b8a6",
     selectedTarget: null,
     selectedLayerId: null,
@@ -88,6 +90,10 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
 
   const setTheme = useCallback((theme: ThemeName) => {
     setState((prev) => ({ ...prev, theme, autosavedAt: Date.now() }));
+  }, []);
+
+  const setFontFamily = useCallback((fontFamily: FontFamilyName) => {
+    setState((prev) => ({ ...prev, fontFamily, autosavedAt: Date.now() }));
   }, []);
 
   const setAccent = useCallback((accent: string) => {
@@ -145,7 +151,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     });
   }, [commit]);
 
-  const addLayer = useCallback((asset: AssetItem) => {
+  const addLayer = useCallback((asset: AssetItem, position?: { x: number; y: number; width?: number }) => {
     commit((prev) => {
       const maxZ = prev.layers.filter((layer) => layer.slideIndex === prev.currentSlide).reduce((max, layer) => Math.max(max, layer.zIndex), 20);
       const layer: SlideLayer = {
@@ -154,9 +160,9 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
         assetId: asset.id,
         src: asset.path,
         name: asset.name,
-        x: 58,
-        y: 42,
-        width: 22,
+        x: position?.x ?? 58,
+        y: position?.y ?? 42,
+        width: position?.width ?? 22,
         zIndex: maxZ + 1,
         visible: true,
         locked: false,
@@ -234,15 +240,18 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
   }, [commit]);
 
   const exportState = useCallback(() => {
-    return JSON.stringify({ version: 1, ...snapshot(state), theme: state.theme, accent: state.accent }, null, 2);
+    return JSON.stringify({ version: 1, ...snapshot(state), theme: state.theme, fontFamily: state.fontFamily, accent: state.accent }, null, 2);
   }, [state]);
 
   const importState = useCallback((value: string) => {
-    const parsed = JSON.parse(value) as Partial<EditorSnapshot>;
+    const parsed = JSON.parse(value) as Partial<EditorSnapshot> & Partial<Pick<EditorState, "theme" | "fontFamily" | "accent">>;
     commit((prev) => ({
       ...prev,
       slideHtmlByIndex: parsed.slideHtmlByIndex || prev.slideHtmlByIndex,
       layers: parsed.layers || prev.layers,
+      theme: parsed.theme || prev.theme,
+      fontFamily: parsed.fontFamily || prev.fontFamily,
+      accent: parsed.accent || prev.accent,
     }));
   }, [commit]);
 
@@ -260,6 +269,7 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     state,
     goToSlide,
     setTheme,
+    setFontFamily,
     setAccent,
     selectTarget,
     selectLayer,
@@ -277,5 +287,5 @@ export function useEditorState(slideCount: number, initialSlideHtmlByIndex: Reco
     exportState,
     importState,
     resetAll,
-  }), [addLayer, deleteLayer, duplicateLayer, exportState, goToSlide, importState, redo, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setInspectorTab, setTheme, state, undo, updateLayer]);
+  }), [addLayer, deleteLayer, duplicateLayer, exportState, goToSlide, importState, redo, replaceImage, replaceText, resetAll, resetSlide, selectLayer, selectTarget, setAccent, setDraftQuery, setFontFamily, setInspectorTab, setTheme, state, undo, updateLayer]);
 }

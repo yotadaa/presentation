@@ -1,0 +1,296 @@
+[
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "cover art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.39444080351146826,
+      "width": 0.3218689945590791,
+      "xCenter": 0.7640736944739747,
+      "yCenter": 0.5522731599278485
+    },
+    "selector": ".cover-art",
+    "slide": 1,
+    "text": "DataGenFitness SeleksiCr/MrOutput",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "1"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "agenda grid",
+    "nodeCount": 5,
+    "rel": {
+      "height": 0.2611039543503021,
+      "width": 0.9275104932007053,
+      "xCenter": 0.49999993762401124,
+      "yCenter": 0.4970161537769751
+    },
+    "selector": ".agenda-grid",
+    "slide": 2,
+    "text": "1. PendahuluanMasalah, tujuan, manfaat, dan kontribusi penelitian. 2. TinjauanPenjadwalan, GA, fuzzy controller, dan penelitian terkait. 3. MetodologiRepresentasi gen, populasi awa",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "2"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "divider art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.4222187019300907,
+      "width": 0.3218688481451758,
+      "xCenter": 0.7715708154292338,
+      "yCenter": 0.5759867065984563
+    },
+    "selector": ".divider-main",
+    "slide": 3,
+    "text": "",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "3"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "divider art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.42221857877701297,
+      "width": 0.32186899276643965,
+      "xCenter": 0.771570855643317,
+      "yCenter": 0.5759866179878738
+    },
+    "selector": ".divider-main",
+    "slide": 9,
+    "text": "",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "9"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "divider art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.422218446707389,
+      "width": 0.32186886337368414,
+      "xCenter": 0.771570814251997,
+      "yCenter": 0.5759866506366139
+    },
+    "selector": ".divider-main",
+    "slide": 25,
+    "text": "",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "25"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "divider art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.4222185634219761,
+      "width": 0.32186898168936784,
+      "xCenter": 0.7715708726238587,
+      "yCenter": 0.5759866841845588
+    },
+    "selector": ".divider-main",
+    "slide": 37,
+    "text": "",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "37"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "divider art",
+    "nodeCount": 0,
+    "rel": {
+      "height": 0.4222185018363246,
+      "width": 0.32186897157144956,
+      "xCenter": 0.7715708134313856,
+      "yCenter": 0.5759866398724967
+    },
+    "selector": ".divider-main",
+    "slide": 42,
+    "text": "",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "42"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "process flow",
+    "nodeCount": 5,
+    "rel": {
+      "height": 0.36876085133228353,
+      "width": 0.9275105850398603,
+      "xCenter": 0.4999999688060594,
+      "yCenter": 0.5714066742722579
+    },
+    "selector": ".process-line",
+    "slide": 11,
+    "text": "PopulasiKumpulan kandidat jadwal dibangkitkan sebagai calon solusi. FitnessSetiap kandidat dinilai berdasarkan konflik dan penalty. SeleksiKandidat terbaik lebih berpeluang menjadi",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "11"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "process flow",
+    "nodeCount": 5,
+    "rel": {
+      "height": 0.17771630079587733,
+      "width": 0.9275105558620533,
+      "xCenter": 0.49999996878487707,
+      "yCenter": 0.6300002319630165
+    },
+    "selector": ".process-line",
+    "slide": 21,
+    "text": "PopulasiNilai fitness dan keragaman dibaca dari generasi berjalan. FuzzifikasiInput dikonversi ke label linguistik. InferensiRule base menentukan respons parameter. DefuzzifikasiNi",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "21"
+    }
+  },
+  {
+    "arrowCount": 4,
+    "clipped": false,
+    "found": true,
+    "kind": "framework flow",
+    "nodeCount": 5,
+    "rel": {
+      "height": 0.12221495236282263,
+      "width": 0.9275106423605262,
+      "xCenter": 0.5,
+      "yCenter": 0.46853302742238295
+    },
+    "selector": ".flow-diagram",
+    "slide": 23,
+    "text": "Data PraktikumRepresentasi GenPopulasi JadwalGA + Fuzzy ControllerJadwal Layak",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "23"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "process flow",
+    "nodeCount": 4,
+    "rel": {
+      "height": 0.17771620461464444,
+      "width": 0.9275105266067716,
+      "xCenter": 0.4999999375997702,
+      "yCenter": 0.6318088225391649
+    },
+    "selector": ".process-line",
+    "slide": 26,
+    "text": "Studi literaturMemetakan teori penjadwalan, GA, Fuzzy Logic, dan penelitian terkait. Pengumpulan dataMengumpulkan data mata praktikum, kelas, ruang, peserta, dan asisten. Pemodelan",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "26"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "pipeline flow",
+    "nodeCount": 10,
+    "rel": {
+      "height": 0.28757951400070975,
+      "width": 0.9275105019147403,
+      "xCenter": 0.4999999375991043,
+      "yCenter": 0.5035807023357239
+    },
+    "selector": ".pipeline-wide",
+    "slide": 27,
+    "text": "01 Data Praktikum Mata praktikum, kelas, ruang, peserta, dan asisten. 02 Seeder Membentuk gen dan individu awal dari data. 03 Populasi Awal Kandidat jadwal siap dievaluasi. 04 Fitn",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "27"
+    }
+  },
+  {
+    "arrowCount": 13,
+    "clipped": false,
+    "found": true,
+    "kind": "native flowchart",
+    "nodeCount": 16,
+    "rel": {
+      "height": 0.5670572058419335,
+      "width": 0.927510591531714,
+      "xCenter": 0.5,
+      "yCenter": 0.6277669351136121
+    },
+    "selector": ".native-flowchart",
+    "slide": 30,
+    "text": "Entry dan gene call Runner StartChoose SeedGenerate PopulationGenerate IndividualCall Generate Gene Gene setup Pick SubjectResolve DurationResolve AssistantsResolve LabChoose Room ",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "30"
+    }
+  },
+  {
+    "arrowCount": 0,
+    "clipped": false,
+    "found": true,
+    "kind": "greedy flowchart",
+    "nodeCount": 6,
+    "rel": {
+      "height": 0.2599825914244132,
+      "width": 0.9275106024237998,
+      "xCenter": 0.5,
+      "yCenter": 0.7713576692561406
+    },
+    "selector": ".greedy-flowchart",
+    "slide": 44,
+    "text": "Greedy Post-Processing / Fallback 1Global-best scheduleJadwal terbaik dari GA/Fuzzy GA menjadi base. 2Deteksi konflik residualRuang, kelas/mata kuliah tatap muka/teori, asisten, da",
+    "nav": {
+      "hash": "#slide-44",
+      "headerSlide": null,
+      "input": "44"
+    }
+  }
+]

@@ -27,12 +27,31 @@
 
 .react-slide-frame .chapter {
   position: relative;
+  --chip-step: .94in;
 }
 
 .react-slide-frame .chip {
   cursor: pointer;
   user-select: none;
   will-change: transform, background-color, color, box-shadow;
+  position: relative;
+  z-index: 1;
+}
+
+.react-slide-frame .chapter::before {
+  content: "";
+  position: absolute;
+  left: calc(50% - (var(--chip-step) * 2.5) + (var(--active-chip-index, 0) * var(--chip-step)));
+  top: 50%;
+  width: .82in;
+  height: .26in;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .06);
+  border: 1px solid rgba(15, 23, 42, .08);
+  transform: translateY(-50%);
+  transition: left .44s cubic-bezier(.22,1,.36,1), opacity .28s ease;
+  opacity: .9;
+  pointer-events: none;
 }
 
 .react-slide-frame .chip:hover {
@@ -46,10 +65,120 @@
   isolation: isolate;
 }
 
+.react-slide-frame .main {
+  position: relative;
+}
+
+.react-slide-frame .main > *:not(.generated-decor) {
+  position: relative;
+  z-index: 2;
+}
+
+.react-slide-frame .generated-decor {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  opacity: .94;
+  z-index: 1;
+  pointer-events: auto;
+  filter: drop-shadow(0 .20in .34in rgba(15, 23, 42, .13));
+}
+
+.react-slide-frame .generated-decor-fitness {
+  right: .44in;
+  bottom: .62in;
+  width: 2.35in;
+  height: 2.05in;
+}
+
+.react-slide-frame .generated-decor-pipeline {
+  right: .52in;
+  bottom: .62in;
+  width: 2.18in;
+  height: 1.92in;
+}
+
+.react-slide-frame .generated-decor-repair {
+  right: .58in;
+  bottom: .58in;
+  width: 2.28in;
+  height: 2.05in;
+}
+
+.react-slide-frame .generated-decor-fuzzy {
+  right: .54in;
+  bottom: .62in;
+  width: 2.24in;
+  height: 2.00in;
+}
+
+.react-slide-frame .generated-decor-summary {
+  right: .64in;
+  bottom: .68in;
+  width: 2.12in;
+  height: 1.82in;
+}
+
+.react-slide-frame .divider .main > .divider-main {
+  position: absolute;
+  z-index: 1;
+  right: .50in;
+  top: 50%;
+  width: 5.15in;
+  height: 3.80in;
+  transform: translateY(-42%);
+}
+
+.react-slide-frame .divider .main > .divider-main .divider-art {
+  height: 100%;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.react-slide-frame .divider .main > .divider-main img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: translateY(-.18in) scale(1.04);
+}
+
+.react-slide-frame #slide-34 .wide-visual {
+  height: 3.02in;
+  margin-top: .06in;
+}
+
 .react-slide-frame .slide {
   --accent: var(--slide-accent, #0f766e);
   --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
   --accent-line: color-mix(in srgb, var(--accent) 62%, transparent);
+}
+
+.react-slide-frame .subdesc p,
+.react-slide-frame .lead,
+.react-slide-frame .bodytext,
+.react-slide-frame .card p,
+.react-slide-frame .metric span,
+.react-slide-frame .flow-node,
+.react-slide-frame .step p,
+.react-slide-frame .callout,
+.react-slide-frame .formula,
+.react-slide-frame .lab-matrix span,
+.react-slide-frame .scale-grid span,
+.react-slide-frame .source-note {
+  font-size: calc(1em * 1.12);
+  line-height: 1.42;
+}
+
+.react-slide-frame .card h3,
+.react-slide-frame .flow-node strong,
+.react-slide-frame .step strong {
+  font-size: calc(1em * 1.08);
 }
 
 .react-slide-frame .accent-teal,
@@ -77,6 +206,38 @@
   filter: drop-shadow(0 8px 14px color-mix(in srgb, var(--slide-accent, var(--accent)) 18%, transparent));
 }
 
+.react-slide-frame .cross-symbol {
+  position: relative;
+  display: inline-flex;
+  width: .34in;
+  height: .34in;
+  color: var(--slide-accent, var(--accent));
+  font-size: 0 !important;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.react-slide-frame .cross-symbol::before,
+.react-slide-frame .cross-symbol::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: .30in;
+  height: .035in;
+  border-radius: 999px;
+  background: currentColor;
+  transform-origin: center;
+}
+
+.react-slide-frame .cross-symbol::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.react-slide-frame .cross-symbol::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .react-slide-frame .arrow::before,
 .react-slide-frame .arrow-inline::before,
 .react-slide-frame .flow-arrow::before {
@@ -94,8 +255,31 @@
   height: .20in;
 }
 
+.react-slide-frame .flow-diagram .flow-arrow {
+  width: .56in;
+  height: .30in;
+}
+
+.react-slide-frame .native-flowchart .flow-arrow {
+  width: .34in;
+  height: .24in;
+  flex-basis: .34in;
+}
+
 .react-slide-frame .arrow-inline {
   margin: 0 .02in;
+}
+
+.react-slide-frame .arrow-inline.combine::before {
+  width: .25in;
+  height: .25in;
+  border-radius: 50%;
+  background:
+    linear-gradient(currentColor, currentColor) center / 72% .035in no-repeat,
+    linear-gradient(currentColor, currentColor) center / .035in 72% no-repeat;
+  mask: none;
+  -webkit-mask: none;
+  opacity: .92;
 }
 
 .react-slide-frame[data-slide-theme="light"] .slide,

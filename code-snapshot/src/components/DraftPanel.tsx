@@ -1,6 +1,7 @@
 import { MagnifyingGlassIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import type { ThesisBlock } from "../types";
 import { highlightText, useDraftSearch } from "../hooks/useDraftSearch";
+import { AppButton, TextField } from "./ui/controls";
 
 type DraftPanelProps = {
   blocks: ThesisBlock[];
@@ -24,15 +25,13 @@ export default function DraftPanel({
   return (
     <section className="draft-panel">
       <div className="panel-search">
-        <label>
-          <span>Cari di draft skripsi</span>
-          <MagnifyingGlassIcon aria-hidden="true" />
-          <input
-            value={query}
-            onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Cari paragraf, fuzzy, greedy, penalti..."
-          />
-        </label>
+        <TextField
+          label="Cari di draft skripsi"
+          icon={<MagnifyingGlassIcon aria-hidden="true" />}
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder="Cari paragraf, fuzzy, greedy, penalti..."
+        />
       </div>
       <div className="draft-results">
         {results.map((block) => (
@@ -47,17 +46,16 @@ export default function DraftPanel({
               ))}
             </p>
             {selectable ? (
-              <button
-                type="button"
-                className="tool-button"
+              <AppButton
+                size="sm"
+                icon={<PlusCircleIcon aria-hidden="true" />}
                 onClick={() => {
                   const selected = window.getSelection()?.toString().trim();
                   onUseSelection?.(block, selected || block.text);
                 }}
               >
-                <PlusCircleIcon aria-hidden="true" />
                 Tambah teks terseleksi
-              </button>
+              </AppButton>
             ) : null}
           </article>
         ))}

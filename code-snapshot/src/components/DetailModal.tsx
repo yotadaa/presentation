@@ -4,6 +4,7 @@ import type { ReferenceEntry, SelectionTarget, Slide, ThesisBlock } from "../typ
 import DraftPanel from "./DraftPanel";
 import ReferencePreview from "./ReferencePreview";
 import ReplaceTextPanel from "./ReplaceTextPanel";
+import { AppButton, IconButton, TrafficLights } from "./ui/controls";
 
 type DetailModalProps = {
   slide: Slide;
@@ -54,8 +55,9 @@ export default function DetailModal({
   return (
     <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="detail-modal" role="dialog" aria-modal="true" aria-label="Detail item slide">
-        <button type="button" className="modal-close" onClick={onClose} aria-label="Tutup"><XMarkIcon aria-hidden="true" /></button>
+        <IconButton className="modal-close" onClick={onClose} label="Tutup" icon={<XMarkIcon aria-hidden="true" />} />
         <div className="modal-heading">
+          <TrafficLights />
           <span className="modal-icon"><InformationCircleIcon aria-hidden="true" /></span>
           <div>
             <p>{slide.chapter} - Slide {String(slide.index).padStart(2, "0")}</p>
@@ -64,12 +66,12 @@ export default function DetailModal({
         </div>
 
         <div className="modal-tabs">
-          <button type="button" className={mode === "summary" ? "active" : ""} onClick={() => setMode("summary")}><InformationCircleIcon aria-hidden="true" />Konteks</button>
-          <button type="button" className={mode === "draft" ? "active" : ""} onClick={() => {
+          <AppButton variant={mode === "summary" ? "primary" : "secondary"} icon={<InformationCircleIcon aria-hidden="true" />} onClick={() => setMode("summary")}>Konteks</AppButton>
+          <AppButton variant={mode === "draft" ? "primary" : "secondary"} icon={<DocumentMagnifyingGlassIcon aria-hidden="true" />} onClick={() => {
             setMode("draft");
             onShowDraft(draftQuery);
-          }}><DocumentMagnifyingGlassIcon aria-hidden="true" />Lihat di draft</button>
-          <button type="button" className={mode === "replace" ? "active" : ""} onClick={() => setMode("replace")}><PencilSquareIcon aria-hidden="true" />Replace text</button>
+          }}>Lihat di draft</AppButton>
+          <AppButton variant={mode === "replace" ? "primary" : "secondary"} icon={<PencilSquareIcon aria-hidden="true" />} onClick={() => setMode("replace")}>Replace text</AppButton>
         </div>
 
         {mode === "summary" ? (

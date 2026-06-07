@@ -1,4 +1,5 @@
 export type ThemeName = "light" | "mint" | "navy" | "paper" | "contrast";
+export type FontFamilyName = "inter" | "jakarta" | "noto" | "sourceSerif" | "robotoSlab" | "system" | "serif" | "mono" | "rounded";
 
 export type ThesisBlock = {
   id: string;
@@ -111,6 +112,15 @@ export type SlideLayer = {
   locked: boolean;
 };
 
+export type BaseImageLayer = {
+  id: string;
+  slideIndex: number;
+  editId: string;
+  src: string;
+  name: string;
+  alt: string;
+};
+
 export type EditorSnapshot = {
   slideHtmlByIndex: Record<number, string>;
   layers: SlideLayer[];
@@ -119,6 +129,7 @@ export type EditorSnapshot = {
 export type EditorState = EditorSnapshot & {
   currentSlide: number;
   theme: ThemeName;
+  fontFamily: FontFamilyName;
   accent: string;
   selectedTarget: SelectionTarget | null;
   selectedLayerId: string | null;

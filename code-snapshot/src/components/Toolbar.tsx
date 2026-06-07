@@ -1,71 +1,50 @@
-import { useRef } from "react";
 import {
-  ArrowDownTrayIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
-  ArrowUpTrayIcon,
-  CommandLineIcon,
-  SwatchIcon,
-  TrashIcon,
   ArrowUturnLeftIcon,
   ArrowUturnRightIcon,
+  Cog6ToothIcon,
+  CommandLineIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import type { EditorState, ThemeName } from "../types";
-
-const themes: Array<{ value: ThemeName; label: string }> = [
-  { value: "light", label: "Light Academic" },
-  { value: "mint", label: "Mint Lab" },
-  { value: "navy", label: "Navy Focus" },
-  { value: "paper", label: "Warm Paper" },
-  { value: "contrast", label: "High Contrast" },
-];
+import type { EditorState } from "../types";
+import { AppButton, IconButton, NumberStepper, TextField } from "./ui/controls";
 
 type ToolbarProps = {
   state: EditorState;
   slideCount: number;
   isFullscreen: boolean;
+  searchQuery: string;
+  searchMatchCount: number;
   onGoToSlide: (slide: number) => void;
-  onThemeChange: (theme: ThemeName) => void;
-  onAccentChange: (accent: string) => void;
+  onSearchChange: (query: string) => void;
+  onSearchPrev: () => void;
+  onSearchNext: () => void;
   onUndo: () => void;
   onRedo: () => void;
   onOpenPalette: () => void;
+  onOpenSettings: () => void;
   onToggleFullscreen: () => void | Promise<void>;
-  onExport: () => string;
-  onImport: (value: string) => void;
-  onResetSlide: () => void;
-  onResetAll: () => void;
 };
-
-function downloadText(filename: string, content: string) {
-  const blob = new Blob([content], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
 
 export default function Toolbar({
   state,
   slideCount,
   isFullscreen,
+  searchQuery,
+  searchMatchCount,
   onGoToSlide,
-  onThemeChange,
-  onAccentChange,
+  onSearchChange,
+  onSearchPrev,
+  onSearchNext,
   onUndo,
   onRedo,
   onOpenPalette,
+  onOpenSettings,
   onToggleFullscreen,
-  onExport,
-  onImport,
-  onResetSlide,
-  onResetAll,
 }: ToolbarProps) {
-  const importRef = useRef<HTMLInputElement>(null);
   const autosaveDate = new Date(state.autosavedAt);
 
   return (
@@ -78,68 +57,47 @@ export default function Toolbar({
         </div>
       </div>
 
-      <div className="toolbar-cluster">
-        <button type="button" className="icon-button" title="Slide sebelumnya" onClick={() => onGoToSlide(state.currentSlide - 1)}>
-          <ArrowLeftIcon aria-hidden="true" />
-        </button>
-        <label className="slide-jump">
-          <span>Slide</span>
-          <input
-            type="number"
+      <div className="toolbar-cluster slide-nav-cluster">
+        <IconButton label="Slide sebelumnya" icon={<ArrowLeftIcon aria-hidden="true" />} onClick={() => onGoToSlide(state.currentSlide - 1)} />
+        <label className="slide-jump" aria-label="Pindah slide">
+          <NumberStepper
+            label="Slide"
             min={1}
             max={slideCount}
             value={state.currentSlide}
-            onChange={(event) => onGoToSlide(Number(event.target.value))}
+            onChange={onGoToSlide}
+            showButtons={false}
           />
           <span>/ {slideCount}</span>
         </label>
-        <button type="button" className="icon-button" title="Slide berikutnya" onClick={() => onGoToSlide(state.currentSlide + 1)}>
-          <ArrowRightIcon aria-hidden="true" />
-        </button>
+        <IconButton label="Slide berikutnya" icon={<ArrowRightIcon aria-hidden="true" />} onClick={() => onGoToSlide(state.currentSlide + 1)} />
+      </div>
+
+      <div className="toolbar-search" role="search">
+        <TextField
+          icon={<MagnifyingGlassIcon aria-hidden="true" />}
+          value={searchQuery}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder="Cari teks di slide..."
+          aria-label="Cari teks di slide"
+        />
+        <span className="search-count">{searchQuery.trim().length >= 2 ? `${searchMatchCount} hasil` : "min 2 huruf"}</span>
+        <IconButton label="Hasil sebelumnya" compact disabled={!searchMatchCount} icon={<ArrowLeftIcon aria-hidden="true" />} onClick={onSearchPrev} />
+        <IconButton label="Hasil berikutnya" compact disabled={!searchMatchCount} icon={<ArrowRightIcon aria-hidden="true" />} onClick={onSearchNext} />
       </div>
 
       <div className="toolbar-cluster grow">
-        <button type="button" className="tool-button" onClick={onOpenPalette}><CommandLineIcon aria-hidden="true" />Ctrl+K</button>
-        <button type="button" className="tool-button" disabled={!state.history.length} onClick={onUndo}><ArrowUturnLeftIcon aria-hidden="true" />Undo</button>
-        <button type="button" className="tool-button" disabled={!state.future.length} onClick={onRedo}><ArrowUturnRightIcon aria-hidden="true" />Redo</button>
-        <button type="button" className="tool-button primary" onClick={() => void onToggleFullscreen()}>
-          {isFullscreen ? <ArrowsPointingInIcon aria-hidden="true" /> : <ArrowsPointingOutIcon aria-hidden="true" />}
-          {isFullscreen ? "Exit Fullscreen" : "Fullscreen"} <kbd>F</kbd>
-        </button>
-      </div>
-
-      <div className="toolbar-cluster">
-        <select value={state.theme} onChange={(event) => onThemeChange(event.target.value as ThemeName)} title="Theme">
-          {themes.map((theme) => <option key={theme.value} value={theme.value}>{theme.label}</option>)}
-        </select>
-        <input
-          className="accent-input"
-          type="color"
-          value={state.accent}
-          title="Accent color"
-          onInput={(event) => onAccentChange(event.currentTarget.value)}
-          onChange={(event) => onAccentChange(event.target.value)}
-        />
-        <SwatchIcon className="toolbar-icon-hint" aria-hidden="true" />
-      </div>
-
-      <div className="toolbar-cluster">
-        <button type="button" className="tool-button" onClick={() => downloadText("skripsi-presenter-state.json", onExport())}><ArrowDownTrayIcon aria-hidden="true" />Export</button>
-        <button type="button" className="tool-button" onClick={() => importRef.current?.click()}><ArrowUpTrayIcon aria-hidden="true" />Import</button>
-        <input
-          ref={importRef}
-          hidden
-          type="file"
-          accept="application/json"
-          onChange={async (event) => {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            onImport(await file.text());
-            event.target.value = "";
-          }}
-        />
-        <button type="button" className="tool-button danger" onClick={() => window.confirm("Reset slide aktif?") && onResetSlide()}><TrashIcon aria-hidden="true" />Reset Slide</button>
-        <button type="button" className="tool-button danger" onClick={() => window.confirm("Reset semua edit dan layer?") && onResetAll()}><TrashIcon aria-hidden="true" />Reset All</button>
+        <AppButton icon={<CommandLineIcon aria-hidden="true" />} onClick={onOpenPalette}>Ctrl+K</AppButton>
+        <AppButton icon={<ArrowUturnLeftIcon aria-hidden="true" />} disabled={!state.history.length} onClick={onUndo}>Undo</AppButton>
+        <AppButton icon={<ArrowUturnRightIcon aria-hidden="true" />} disabled={!state.future.length} onClick={onRedo}>Redo</AppButton>
+        <AppButton
+          variant="primary"
+          icon={isFullscreen ? <ArrowsPointingInIcon aria-hidden="true" /> : <ArrowsPointingOutIcon aria-hidden="true" />}
+          onClick={() => void onToggleFullscreen()}
+        >
+          {isFullscreen ? "Exit" : "Fullscreen"} <kbd>F</kbd>
+        </AppButton>
+        <AppButton icon={<Cog6ToothIcon aria-hidden="true" />} onClick={onOpenSettings}>Settings</AppButton>
       </div>
 
       <div className="autosave-pill" title={autosaveDate.toLocaleString("id-ID")}>

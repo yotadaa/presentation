@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { BoltIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BoltIcon, DocumentTextIcon, MagnifyingGlassIcon, PhotoIcon, RectangleStackIcon } from "@heroicons/react/24/outline";
 import type { AssetItem, Slide, ThesisBlock } from "../types";
+import { AppButton, TextField } from "./ui/controls";
 
 type CommandPaletteProps = {
   slides: Slide[];
@@ -46,6 +47,7 @@ export default function CommandPalette({
         action: () => onSetDraftQuery(block.text.slice(0, 160)),
       }));
     const assetMatches = assets
+      .filter((asset) => asset.kind !== "reference" && !asset.path.includes("/reference-pdf-pages/"))
       .filter((asset) => q && asset.name.toLowerCase().includes(q))
       .slice(0, 5)
       .map((asset) => ({
@@ -63,8 +65,10 @@ export default function CommandPalette({
   return (
     <div className="palette-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
       <section className="command-palette" role="dialog" aria-modal="true" aria-label="Command palette">
-        <input
+        <TextField
+          className="palette-input-wrap"
           autoFocus
+          icon={<MagnifyingGlassIcon aria-hidden="true" />}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={(event) => {
@@ -72,24 +76,36 @@ export default function CommandPalette({
           }}
           placeholder="Cari slide, draft, asset, atau command..."
         />
-        <MagnifyingGlassIcon className="palette-search-icon" aria-hidden="true" />
         <div className="command-list">
           {matches.map((match) => (
-            <button
+            <AppButton
               key={match.id}
-              type="button"
+              className="command-item"
+              variant="ghost"
+              icon={iconFor(match.type)}
               onClick={() => {
                 void match.action();
                 onClose();
               }}
             >
-              <BoltIcon aria-hidden="true" />
-              <span>{match.type}</span>
-              <strong>{match.title}</strong>
-            </button>
+              <span className="command-type">{match.type}</span>
+              <strong className="command-item-title">{match.title}</strong>
+            </AppButton>
           ))}
         </div>
+        <footer className="command-footer">
+          <span><kbd>Up</kbd><kbd>Down</kbd> navigasi</span>
+          <span><kbd>Enter</kbd> pilih</span>
+          <span><kbd>Esc</kbd> tutup</span>
+        </footer>
       </section>
     </div>
   );
+}
+
+function iconFor(type: string) {
+  if (type === "Slide") return <RectangleStackIcon aria-hidden="true" />;
+  if (type === "Draft") return <DocumentTextIcon aria-hidden="true" />;
+  if (type === "Asset") return <PhotoIcon aria-hidden="true" />;
+  return <BoltIcon aria-hidden="true" />;
 }

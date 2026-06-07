@@ -1,8 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DocumentDuplicateIcon,
+  EyeSlashIcon,
+  LockClosedIcon,
+  LockOpenIcon,
+  PhotoIcon,
+  TrashIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import type { CSSProperties } from "react";
-import type { SelectionTarget, Slide, SlideLayer } from "../types";
+import type { AssetItem, BaseImageLayer, SelectionTarget, Slide, SlideLayer } from "../types";
 import { normalizeAssetUrl, targetFromElement } from "../utils/slideDom";
+import { AppButton, IconButton } from "./ui/controls";
 
 const SLIDE_WIDTH = 1536;
 const SLIDE_HEIGHT = 864;
@@ -14,10 +27,14 @@ type SlideCanvasProps = {
   accent: string;
   chapterStartByName: Record<string, number>;
   layers: SlideLayer[];
+  baseImages: BaseImageLayer[];
   selectedLayerId: string | null;
   onSelectTarget: (target: SelectionTarget | null) => void;
   onSelectLayer: (layerId: string | null) => void;
   onUpdateLayer: (layerId: string, patch: Partial<SlideLayer>, saveHistory?: boolean) => void;
+  onDeleteLayer: (layerId: string) => void;
+  onDuplicateLayer: (layerId: string) => void;
+  onAddLayer: (asset: AssetItem, position?: { x: number; y: number; width?: number }) => void;
   onGoToSlide: (slide: number) => void;
   onNext: () => void;
   onPrev: () => void;
@@ -30,10 +47,14 @@ export default function SlideCanvas({
   accent,
   chapterStartByName,
   layers,
+  baseImages,
   selectedLayerId,
   onSelectTarget,
   onSelectLayer,
   onUpdateLayer,
+  onDeleteLayer,
+  onDuplicateLayer,
+  onAddLayer,
   onGoToSlide,
   onNext,
   onPrev,
@@ -44,7 +65,22 @@ export default function SlideCanvas({
   const previousSlideIndexRef = useRef(slide.index);
   const dragRef = useRef<{ id: string; startX: number; startY: number; x: number; y: number } | null>(null);
   const gestureRef = useRef<{ pointerId: number; startX: number; startY: number; startTime: number } | null>(null);
+  const [imageTip, setImageTip] = useState<
+    | { kind: "base"; target: SelectionTarget; title: string; x: number; y: number }
+    | { kind: "layer"; layerId: string; title: string; x: number; y: number }
+    | null
+  >(null);
   const transitionDirection = slide.index >= previousSlideIndexRef.current ? "forward" : "backward";
+  const imageTipPosition = useMemo(() => {
+    if (!imageTip) return null;
+    const minX = imageTip.kind === "base" ? 32 : 30;
+    const maxX = imageTip.kind === "base" ? 68 : 70;
+
+    return {
+      left: `${Math.max(minX, Math.min(maxX, imageTip.x))}%`,
+      top: `${Math.max(14, Math.min(80, imageTip.y))}%`,
+    } satisfies CSSProperties;
+  }, [imageTip]);
 
   useEffect(() => {
     const resize = () => {
@@ -66,6 +102,7 @@ export default function SlideCanvas({
 
   useEffect(() => {
     previousSlideIndexRef.current = slide.index;
+    setImageTip(null);
   }, [slide.index]);
 
   const slideProgress = useMemo(() => `${slide.index} / 45`, [slide.index]);
@@ -130,10 +167,25 @@ export default function SlideCanvas({
         onPointerCancel={() => {
           gestureRef.current = null;
         }}
+        onDragOver={(event) => {
+          if (event.dataTransfer.types.includes("application/x-skripsi-asset")) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "copy";
+          }
+        }}
+        onDrop={(event) => {
+          const raw = event.dataTransfer.getData("application/x-skripsi-asset");
+          if (!raw) return;
+          event.preventDefault();
+          const asset = JSON.parse(raw) as AssetItem;
+          const shell = frameRef.current?.getBoundingClientRect();
+          if (!shell) return;
+          const x = Math.max(4, Math.min(96, ((event.clientX - shell.left) / shell.width) * 100));
+          const y = Math.max(4, Math.min(94, ((event.clientY - shell.top) / shell.height) * 100));
+          onAddLayer(asset, { x, y, width: 20 });
+        }}
       >
-        <button type="button" className="nav-hit left" aria-label="Slide sebelumnya" onClick={onPrev}>
-          <ChevronLeftIcon aria-hidden="true" />
-        </button>
+        <IconButton className="nav-hit left" label="Slide sebelumnya" icon={<ChevronLeftIcon aria-hidden="true" />} onClick={onPrev} />
           <div
             key={slide.index}
             className={`slide-scale-shell slide-enter-${transitionDirection}`}
@@ -161,8 +213,23 @@ export default function SlideCanvas({
               const layerHit = target.closest(".slide-layer");
               if (layerHit) return;
               const selected = targetFromElement(target, slide.index);
+              const selectedNode = (target.closest("[data-edit-id]") || target.closest("img")) as HTMLElement | null;
               onSelectLayer(null);
               onSelectTarget(selected);
+              if (selected?.kind === "image" && selectedNode && frameRef.current) {
+                const imageRect = selectedNode.getBoundingClientRect();
+                const frameRect = frameRef.current.getBoundingClientRect();
+                const baseImage = baseImages.find((item) => item.editId === selected.editId);
+                setImageTip({
+                  kind: "base",
+                  target: selected,
+                  title: baseImage?.name || selected.text || "Gambar slide",
+                  x: ((imageRect.left + imageRect.width / 2 - frameRect.left) / frameRect.width) * 100,
+                  y: ((imageRect.top - frameRect.top) / frameRect.height) * 100,
+                });
+              } else {
+                setImageTip(null);
+              }
             }}
             dangerouslySetInnerHTML={{ __html: html }}
           />
@@ -185,6 +252,7 @@ export default function SlideCanvas({
                     event.preventDefault();
                     onSelectTarget(null);
                     onSelectLayer(layer.id);
+                    setImageTip({ kind: "layer", layerId: layer.id, title: layer.name, x: layer.x, y: layer.y });
                     dragRef.current = {
                       id: layer.id,
                       startX: event.clientX,
@@ -201,10 +269,41 @@ export default function SlideCanvas({
               );
             })}
           </div>
+
+          {imageTip ? (
+            <div
+              className={`image-layer-tooltip ${imageTip.kind === "base" ? "base-tip" : "overlay-tip"}`}
+              style={imageTipPosition || undefined}
+            >
+              <div className="image-tip-head">
+                <PhotoIcon aria-hidden="true" />
+                <strong>{imageTip.title}</strong>
+                <IconButton compact label="Tutup kontrol gambar" icon={<XMarkIcon aria-hidden="true" />} onClick={() => setImageTip(null)} />
+              </div>
+              {imageTip.kind === "base" ? (
+                <p>Gambar bawaan slide. Pilih aset di panel kanan untuk mengganti gambar yang sedang dipilih.</p>
+              ) : (
+                <div className="image-tip-actions">
+                  {(() => {
+                    const layer = layers.find((item) => item.id === imageTip.layerId);
+                    if (!layer) return null;
+                    return (
+                      <>
+                        <AppButton size="sm" icon={layer.locked ? <LockOpenIcon aria-hidden="true" /> : <LockClosedIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { locked: !layer.locked })}>{layer.locked ? "Unlock" : "Lock"}</AppButton>
+                        <AppButton size="sm" icon={<EyeSlashIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { visible: false })}>Hide</AppButton>
+                        <AppButton size="sm" icon={<ArrowUpIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex + 1 })}>Front</AppButton>
+                        <AppButton size="sm" icon={<ArrowDownIcon aria-hidden="true" />} onClick={() => onUpdateLayer(layer.id, { zIndex: layer.zIndex - 1 })}>Back</AppButton>
+                        <AppButton size="sm" icon={<DocumentDuplicateIcon aria-hidden="true" />} onClick={() => onDuplicateLayer(layer.id)}>Duplicate</AppButton>
+                        <AppButton size="sm" variant="danger" icon={<TrashIcon aria-hidden="true" />} onClick={() => { onDeleteLayer(layer.id); setImageTip(null); }}>Delete</AppButton>
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          ) : null}
         </div>
-        <button type="button" className="nav-hit right" aria-label="Slide berikutnya" onClick={onNext}>
-          <ChevronRightIcon aria-hidden="true" />
-        </button>
+        <IconButton className="nav-hit right" label="Slide berikutnya" icon={<ChevronRightIcon aria-hidden="true" />} onClick={onNext} />
       </div>
     </main>
   );

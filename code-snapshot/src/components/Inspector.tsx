@@ -1,9 +1,10 @@
 import { DocumentTextIcon, PhotoIcon, RectangleStackIcon, BookOpenIcon } from "@heroicons/react/24/outline";
-import type { AssetItem, AssetsData, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
+import type { AssetItem, AssetsData, BaseImageLayer, EditorState, ReferenceEntry, SlidesData, ThesisData, SlideLayer } from "../types";
 import DraftPanel from "./DraftPanel";
 import AssetPanel from "./AssetPanel";
 import LayerPanel from "./LayerPanel";
 import ReferencePreview from "./ReferencePreview";
+import { SegmentedControl } from "./ui/controls";
 
 type InspectorProps = {
   state: EditorState;
@@ -18,6 +19,7 @@ type InspectorProps = {
   onDeleteLayer: (id: string) => void;
   onDuplicateLayer: (id: string) => void;
   onSelectLayer: (id: string | null) => void;
+  baseImages: BaseImageLayer[];
 };
 
 const tabs: Array<{ id: EditorState["inspectorTab"]; label: string; Icon: typeof DocumentTextIcon }> = [
@@ -40,6 +42,7 @@ export default function Inspector({
   onDeleteLayer,
   onDuplicateLayer,
   onSelectLayer,
+  baseImages,
 }: InspectorProps) {
   const slide = slidesData.slides.find((item) => item.index === state.currentSlide) || slidesData.slides[0];
   const layers = state.layers.filter((layer) => layer.slideIndex === state.currentSlide);
@@ -47,12 +50,11 @@ export default function Inspector({
   return (
     <aside className="inspector">
       <div className="inspector-tabs">
-        {tabs.map((tab) => (
-          <button key={tab.id} type="button" className={state.inspectorTab === tab.id ? "active" : ""} onClick={() => onSetTab(tab.id)}>
-            <tab.Icon aria-hidden="true" />
-            {tab.label}
-          </button>
-        ))}
+        <SegmentedControl
+          value={state.inspectorTab}
+          onChange={onSetTab}
+          options={tabs.map((tab) => ({ value: tab.id, label: tab.label, icon: <tab.Icon aria-hidden="true" /> }))}
+        />
       </div>
 
       <div className="inspector-body">
@@ -76,6 +78,7 @@ export default function Inspector({
         {state.inspectorTab === "layers" ? (
           <LayerPanel
             layers={layers}
+            baseImages={baseImages}
             selectedLayerId={state.selectedLayerId}
             onSelectLayer={onSelectLayer}
             onUpdateLayer={onUpdateLayer}

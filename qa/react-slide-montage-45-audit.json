@@ -1,0 +1,542 @@
+[
+  {
+    "slide": 1,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-01.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 232.06,
+    "stddev": 52.32,
+    "darkRatio": 0.016,
+    "nonblank": true
+  },
+  {
+    "slide": 2,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-02.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 243.17,
+    "stddev": 30.79,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 3,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-03.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.23,
+    "stddev": 34.62,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 4,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-04.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.37,
+    "stddev": 34.68,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 5,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-05.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.67,
+    "stddev": 39.87,
+    "darkRatio": 0.006,
+    "nonblank": true
+  },
+  {
+    "slide": 6,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-06.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.19,
+    "stddev": 36.14,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 7,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-07.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.45,
+    "stddev": 31.97,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 8,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-08.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.44,
+    "stddev": 35.53,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 9,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-09.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.86,
+    "stddev": 34.38,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 10,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-10.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 235.7,
+    "stddev": 44.11,
+    "darkRatio": 0.009,
+    "nonblank": true
+  },
+  {
+    "slide": 11,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-11.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.91,
+    "stddev": 32.72,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 12,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-12.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.13,
+    "stddev": 31.6,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 13,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-13.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.08,
+    "stddev": 37.55,
+    "darkRatio": 0.006,
+    "nonblank": true
+  },
+  {
+    "slide": 14,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-14.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.92,
+    "stddev": 31.65,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 15,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-15.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.1,
+    "stddev": 33.31,
+    "darkRatio": 0.002,
+    "nonblank": true
+  },
+  {
+    "slide": 16,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-16.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.44,
+    "stddev": 32.34,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 17,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-17.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.07,
+    "stddev": 34.83,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 18,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-18.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.09,
+    "stddev": 39.09,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 19,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-19.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.18,
+    "stddev": 36.59,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 20,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-20.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.33,
+    "stddev": 38.34,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 21,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-21.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 237.52,
+    "stddev": 41.64,
+    "darkRatio": 0.01,
+    "nonblank": true
+  },
+  {
+    "slide": 22,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-22.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.36,
+    "stddev": 41.31,
+    "darkRatio": 0.009,
+    "nonblank": true
+  },
+  {
+    "slide": 23,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-23.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.55,
+    "stddev": 33.98,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 24,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-24.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.71,
+    "stddev": 34.88,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 25,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-25.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.07,
+    "stddev": 32.15,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 26,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-26.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.16,
+    "stddev": 41.91,
+    "darkRatio": 0.01,
+    "nonblank": true
+  },
+  {
+    "slide": 27,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-27.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.94,
+    "stddev": 37.33,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 28,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-28.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.33,
+    "stddev": 38.09,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 29,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-29.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 235.67,
+    "stddev": 43.57,
+    "darkRatio": 0.008,
+    "nonblank": true
+  },
+  {
+    "slide": 30,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-30.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.43,
+    "stddev": 36.24,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 31,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-31.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.21,
+    "stddev": 38.9,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 32,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-32.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 237.88,
+    "stddev": 40.48,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 33,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-33.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.52,
+    "stddev": 36.3,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 34,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-34.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 237.22,
+    "stddev": 40.62,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 35,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-35.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 238.72,
+    "stddev": 39.15,
+    "darkRatio": 0.006,
+    "nonblank": true
+  },
+  {
+    "slide": 36,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-36.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 164.52,
+    "stddev": 106.66,
+    "darkRatio": 0.309,
+    "nonblank": true
+  },
+  {
+    "slide": 37,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-37.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.15,
+    "stddev": 36.53,
+    "darkRatio": 0.005,
+    "nonblank": true
+  },
+  {
+    "slide": 38,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-38.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 239.24,
+    "stddev": 39.31,
+    "darkRatio": 0.007,
+    "nonblank": true
+  },
+  {
+    "slide": 39,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-39.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 166.11,
+    "stddev": 102.27,
+    "darkRatio": 0.31,
+    "nonblank": true
+  },
+  {
+    "slide": 40,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-40.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.38,
+    "stddev": 35.91,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 41,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-41.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 170.09,
+    "stddev": 99.24,
+    "darkRatio": 0.29,
+    "nonblank": true
+  },
+  {
+    "slide": 42,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-42.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.88,
+    "stddev": 30.15,
+    "darkRatio": 0.003,
+    "nonblank": true
+  },
+  {
+    "slide": 43,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-43.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 240.6,
+    "stddev": 33.98,
+    "darkRatio": 0.004,
+    "nonblank": true
+  },
+  {
+    "slide": 44,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-44.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 236.13,
+    "stddev": 45.21,
+    "darkRatio": 0.008,
+    "nonblank": true
+  },
+  {
+    "slide": 45,
+    "file": "C:\\skripsi\\presentation\\qa\\react-slide-captures\\slide-45.png",
+    "size": [
+      1130,
+      637
+    ],
+    "mean": 241.48,
+    "stddev": 32.6,
+    "darkRatio": 0.003,
+    "nonblank": true
+  }
+]

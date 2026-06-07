@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 import type { AssetsData, SlidesData, ThesisData } from "../types";
-import { slideHtmlFor } from "../utils/slideDom";
+import { extractBaseImageLayers, highlightSlideSearch, plainTextFromHtml, slideHtmlFor } from "../utils/slideDom";
 import { useEditorState } from "../hooks/useEditorState";
 import Toolbar from "./Toolbar";
 import SlideRail from "./SlideRail";
@@ -8,12 +9,26 @@ import SlideCanvas from "./SlideCanvas";
 import Inspector from "./Inspector";
 import DetailModal from "./DetailModal";
 import CommandPalette from "./CommandPalette";
+import SettingsModal from "./SettingsModal";
+import { downloadDeckPdf } from "../utils/exportPdf";
 
 type AppShellProps = {
   slidesData: SlidesData;
   thesisData: ThesisData;
   assetsData: AssetsData;
 };
+
+const FONT_STACKS = {
+  inter: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  jakarta: '"Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, sans-serif',
+  noto: '"Noto Sans", Inter, ui-sans-serif, system-ui, sans-serif',
+  sourceSerif: '"Source Serif 4", Georgia, "Times New Roman", serif',
+  robotoSlab: '"Roboto Slab", Georgia, "Times New Roman", serif',
+  system: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  serif: 'Georgia, "Times New Roman", Times, serif',
+  mono: '"Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace',
+  rounded: '"Trebuchet MS", "Segoe UI", ui-sans-serif, system-ui, sans-serif',
+} as const;
 
 export default function AppShell({ slidesData, thesisData, assetsData }: AppShellProps) {
   const initialSlideHtmlByIndex = useMemo(
@@ -24,7 +39,12 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
   const { state } = editor;
   const [modalOpen, setModalOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isPresentingFallback, setIsPresentingFallback] = useState(false);
+  const [slideSearch, setSlideSearch] = useState("");
+  const [isPdfExporting, setIsPdfExporting] = useState(false);
+  const isPresenting = isFullscreen || isPresentingFallback;
 
   const activeSlide = useMemo(
     () => slidesData.slides.find((slide) => slide.index === state.currentSlide) || slidesData.slides[0],
@@ -34,9 +54,21 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
     () => slideHtmlFor(activeSlide, state.slideHtmlByIndex),
     [activeSlide, state.slideHtmlByIndex],
   );
+  const renderedActiveHtml = useMemo(
+    () => highlightSlideSearch(activeHtml, slideSearch),
+    [activeHtml, slideSearch],
+  );
+  const printableSlides = useMemo(
+    () => slidesData.slides.map((slide) => ({ index: slide.index, html: slideHtmlFor(slide, state.slideHtmlByIndex) })),
+    [slidesData.slides, state.slideHtmlByIndex],
+  );
   const activeLayers = useMemo(
     () => state.layers.filter((layer) => layer.slideIndex === activeSlide.index),
     [activeSlide.index, state.layers],
+  );
+  const activeBaseImages = useMemo(
+    () => extractBaseImageLayers(activeHtml, activeSlide.index),
+    [activeHtml, activeSlide.index],
   );
   const chapterStartByName = useMemo(() => {
     const entries = new Map<string, number>();
@@ -45,18 +77,65 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
     });
     return Object.fromEntries(entries);
   }, [slidesData.slides]);
+  const slideSearchMatches = useMemo(() => {
+    const q = slideSearch.trim().toLowerCase();
+    if (q.length < 2) return [];
+    return slidesData.slides
+      .filter((slide) => plainTextFromHtml(slideHtmlFor(slide, state.slideHtmlByIndex)).toLowerCase().includes(q))
+      .map((slide) => slide.index);
+  }, [slidesData.slides, slideSearch, state.slideHtmlByIndex]);
+
+  const goToSearchMatch = useCallback((direction: 1 | -1) => {
+    if (!slideSearchMatches.length) return;
+    const currentPosition = slideSearchMatches.indexOf(state.currentSlide);
+    const nextPosition = currentPosition === -1
+      ? (direction > 0 ? 0 : slideSearchMatches.length - 1)
+      : (currentPosition + direction + slideSearchMatches.length) % slideSearchMatches.length;
+    editor.goToSlide(slideSearchMatches[nextPosition]);
+  }, [editor, slideSearchMatches, state.currentSlide]);
 
   const toggleFullscreen = useCallback(async () => {
     const root = document.querySelector(".app-shell") as HTMLElement | null;
-    if (!document.fullscreenElement && root) {
-      await root.requestFullscreen();
-    } else if (document.fullscreenElement) {
+    if (document.fullscreenElement) {
       await document.exitFullscreen();
+      setIsPresentingFallback(false);
+      return;
     }
-  }, []);
+
+    if (isPresentingFallback) {
+      setIsPresentingFallback(false);
+      return;
+    }
+
+    if (!root || !document.fullscreenEnabled || !root.requestFullscreen) {
+      setIsPresentingFallback(true);
+      return;
+    }
+
+    try {
+      await root.requestFullscreen();
+      setIsPresentingFallback(false);
+    } catch {
+      setIsPresentingFallback(true);
+    }
+  }, [isPresentingFallback]);
+
+  const exportPdf = useCallback(async () => {
+    if (isPdfExporting) return;
+    setIsPdfExporting(true);
+    try {
+      await downloadDeckPdf("skripsi-presenter-react.pdf");
+    } finally {
+      setIsPdfExporting(false);
+    }
+  }, [isPdfExporting]);
 
   useEffect(() => {
-    const handler = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    const handler = () => {
+      const active = Boolean(document.fullscreenElement);
+      setIsFullscreen(active);
+      if (!active) setIsPresentingFallback(false);
+    };
     document.addEventListener("fullscreenchange", handler);
     return () => document.removeEventListener("fullscreenchange", handler);
   }, []);
@@ -64,16 +143,17 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setPaletteOpen(true);
+        return;
+      }
       const editing = target?.matches("input, textarea, select, [contenteditable='true']");
       if (editing) return;
       if (event.key === "ArrowRight") editor.goToSlide(state.currentSlide + 1);
       if (event.key === "ArrowLeft") editor.goToSlide(state.currentSlide - 1);
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") editor.undo();
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "y") editor.redo();
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        setPaletteOpen(true);
-      }
       if (event.key.toLowerCase() === "f") {
         event.preventDefault();
         void toggleFullscreen();
@@ -84,23 +164,30 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
   }, [editor, state.currentSlide, toggleFullscreen]);
 
   return (
-    <div className={`app-shell ${isFullscreen ? "is-presenting" : ""}`}>
+    <div
+      className={`app-shell ${isPresenting ? "is-presenting" : ""}`}
+      data-font-family={state.fontFamily}
+      style={{ "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
+    >
       <Toolbar
         state={state}
         slideCount={slidesData.slides.length}
-        isFullscreen={isFullscreen}
+        isFullscreen={isPresenting}
+        searchQuery={slideSearch}
+        searchMatchCount={slideSearchMatches.length}
         onGoToSlide={editor.goToSlide}
-        onThemeChange={editor.setTheme}
-        onAccentChange={editor.setAccent}
+        onSearchChange={setSlideSearch}
+        onSearchPrev={() => goToSearchMatch(-1)}
+        onSearchNext={() => goToSearchMatch(1)}
         onUndo={editor.undo}
         onRedo={editor.redo}
         onOpenPalette={() => setPaletteOpen(true)}
+        onOpenSettings={() => setSettingsOpen(true)}
         onToggleFullscreen={toggleFullscreen}
-        onExport={editor.exportState}
-        onImport={editor.importState}
-        onResetSlide={() => editor.resetSlide(state.currentSlide)}
-        onResetAll={editor.resetAll}
       />
+      <div className="top-progress" aria-hidden="true">
+        <span style={{ width: `${(state.currentSlide / slidesData.slides.length) * 100}%` }} />
+      </div>
 
       <div className="workspace-grid">
         <SlideRail
@@ -110,18 +197,22 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
         />
         <SlideCanvas
           slide={activeSlide}
-          html={activeHtml}
+          html={renderedActiveHtml}
           theme={state.theme}
           accent={state.accent}
           chapterStartByName={chapterStartByName}
           layers={activeLayers}
+          baseImages={activeBaseImages}
           selectedLayerId={state.selectedLayerId}
           onSelectTarget={(target) => {
             editor.selectTarget(target);
-            setModalOpen(Boolean(target));
+            setModalOpen(Boolean(target && target.kind !== "image"));
           }}
           onSelectLayer={editor.selectLayer}
           onUpdateLayer={editor.updateLayer}
+          onDeleteLayer={editor.deleteLayer}
+          onDuplicateLayer={editor.duplicateLayer}
+          onAddLayer={editor.addLayer}
           onNext={() => editor.goToSlide(state.currentSlide + 1)}
           onPrev={() => editor.goToSlide(state.currentSlide - 1)}
           onGoToSlide={editor.goToSlide}
@@ -139,6 +230,7 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onDeleteLayer={editor.deleteLayer}
           onDuplicateLayer={editor.duplicateLayer}
           onSelectLayer={editor.selectLayer}
+          baseImages={activeBaseImages}
         />
       </div>
 
@@ -169,6 +261,36 @@ export default function AppShell({ slidesData, thesisData, assetsData }: AppShel
           onToggleFullscreen={toggleFullscreen}
         />
       ) : null}
+
+      {settingsOpen ? (
+        <SettingsModal
+          theme={state.theme}
+          fontFamily={state.fontFamily}
+          accent={state.accent}
+          isPdfExporting={isPdfExporting}
+          onClose={() => setSettingsOpen(false)}
+          onThemeChange={editor.setTheme}
+          onFontFamilyChange={editor.setFontFamily}
+          onAccentChange={editor.setAccent}
+          onExportPdf={exportPdf}
+          onExportState={editor.exportState}
+          onImportState={editor.importState}
+          onResetSlide={() => editor.resetSlide(state.currentSlide)}
+          onResetAll={editor.resetAll}
+        />
+      ) : null}
+
+      <div className="print-deck" aria-hidden="true">
+        {printableSlides.map((item) => (
+          <div
+            key={item.index}
+            className="react-slide-frame print-deck-frame"
+            data-slide-theme={state.theme}
+            style={{ "--slide-accent": state.accent, "--presenter-font": FONT_STACKS[state.fontFamily] } as CSSProperties}
+            dangerouslySetInnerHTML={{ __html: item.html }}
+          />
+        ))}
+      </div>
     </div>
   );
 }

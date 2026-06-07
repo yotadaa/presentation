@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CheckCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { DraftSelection, SelectionTarget, ThesisBlock } from "../types";
 import DraftPanel from "./DraftPanel";
+import { AppButton, SelectMenu } from "./ui/controls";
 
 type ReplaceTextPanelProps = {
   target: SelectionTarget;
@@ -43,31 +44,35 @@ export default function ReplaceTextPanel({ target, blocks, initialQuery, onApply
       <div className="selection-basket">
         <div className="basket-head">
           <strong>Pilihan teks</strong>
-          <select value={joinMode} onChange={(event) => setJoinMode(event.target.value as "space" | "newline")}>
-            <option value="space">Gabung spasi</option>
-            <option value="newline">Baris baru</option>
-          </select>
+          <SelectMenu
+            value={joinMode}
+            onChange={setJoinMode}
+            options={[
+              { value: "space", label: "Gabung spasi" },
+              { value: "newline", label: "Baris baru" },
+            ]}
+          />
         </div>
         {basket.length ? (
           basket.map((item) => (
             <div className="basket-item" key={item.id}>
               <span>{item.section || item.blockId}</span>
               <p>{item.text}</p>
-              <button type="button" onClick={() => setBasket((prev) => prev.filter((entry) => entry.id !== item.id))}><TrashIcon aria-hidden="true" />Hapus</button>
+              <AppButton size="sm" variant="danger" icon={<TrashIcon aria-hidden="true" />} onClick={() => setBasket((prev) => prev.filter((entry) => entry.id !== item.id))}>Hapus</AppButton>
             </div>
           ))
         ) : (
           <p className="empty-note">Seleksi teks di paragraf draft, lalu tekan "Tambah teks terseleksi".</p>
         )}
-        <button
-          type="button"
+        <AppButton
           className="tool-button primary wide"
+          variant="primary"
           disabled={!replacement}
           onClick={() => onApply(replacement)}
+          icon={<CheckCircleIcon aria-hidden="true" />}
         >
-          <CheckCircleIcon aria-hidden="true" />
           Terapkan ke slide
-        </button>
+        </AppButton>
       </div>
     </section>
   );
