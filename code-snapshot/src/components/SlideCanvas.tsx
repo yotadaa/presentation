@@ -114,6 +114,7 @@ export default function SlideCanvas({
     | null
   >(null);
   const [elementTip, setElementTip] = useState<{ layerId: string; title: string; x: number; y: number } | null>(null);
+  const [isLayerDragging, setIsLayerDragging] = useState(false);
   const [textTip, setTextTip] = useState<{
     target: SelectionTarget;
     x: number;
@@ -186,6 +187,7 @@ export default function SlideCanvas({
     previousSlideIndexRef.current = slide.index;
     setImageTip(null);
     setElementTip(null);
+    setIsLayerDragging(false);
     setTextTip(null);
   }, [slide.index]);
 
@@ -467,7 +469,7 @@ export default function SlideCanvas({
 
           {imageTip && !isEditInteractionLocked() ? (
             <div
-              className={`image-layer-tooltip ${imageTip.kind === "base" ? "base-tip" : "overlay-tip"}`}
+              className={`image-layer-tooltip ${imageTip.kind === "base" ? "base-tip" : "overlay-tip"} ${isLayerDragging ? "is-dragging" : ""}`}
               style={imageTipPosition || undefined}
             >
               <div className="image-tip-head">
@@ -519,7 +521,7 @@ export default function SlideCanvas({
           ) : null}
 
           {elementTip && !isEditInteractionLocked() ? (
-            <div className="image-layer-tooltip element-layer-tooltip" style={elementTipPosition || undefined}>
+            <div className={`image-layer-tooltip element-layer-tooltip ${isLayerDragging ? "is-dragging" : ""}`} style={elementTipPosition || undefined}>
               <div className="image-tip-head">
                 <RectangleStackIcon aria-hidden="true" />
                 <strong>{elementTip.title}</strong>
@@ -708,6 +710,7 @@ export default function SlideCanvas({
     setTextTip(null);
     setImageTip({ kind, layerId: id, title, x, y });
     setElementTip(null);
+    setIsLayerDragging(true);
     dragRef.current = {
       mode: "move",
       kind,
@@ -726,6 +729,7 @@ export default function SlideCanvas({
     if (isEditInteractionLocked()) return;
     event.preventDefault();
     event.stopPropagation();
+    setIsLayerDragging(true);
     dragRef.current = {
       mode: "resize",
       kind,
@@ -755,6 +759,7 @@ export default function SlideCanvas({
     setTextTip(null);
     setImageTip(null);
     setElementTip({ layerId: id, title, x, y });
+    setIsLayerDragging(true);
     dragRef.current = {
       mode: "move",
       kind: "element",
@@ -773,6 +778,7 @@ export default function SlideCanvas({
     if (isEditInteractionLocked()) return;
     event.preventDefault();
     event.stopPropagation();
+    setIsLayerDragging(true);
     dragRef.current = {
       mode: "resize",
       kind: "element",
@@ -858,6 +864,7 @@ export default function SlideCanvas({
       }
     }
     dragRef.current = null;
+    setIsLayerDragging(false);
     window.removeEventListener("pointermove", pointerMove);
     window.removeEventListener("pointerup", pointerUp);
   }
