@@ -1251,6 +1251,87 @@ button {
   object-position: center top;
 }
 
+.alignment-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  pointer-events: none;
+}
+
+.alignment-guide {
+  position: absolute;
+  display: block;
+  background: color-mix(in srgb, var(--accent) 86%, #38bdf8);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 0 18px color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 999px;
+}
+
+.alignment-guide-vertical {
+  width: 2px;
+  transform: translateX(-1px);
+}
+
+.alignment-guide-horizontal {
+  height: 2px;
+  transform: translateY(-1px);
+}
+
+.alignment-distance {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.alignment-distance::before {
+  content: "";
+  position: absolute;
+  background: color-mix(in srgb, var(--accent) 78%, #38bdf8);
+  border-radius: 999px;
+}
+
+.alignment-distance b {
+  position: relative;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.14);
+  padding: 2px 7px;
+  line-height: 1.25;
+}
+
+.alignment-distance-horizontal {
+  height: 18px;
+  transform: translateY(-50%);
+}
+
+.alignment-distance-horizontal::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.alignment-distance-vertical {
+  width: 18px;
+  transform: translateX(-50%);
+}
+
+.alignment-distance-vertical::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
 .base-layer-row.is-hidden {
   opacity: 0.64;
 }

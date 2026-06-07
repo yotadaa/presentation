@@ -31,6 +31,26 @@ const textFontOptions: Array<{ value: "inherit" | FontFamilyName; label: string;
   { value: "robotoSlab", label: "Roboto Slab", note: "Slab untuk aksen tegas." },
 ];
 
+type AlignmentGuide = {
+  orientation: "vertical" | "horizontal";
+  position: number;
+  start: number;
+  end: number;
+};
+
+type AlignmentDistanceHint = {
+  orientation: "horizontal" | "vertical";
+  x: number;
+  y: number;
+  length: number;
+  text: string;
+};
+
+type AlignmentOverlay = {
+  guides: AlignmentGuide[];
+  distances: AlignmentDistanceHint[];
+};
+
 type SlideCanvasProps = {
   slide: Slide;
   html: string;
@@ -115,6 +135,7 @@ export default function SlideCanvas({
   >(null);
   const [elementTip, setElementTip] = useState<{ layerId: string; title: string; x: number; y: number } | null>(null);
   const [isLayerDragging, setIsLayerDragging] = useState(false);
+  const [alignmentOverlay, setAlignmentOverlay] = useState<AlignmentOverlay | null>(null);
   const [textTip, setTextTip] = useState<{
     target: SelectionTarget;
     x: number;
@@ -188,6 +209,7 @@ export default function SlideCanvas({
     setImageTip(null);
     setElementTip(null);
     setIsLayerDragging(false);
+    setAlignmentOverlay(null);
     setTextTip(null);
   }, [slide.index]);
 
@@ -467,6 +489,35 @@ export default function SlideCanvas({
             {renderLayerStage("front", frontBaseImages, frontLayers, frontBaseElements)}
           </div>
 
+          {alignmentOverlay && isLayerDragging ? (
+            <div className="alignment-overlay" aria-hidden="true">
+              {alignmentOverlay.guides.map((guide, index) => (
+                <span
+                  key={`guide-${guide.orientation}-${index}`}
+                  className={`alignment-guide alignment-guide-${guide.orientation}`}
+                  style={
+                    guide.orientation === "vertical"
+                      ? { left: `${guide.position}px`, top: `${guide.start}px`, height: `${Math.max(12, guide.end - guide.start)}px` }
+                      : { top: `${guide.position}px`, left: `${guide.start}px`, width: `${Math.max(12, guide.end - guide.start)}px` }
+                  }
+                />
+              ))}
+              {alignmentOverlay.distances.map((hint, index) => (
+                <span
+                  key={`distance-${hint.orientation}-${index}`}
+                  className={`alignment-distance alignment-distance-${hint.orientation}`}
+                  style={
+                    hint.orientation === "horizontal"
+                      ? { left: `${hint.x}px`, top: `${hint.y}px`, width: `${Math.max(16, hint.length)}px` }
+                      : { left: `${hint.x}px`, top: `${hint.y}px`, height: `${Math.max(16, hint.length)}px` }
+                  }
+                >
+                  <b>{hint.text}</b>
+                </span>
+              ))}
+            </div>
+          ) : null}
+
           {imageTip && !isEditInteractionLocked() ? (
             <div
               className={`image-layer-tooltip ${imageTip.kind === "base" ? "base-tip" : "overlay-tip"} ${isLayerDragging ? "is-dragging" : ""}`}
@@ -605,6 +656,7 @@ export default function SlideCanvas({
             <div
               key={image.id}
               className={`slide-layer base-image-layer depth-${depth} ${image.frame === "screen" ? "base-screen-frame" : ""} ${selected ? "selected" : ""} ${locked ? "locked" : ""}`}
+              data-layer-id={image.id}
               style={{
                 left: `${image.x}%`,
                 top: `${image.y}%`,
@@ -667,6 +719,7 @@ export default function SlideCanvas({
             <div
               key={layer.id}
               className={`slide-layer depth-${depth} ${selected ? "selected" : ""} ${layer.locked ? "locked" : ""}`}
+              data-layer-id={layer.id}
               style={{
                 left: `${layer.x}%`,
                 top: `${layer.y}%`,
@@ -806,6 +859,7 @@ export default function SlideCanvas({
     if (!drag || !frame) return;
     const rect = frame.getBoundingClientRect();
     if (drag.mode === "resize") {
+      setAlignmentOverlay(null);
       if (!drag.moved && Math.abs(event.clientX - drag.startX) <= 2) return;
       if (!drag.moved) {
         if (drag.kind === "element") onBeginBaseElementEdit(drag.id, { width: drag.width, height: drag.height });
@@ -836,7 +890,12 @@ export default function SlideCanvas({
     }
     const nextX = drag.x + ((event.clientX - drag.startX) / rect.width) * 100;
     const nextY = drag.y + ((event.clientY - drag.startY) / rect.height) * 100;
-    const patch = { x: Math.max(0, Math.min(95, nextX)), y: Math.max(0, Math.min(92, nextY)) };
+    const alignment = getAlignmentOverlay(frame, drag.id, nextX, nextY);
+    const patch = {
+      x: Math.max(0, Math.min(95, alignment.x)),
+      y: Math.max(0, Math.min(92, alignment.y)),
+    };
+    setAlignmentOverlay(alignment.overlay);
     setImageTip((tip) => tip && tip.layerId === drag.id ? { ...tip, x: patch.x, y: patch.y } : tip);
     setElementTip((tip) => tip && tip.layerId === drag.id ? { ...tip, x: patch.x, y: patch.y } : tip);
     if (drag.kind === "element") onUpdateBaseElement(drag.id, patch, false);
@@ -865,6 +924,7 @@ export default function SlideCanvas({
     }
     dragRef.current = null;
     setIsLayerDragging(false);
+    setAlignmentOverlay(null);
     window.removeEventListener("pointermove", pointerMove);
     window.removeEventListener("pointerup", pointerUp);
   }
@@ -900,6 +960,157 @@ function fontCssValue(value: "inherit" | FontFamilyName) {
     rounded: "\"Trebuchet MS\", ui-sans-serif, system-ui, sans-serif",
   };
   return stacks[value];
+}
+
+function getAlignmentOverlay(frame: HTMLElement, activeId: string, x: number, y: number) {
+  const frameRect = frame.getBoundingClientRect();
+  const active = frame.querySelector<HTMLElement>(`.slide-layer[data-layer-id="${escapeSelector(activeId)}"]`);
+  if (!active || frameRect.width <= 0 || frameRect.height <= 0) {
+    return { x, y, overlay: null as AlignmentOverlay | null };
+  }
+
+  const activeRect = active.getBoundingClientRect();
+  if (activeRect.width <= 1 || activeRect.height <= 1) {
+    return { x, y, overlay: null as AlignmentOverlay | null };
+  }
+
+  const targets = [...frame.querySelectorAll<HTMLElement>(".slide-layer[data-layer-id]")]
+    .filter((node) => node !== active && node.getAttribute("data-layer-id") !== activeId)
+    .map((node) => node.getBoundingClientRect())
+    .filter((rect) => rect.width > 1 && rect.height > 1);
+
+  if (!targets.length) return { x, y, overlay: null as AlignmentOverlay | null };
+
+  let centerX = frameRect.left + (x / 100) * frameRect.width;
+  let centerY = frameRect.top + (y / 100) * frameRect.height;
+  const width = activeRect.width;
+  const height = activeRect.height;
+  const threshold = 8;
+  const candidate = () => rectFromCenter(centerX, centerY, width, height);
+  const guides: AlignmentGuide[] = [];
+
+  const verticalSnap = nearestAlignment(candidate(), targets, "x", threshold);
+  if (verticalSnap) {
+    centerX = verticalSnap.targetValue - verticalSnap.offset;
+    const next = candidate();
+    guides.push({
+      orientation: "vertical",
+      position: verticalSnap.targetValue - frameRect.left,
+      start: Math.max(0, Math.min(next.top, verticalSnap.targetRect.top) - frameRect.top - 12),
+      end: Math.min(frameRect.height, Math.max(next.bottom, verticalSnap.targetRect.bottom) - frameRect.top + 12),
+    });
+  }
+
+  const horizontalSnap = nearestAlignment(candidate(), targets, "y", threshold);
+  if (horizontalSnap) {
+    centerY = horizontalSnap.targetValue - horizontalSnap.offset;
+    const next = candidate();
+    guides.push({
+      orientation: "horizontal",
+      position: horizontalSnap.targetValue - frameRect.top,
+      start: Math.max(0, Math.min(next.left, horizontalSnap.targetRect.left) - frameRect.left - 12),
+      end: Math.min(frameRect.width, Math.max(next.right, horizontalSnap.targetRect.right) - frameRect.left + 12),
+    });
+  }
+
+  const distances = nearestDistanceHints(candidate(), targets, frameRect);
+  const overlay = guides.length || distances.length ? { guides, distances } : null;
+  return {
+    x: ((centerX - frameRect.left) / frameRect.width) * 100,
+    y: ((centerY - frameRect.top) / frameRect.height) * 100,
+    overlay,
+  };
+}
+
+function rectFromCenter(centerX: number, centerY: number, width: number, height: number) {
+  return {
+    left: centerX - width / 2,
+    top: centerY - height / 2,
+    right: centerX + width / 2,
+    bottom: centerY + height / 2,
+    width,
+    height,
+    centerX,
+    centerY,
+  };
+}
+
+function nearestAlignment(
+  activeRect: ReturnType<typeof rectFromCenter>,
+  targets: DOMRect[],
+  axis: "x" | "y",
+  threshold: number,
+) {
+  const activePoints = axis === "x"
+    ? [
+        { value: activeRect.left, offset: -activeRect.width / 2 },
+        { value: activeRect.centerX, offset: 0 },
+        { value: activeRect.right, offset: activeRect.width / 2 },
+      ]
+    : [
+        { value: activeRect.top, offset: -activeRect.height / 2 },
+        { value: activeRect.centerY, offset: 0 },
+        { value: activeRect.bottom, offset: activeRect.height / 2 },
+      ];
+  let best: { diff: number; targetValue: number; offset: number; targetRect: DOMRect } | null = null;
+
+  for (const targetRect of targets) {
+    const targetPoints = axis === "x"
+      ? [targetRect.left, targetRect.left + targetRect.width / 2, targetRect.right]
+      : [targetRect.top, targetRect.top + targetRect.height / 2, targetRect.bottom];
+    for (const activePoint of activePoints) {
+      for (const targetValue of targetPoints) {
+        const diff = Math.abs(activePoint.value - targetValue);
+        if (diff <= threshold && (!best || diff < best.diff)) {
+          best = { diff, targetValue, offset: activePoint.offset, targetRect };
+        }
+      }
+    }
+  }
+
+  return best;
+}
+
+function nearestDistanceHints(activeRect: ReturnType<typeof rectFromCenter>, targets: DOMRect[], frameRect: DOMRect) {
+  const maxDistance = 180;
+  let horizontal: AlignmentDistanceHint | null = null;
+  let vertical: AlignmentDistanceHint | null = null;
+
+  for (const target of targets) {
+    const verticalOverlap = Math.min(activeRect.bottom, target.bottom) - Math.max(activeRect.top, target.top);
+    if (verticalOverlap > Math.min(activeRect.height, target.height) * 0.24) {
+      const gap = activeRect.right <= target.left ? target.left - activeRect.right : target.right <= activeRect.left ? activeRect.left - target.right : null;
+      if (gap != null && gap > 1 && gap <= maxDistance && (!horizontal || gap < horizontal.length)) {
+        const start = activeRect.right <= target.left ? activeRect.right : target.right;
+        const y = (Math.max(activeRect.top, target.top) + Math.min(activeRect.bottom, target.bottom)) / 2 - frameRect.top;
+        horizontal = {
+          orientation: "horizontal",
+          x: start - frameRect.left,
+          y,
+          length: gap,
+          text: `${Math.round(gap)}px`,
+        };
+      }
+    }
+
+    const horizontalOverlap = Math.min(activeRect.right, target.right) - Math.max(activeRect.left, target.left);
+    if (horizontalOverlap > Math.min(activeRect.width, target.width) * 0.24) {
+      const gap = activeRect.bottom <= target.top ? target.top - activeRect.bottom : target.bottom <= activeRect.top ? activeRect.top - target.bottom : null;
+      if (gap != null && gap > 1 && gap <= maxDistance && (!vertical || gap < vertical.length)) {
+        const start = activeRect.bottom <= target.top ? activeRect.bottom : target.bottom;
+        const x = (Math.max(activeRect.left, target.left) + Math.min(activeRect.right, target.right)) / 2 - frameRect.left;
+        vertical = {
+          orientation: "vertical",
+          x,
+          y: start - frameRect.top,
+          length: gap,
+          text: `${Math.round(gap)}px`,
+        };
+      }
+    }
+  }
+
+  return [horizontal, vertical].filter(Boolean) as AlignmentDistanceHint[];
 }
 
 function floatingTipPosition(x: number, y: number, frame: HTMLElement | null, panel: HTMLElement | null) {
