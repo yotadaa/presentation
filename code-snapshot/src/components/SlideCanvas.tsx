@@ -164,8 +164,10 @@ export default function SlideCanvas({
     const tipWidth = 250;
     const tipHeight = 128;
     const margin = 12;
+    const selectedLayer = frame.querySelector<HTMLElement>(`.slide-layer[data-layer-id="${escapeSelector(imageTip.layerId)}"]`);
+    const selectedRect = selectedLayer?.getBoundingClientRect();
     const anchorX = frameRect.left + (imageTip.x / 100) * frameRect.width - shellRect.left;
-    const anchorY = frameRect.top + (imageTip.y / 100) * frameRect.height - shellRect.top;
+    const anchorY = selectedRect ? selectedRect.top - shellRect.top : frameRect.top + (imageTip.y / 100) * frameRect.height - shellRect.top;
     const minCenterX = panelRect.left + tipWidth / 2 + margin - shellRect.left;
     const maxCenterX = Math.max(minCenterX, panelRect.right - tipWidth / 2 - margin - shellRect.left);
     const minTop = panelRect.top + tipHeight + margin - shellRect.top;
@@ -183,7 +185,7 @@ export default function SlideCanvas({
   }, [imageTip, scale]);
   const elementTipPosition = useMemo(() => {
     if (!elementTip) return null;
-    return floatingTipPosition(elementTip.x, elementTip.y, frameRef.current, viewportRef.current?.closest(".canvas-panel") as HTMLElement | null);
+    return floatingTipPosition(elementTip.x, elementTip.y, frameRef.current, viewportRef.current?.closest(".canvas-panel") as HTMLElement | null, elementTip.layerId);
   }, [elementTip, scale]);
 
   useEffect(() => {
@@ -1113,7 +1115,7 @@ function nearestDistanceHints(activeRect: ReturnType<typeof rectFromCenter>, tar
   return [horizontal, vertical].filter(Boolean) as AlignmentDistanceHint[];
 }
 
-function floatingTipPosition(x: number, y: number, frame: HTMLElement | null, panel: HTMLElement | null) {
+function floatingTipPosition(x: number, y: number, frame: HTMLElement | null, panel: HTMLElement | null, layerId?: string) {
   const shell = frame?.parentElement;
   if (!frame || !panel || !shell) {
     return {
@@ -1128,8 +1130,10 @@ function floatingTipPosition(x: number, y: number, frame: HTMLElement | null, pa
   const tipWidth = 250;
   const tipHeight = 128;
   const margin = 12;
+  const selectedLayer = layerId ? frame.querySelector<HTMLElement>(`.slide-layer[data-layer-id="${escapeSelector(layerId)}"]`) : null;
+  const selectedRect = selectedLayer?.getBoundingClientRect();
   const anchorX = frameRect.left + (x / 100) * frameRect.width - shellRect.left;
-  const anchorY = frameRect.top + (y / 100) * frameRect.height - shellRect.top;
+  const anchorY = selectedRect ? selectedRect.top - shellRect.top : frameRect.top + (y / 100) * frameRect.height - shellRect.top;
   const minCenterX = panelRect.left + tipWidth / 2 + margin - shellRect.left;
   const maxCenterX = Math.max(minCenterX, panelRect.right - tipWidth / 2 - margin - shellRect.left);
   const minTop = panelRect.top + tipHeight + margin - shellRect.top;
